@@ -1,0 +1,3324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快捷键练习 · 帝国时代 4 工具箱</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 修复浏览器扩展注入的元素导致的空白问题 */
+.use-chat-gpt-ai--MuiStack-root {
+    font-size: initial !important;
+    background-color: transparent !important;
+    height: auto !important;
+    line-height: normal !important;
+}
+
+/* 修复页面空白问题 */
+html, body {
+    height: auto;
+    min-height: 0;
+}
+
+/* 临时添加背景色以识别元素 */
+.container {
+    background: transparent;
+}
+
+.mode-content {
+    background: transparent;
+}
+
+.civ-grid {
+    background: transparent;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+    background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.mode-content {
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.mode-selector {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.mode-selector button {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #3498db;
+    color: white;
+}
+
+.mode-selector button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* 文明选择样式 */
+.civ-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+#civ-selection {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+#civ-selection h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.civ-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.civ-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.civ-btn img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+.civ-btn span {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    transition: all 0.3s ease;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.civ-btn:hover span {
+    bottom: 0;
+}
+
+/* 文明背景样式 */
+.civ-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.age-selection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.age-selection input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.count-selection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.count-selection input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+.building-selection {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+}
+
+.building-selection h3 {
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.age-buildings {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #252525;
+    border-radius: 8px;
+}
+
+.age-buildings h4 {
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.select-all-btn {
+    margin-bottom: 15px;
+    padding: 5px 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.select-all-btn:hover {
+    background-color: #2980b9;
+}
+
+.building-checkbox {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100px;
+}
+
+.building-checkbox img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.monastery-images {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 5px;
+}
+
+.monastery-images img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.alternating-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.alternating-images img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s ease-in-out;
+}
+
+/* 动画效果 */
+@keyframes alternateImages {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.alternating-images img:first-child {
+    animation: alternateImages 4s infinite;
+}
+
+.alternating-images img:nth-child(2) {
+    animation: alternateImages 4s infinite 2s;
+}
+
+.building-checkbox label {
+    font-size: 14px;
+    display: block;
+}
+
+.building-checkbox small {
+    font-size: 12px;
+    color: #aaa;
+    display: block;
+}
+
+#confirm-selection-btn, #train-confirm-selection-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#confirm-selection-btn:hover, #train-confirm-selection-btn:hover {
+    background-color: #229954;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#start-btn, #train-start-btn {
+    background-color: #27ae60;
+    color: white;
+}
+
+#pause-btn, #train-pause-btn {
+    background-color: #f39c12;
+    color: white;
+}
+
+#reset-btn, #train-reset-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#confirm-selection-btn:hover, #train-confirm-selection-btn:hover {
+    background-color: #e74c3c;
+}
+
+#difficulty {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #e0e0e0;
+}
+
+.game-area {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.target {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    min-height: 200px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feedback {
+    font-size: 24px;
+    margin-bottom: 20px;
+    min-height: 30px;
+}
+
+.feedback.correct {
+    color: #27ae60;
+}
+
+.feedback.wrong {
+    color: #e74c3c;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #e0e0e0;
+}
+
+.keyboard-display {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+}
+
+.key {
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    color: #e0e0e0;
+}
+
+.key.pressed {
+    background-color: #3498db;
+    color: white;
+    transform: scale(1.1);
+}
+
+.key-list {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.key-list h2 {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.key-list h3 {
+    color: #e0e0e0;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.key-list ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.key-list li {
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    color: #e0e0e0;
+}
+
+.key-list li:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .keyboard-display {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    .key {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    
+    .target {
+        font-size: 36px;
+    }
+    
+    .feedback {
+        font-size: 18px;
+    }
+}
+
+/* 防御性修复：针对常见 AI 助手扩展注入的元素，重置可能导致布局异常的样式 */
+div[class*="use-chat-gpt"],
+div[class*="use-chatgpt"],
+div[class*="chat-gpt"],
+div[class*="ChatGPT"],
+div[class*="maxai"],
+div[class*="MuiStack-root"],
+div[class*="context-menu"] {
+    /* 重置字体大小和行高（核心修复） */
+    font-size: 16px !important;
+    line-height: normal !important;
+    
+    /* 确保元素高度由内容正常决定 */
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    
+    /* 清除可能的外边距和内边距 */
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    /* 可选：如果元素原本应该悬浮，但错误地占据了文档流，可以强制固定定位 */
+    /* 注意：取消下面两行的注释可能会改变扩展按钮的位置，但能彻底移出文档流 */
+    /* position: fixed !important; */
+    /* z-index: 9999 !important; */
+}
+/* 工具箱内嵌页面：与原生工具保持同一视觉体系，并让文明名称始终可见。 */
+html, body {
+    background: #071321;
+    color: #e8cd94;
+    font-family: "Microsoft YaHei UI", Arial, sans-serif;
+}
+.container { max-width: 1400px; padding: 16px 20px; }
+h1, h2, h3, h4 { color: #f5dfa9; }
+h1 { text-align: left; font-size: 25px; margin-bottom: 14px; }
+.intro-text {
+    background: #10263d !important;
+    color: #e8cd94 !important;
+    border: 1px solid #7e6945;
+    padding: 15px 18px !important;
+    margin-bottom: 18px !important;
+}
+.intro-text p { color: #dfc99a !important; }
+.civ-grid { margin-top: 18px; }
+.civ-btn {
+    background: #10243a;
+    border: 1px solid #695b43;
+    color: #f0d9a4;
+    border-radius: 6px;
+}
+.civ-btn:hover { border-color: #e1ba73; transform: none; }
+.civ-btn img { aspect-ratio: 1; object-fit: contain; background: #0a1929; border-radius: 5px 5px 0 0; }
+.civ-btn span,
+.civ-btn:hover span {
+    position: static;
+    display: block;
+    background: #142b43;
+    color: #f0d9a4;
+    padding: 6px 3px;
+    font-size: 12px;
+}
+.mode-selector { gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+button, .mode-selector button, .select-all-btn,
+#confirm-selection-btn, #train-confirm-selection-btn {
+    background: #17334d;
+    color: #f2dba8;
+    border: 1px solid #997b4c;
+    border-radius: 5px;
+    box-shadow: none;
+}
+button:hover, .mode-selector button:hover, .select-all-btn:hover {
+    background: #21445f;
+    color: #fff0c5;
+    transform: none;
+    box-shadow: none;
+}
+button:focus-visible, input:focus-visible { outline: 2px solid #f6da9c; outline-offset: 2px; }
+#start-btn, #train-start-btn { background: #d8b473; color: #0b1b2d; }
+#pause-btn, #train-pause-btn { background: #795d33; color: #fff0c5; }
+#reset-btn, #train-reset-btn { background: #723d38; color: #ffe4bc; }
+#confirm-selection-btn, #train-confirm-selection-btn {
+    background: #d8b473 !important;
+    color: #0b1b2d !important;
+    border: 1px solid #f1d69c !important;
+}
+#end-training-btn, #train-end-training-btn,
+#wrong-answers-list button[onclick^="clearSessionErrors"] {
+    background: #723d38 !important;
+    color: #ffe4bc !important;
+    border: 1px solid #b87966 !important;
+}
+.building-selection, .age-buildings, .game-area,
+.keyboard-display, .key-list, #wrong-answers-list {
+    background: #10243a !important;
+    color: #e8cd94 !important;
+    border: 1px solid #5b563f;
+    box-shadow: none;
+}
+.key-list li, .key { background: #1d3751; color: #f0d9a4; }
+.key.pressed { background: #d8b473; color: #0b1b2d; }
+.target, .stats { color: #f5dfa9; }
+.count-selection input[type="number"], #difficulty {
+    background: #071626;
+    color: #f3dba6;
+    border: 1px solid #8b754e;
+}
+@media (max-width: 900px) {
+    .container { padding: 12px; }
+    .civ-grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+    .game-area { padding: 18px; }
+    .keyboard-display { gap: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>快捷键练习</h1>
+        
+        <!-- 说明文字 -->
+        <div class="intro-text" style="background-color: #252525; padding: 20px; border-radius: 10px; margin-bottom: 30px; color: #e0e0e0;">
+            <p style="margin-bottom: 8px;">先选择文明，再选择练习方式。练习时请让这个页面保持焦点，按提示输入快捷键。</p>
+            <p>学习模式可选择要练习的建筑；训练模式可选择题目，并查看正确数、错误数、用时和进度。页面内可查看本次运行期间的错题记录。</p>
+        </div>
+        
+        <!-- 文明选择页面 -->
+        <div id="civ-selection" class="mode-content">
+            <h2>选择文明</h2>
+            <div class="civ-grid">
+                <button class="civ-btn" data-civ="abbasid" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/06/bg-age4-civ-abb-splash-right-desk.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/ab-e3be9651.png" alt="黑衣大食">
+                    <span>黑衣大食</span>
+                </button>
+                <button class="civ-btn" data-civ="ayyubid" data-bg="https://www.ageofempires.com/wp-content/uploads/2023/09/ABB-AYY_Keyart_Ayyubids_1920x1080-1.png">
+                    <img src="https://static.aoe4world.com/vite/assets/ay-9a60b16b.png" alt="阿尤王朝">
+                    <span>阿尤王朝</span>
+                </button>
+                <button class="civ-btn" data-civ="byzantine" data-bg="https://www.ageofempires.com/wp-content/uploads/2023/09/BYZ_keyart_Byzantines_1920x1080.png">
+                    <img src="https://static.aoe4world.com/vite/assets/by-5fa0ea3f.png" alt="拜占庭">
+                    <span>拜占庭</span>
+                </button>
+                <button class="civ-btn" data-civ="chinese" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/06/bg-age4-civ-chi-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/ch-889d9920.png" alt="中国">
+                    <span>中国</span>
+                </button>
+                <button class="civ-btn" data-civ="delhi" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/06/bg-age4-civ-del-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/de-47cad142.png" alt="德里苏丹">
+                    <span>德里苏丹</span>
+                </button>
+                <button class="civ-btn" data-civ="english" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/06/bg-age4-civ-eng-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/en-9cb03e75.png" alt="英格兰">
+                    <span>英格兰</span>
+                </button>
+                <button class="civ-btn" data-civ="french" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/06/bg-age4-civ-fre-splash-right-desk.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/fr-549f1952.png" alt="法兰西">
+                    <span>法兰西</span>
+                </button>
+                <button class="civ-btn" data-civ="goldenhorde" data-bg="https://cdn.ageofempires.com/aoe/wp-content/uploads/2025/11/AoEIV-DynastiesOfTheEast-WatchYourSteppe-4K.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/goldenhorde-54c12b85.png" alt="金帐汗国">
+                    <span>金帐汗国</span>
+                </button>
+                <button class="civ-btn" data-civ="holyroman" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/08/bg-age4-civ-hre-splash-right-desk.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/hr-3bbbd5e3.png" alt="神圣罗马帝国">
+                    <span>神圣罗马帝国</span>
+                </button>
+                <button class="civ-btn" data-civ="lancaster" data-bg="https://cdn.ageofempires.com/aoe/wp-content/uploads/2025/03/KnightsTemplar-HouseOfLancaster_3840x2160-KOCR.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/hl-17263954.png" alt="兰开斯特王朝">
+                    <span>兰开斯特王朝</span>
+                </button>
+                <button class="civ-btn" data-civ="japanese" data-bg="https://www.ageofempires.com/wp-content/uploads/2023/09/JPN_keyart_Japanese_1920x1036.png">
+                    <img src="https://static.aoe4world.com/vite/assets/ja-11f498ae.png" alt="日本">
+                    <span>日本</span>
+                </button>
+                <button class="civ-btn" data-civ="jeannedarc" data-bg="https://www.ageofempires.com/wp-content/uploads/2023/10/FRE_JDA_keyart_cropped_civ-page_1920x1090_2.png">
+                    <img src="https://static.aoe4world.com/vite/assets/jeannedarc-9c70961e.png" alt="圣女贞德">
+                    <span>圣女贞德</span>
+                </button>
+                <button class="civ-btn" data-civ="knights" data-bg="https://cdn.ageofempires.com/aoe/wp-content/uploads/2025/03/KnightsTemplar-HouseOfLancaster_3840x2160-KOCR.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/kt-d78c3272.png" alt="圣殿骑士团">
+                    <span>圣殿骑士团</span>
+                </button>
+                <button class="civ-btn" data-civ="macedonian" data-bg="https://cdn.ageofempires.com/aoe/wp-content/uploads/2025/11/AoEIV-DynastiesOfTheEast-ContestedCoastline-4K.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/macedonian-892259f7.png" alt="马其顿王朝">
+                    <span>马其顿王朝</span>
+                </button>
+                <button class="civ-btn" data-civ="malians" data-bg="https://www.ageofempires.com/wp-content/uploads/2022/08/bg-age4-civ-mal-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/malians-c194643c.png" alt="马里">
+                    <span>马里</span>
+                </button>
+                <button class="civ-btn" data-civ="mongol" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/06/bg-age4-civ-mon-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/mo-47536d49.png" alt="蒙古">
+                    <span>蒙古</span>
+                </button>
+                <button class="civ-btn" data-civ="odyssey" data-bg="https://www.ageofempires.com/wp-content/uploads/2023/10/HRE-OotD_Keyart_Order-of-the-Dragon_1920x1090.png">
+                    <img src="https://static.aoe4world.com/vite/assets/od-835af597.png" alt="龙之骑士团">
+                    <span>龙之骑士团</span>
+                </button>
+                <button class="civ-btn" data-civ="ottomans" data-bg="https://www.ageofempires.com/wp-content/uploads/2022/08/bg-age4-civ-ott-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/ottomans-1e330a73.png" alt="奥斯曼">
+                    <span>奥斯曼</span>
+                </button>
+                <button class="civ-btn" data-civ="russian" data-bg="https://www.ageofempires.com/wp-content/uploads/2021/08/bg-age4-civ-rus-splash-right-desk.png">
+                    <img src="https://static.aoe4world.com/vite/assets/ru-aec8f40f.png" alt="罗斯">
+                    <span>罗斯</span>
+                </button>
+                <button class="civ-btn" data-civ="sengoku" data-bg="https://cdn.ageofempires.com/aoe/wp-content/uploads/2025/11/AoEIV-DynastiesOfTheEast-DaimyoDynamics-4K.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/sengoku-1cf1ebfb.png" alt="战国大名">
+                    <span>战国大名</span>
+                </button>
+                <button class="civ-btn" data-civ="tughlaq" data-bg="https://cdn.ageofempires.com/aoe/wp-content/uploads/2025/11/AoEIV-DynastiesOfTheEast-ForestLords-4K.webp">
+                    <img src="https://static.aoe4world.com/vite/assets/tughlaq-fe1414db.png" alt="图格鲁克王朝">
+                    <span>图格鲁克王朝</span>
+                </button>
+                <button class="civ-btn" data-civ="zhu" data-bg="https://www.ageofempires.com/wp-content/uploads/2023/09/CHI-ZXL_Keyart_Zhu-Xis-Legacy_1920x1080.png">
+                    <img src="https://static.aoe4world.com/vite/assets/zhuxi-f21662c7.png" alt="朱子遗训">
+                    <span>朱子遗训</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 模式选择按钮 -->
+        <div id="mode-selector" class="mode-selector" style="display: none;">
+            <button id="learn-btn">学习模式</button>
+            <button id="train-btn">训练模式</button>
+            <button id="wrong-answers-btn">错题本</button>
+            <button id="reselect-civ-btn">重新选择文明</button>
+        </div>
+        
+        <!-- 错题本页面 -->
+        <div id="wrong-answers-page" class="mode-content" style="display: none;">
+            <h2>错题本</h2>
+            <div style="margin-bottom: 20px;">
+                <button id="clear-wrong-answers-btn">清空错题记录</button>
+            </div>
+            <div id="wrong-answers-list" style="background-color: #252525; padding: 20px; border-radius: 10px; margin-bottom: 30px; color: #e0e0e0;">
+                <p>暂无错题记录</p>
+            </div>
+            <button id="back-to-mode-select-btn">返回模式选择</button>
+        </div>
+        
+        <!-- 学习模式内容 -->
+        <div id="learn-mode" class="mode-content" style="display: none;">
+            <div class="controls">
+                <button id="start-btn">开始训练</button>
+                <button id="pause-btn" disabled>暂停</button>
+                <button id="reset-btn" disabled>重置</button>
+
+                <div class="count-selection">
+                    <label>训练次数：</label>
+                    <input type="number" id="training-count" min="1" max="100" value="10">
+                </div>
+            </div>
+            
+            <!-- 建筑选择区域 -->
+            <div class="building-selection">
+                <h3>建筑选择</h3>
+                
+                <!-- 时代I建筑 -->
+                <div class="age-buildings" id="age-Q-buildings">
+                    <h4>时代I建筑</h4>
+                    <button class="select-all-btn" data-age="Q">全选</button>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-Q" value="Q-Q">
+                        <label for="build-Q-Q">
+                            <img src="https://data.aoe4world.com/images/buildings/house-1.png" alt="房屋">
+                            房屋<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific japanese">
+                        <input type="checkbox" id="build-Q-Q-japanese" value="Q-Q-japanese">
+                        <label for="build-Q-Q-japanese">
+                            <img src="https://data.aoe4world.com/images/buildings/farmhouse-1.png" alt="农舍">
+                            农舍<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-S" value="Q-S">
+                        <label for="build-Q-S">
+                            <img src="https://data.aoe4world.com/images/buildings/barracks-1.png" alt="兵营">
+                            兵营<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-W" value="Q-W">
+                        <label for="build-Q-W">
+                            <img src="https://data.aoe4world.com/images/buildings/mill-1.png" alt="磨坊">
+                            磨坊<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-D" value="Q-D">
+                        <label for="build-Q-D">
+                            <img src="https://data.aoe4world.com/images/buildings/dock-1.png" alt="码头">
+                            码头<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific knights">
+                        <input type="checkbox" id="build-Q-D-knights" value="Q-D-knights">
+                        <label for="build-Q-D-knights">
+                            <img src="https://data.aoe4world.com/images/buildings/dock-1.png" alt="巨港">
+                            巨港<br>
+                        </label>
+                    </div>
+
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-E" value="Q-E">
+                        <label for="build-Q-E">
+                            <img src="https://data.aoe4world.com/images/buildings/lumber-camp-1.png" alt="伐木场">
+                            伐木场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-Z" value="Q-Z">
+                        <label for="build-Q-Z">
+                            <img src="https://data.aoe4world.com/images/buildings/outpost-1.png" alt="哨站">
+                            哨站<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-R" value="Q-R">
+                        <label for="build-Q-R">
+                            <img src="https://data.aoe4world.com/images/buildings/mining-camp-1.png" alt="采矿场">
+                            采矿场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific japanese">
+                        <input type="checkbox" id="build-Q-R-japanese" value="Q-R-japanese">
+                        <label for="build-Q-R-japanese">
+                            <img src="https://data.aoe4world.com/images/buildings/forge-1.png" alt="锻造厂">
+                            锻造厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-X" value="Q-X">
+                        <label for="build-Q-X">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-1.png" alt="木栅栏">
+                            木栅栏<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-A" value="Q-A">
+                        <label for="build-Q-A">
+                            <img src="https://data.aoe4world.com/images/buildings/farm-1.png" alt="农田">
+                            农田<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific abbasid">
+                        <input type="checkbox" id="build-Q-F" value="Q-F">
+                        <label for="build-Q-F">
+                            <img src="https://data.aoe4world.com/images/buildings/house-of-wisdom-1.png" alt="智慧宫">
+                            智慧宫<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific ayyubid">
+                        <input type="checkbox" id="build-Q-F-ayyubid" value="Q-F-ayyubid">
+                        <label for="build-Q-F-ayyubid">
+                            <img src="https://data.aoe4world.com/images/buildings/house-of-wisdom-1.png" alt="智慧宫">
+                            智慧宫<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="build-Q-F-byzantine" value="Q-F-byzantine">
+                        <label for="build-Q-F-byzantine">
+                            <img src="https://data.aoe4world.com/images/buildings/cistern-1.png" alt="水池">
+                            水池<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="build-Q-V" value="Q-V">
+                        <label for="build-Q-V">
+                            <img src="https://data.aoe4world.com/images/buildings/aqueduct-1.png" alt="水渠">
+                            水渠<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="build-Q-A-byzantine" value="Q-A-byzantine">
+                        <label for="build-Q-A-byzantine">
+                            <img src="https://data.aoe4world.com/images/buildings/olive-grove-1.png" alt="橄榄树林">
+                            橄榄树林<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific chinese">
+                        <input type="checkbox" id="build-Q-F-chinese" value="Q-F-chinese">
+                        <label for="build-Q-F-chinese">
+                            <img src="https://data.aoe4world.com/images/buildings/village-1.png" alt="村庄">
+                            村庄<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific zhu">
+                        <input type="checkbox" id="build-Q-F-zhu" value="Q-F-zhu">
+                        <label for="build-Q-F-zhu">
+                            <img src="https://data.aoe4world.com/images/buildings/village-1.png" alt="村庄">
+                            村庄<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific delhi">
+                        <input type="checkbox" id="build-Q-F-delhi" value="Q-F-delhi">
+                        <label for="build-Q-F-delhi">
+                            <img src="https://data.aoe4world.com/images/buildings/monastery-3.png" alt="修道院">
+                            修道院<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-Q-C" value="Q-C">
+                        <label for="build-Q-C">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-gate-1.png" alt="木城门">
+                            木城门<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="build-Q-Q-goldenhorde" value="Q-Q-goldenhorde">
+                        <label for="build-Q-Q-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/relic-ovoo-1.png" alt="敖包">
+                            敖包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="build-Q-W-goldenhorde" value="Q-W-goldenhorde">
+                        <label for="build-Q-W-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/ger-1.png" alt="蒙古包">
+                            蒙古包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="build-Q-Z-goldenhorde" value="Q-Z-goldenhorde">
+                        <label for="build-Q-Z-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/fortified-outpost-1.png" alt="设防哨站">
+                            设防哨站<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="build-Q-A-goldenhorde" value="Q-A-goldenhorde">
+                        <label for="build-Q-A-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/stockyard-1.png" alt="牲畜围栏">
+                            牲畜围栏<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="build-Q-F-goldenhorde" value="Q-F-goldenhorde">
+                        <label for="build-Q-F-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/stable-1.png" alt="马厩">
+                            马厩<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="build-Q-V-goldenhorde" value="Q-V-goldenhorde">
+                        <label for="build-Q-V-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/golden-tent-2.png" alt="黄金帐篷">
+                            黄金帐篷<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific macedonian">
+                        <input type="checkbox" id="build-Q-F-macedonian" value="Q-F-macedonian">
+                        <label for="build-Q-F-macedonian">
+                            <img src="https://data.aoe4world.com/images/buildings/varangian-warcamp-1.png" alt="瓦兰吉军营">
+                            瓦兰吉军营<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific macedonian">
+                        <input type="checkbox" id="build-Q-S-macedonian" value="Q-S-macedonian">
+                        <label for="build-Q-S-macedonian">
+                            <img src="https://data.aoe4world.com/images/buildings/varangian-stronghold-1.png" alt="瓦兰吉城堡">
+                            瓦兰吉城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific malians">
+                        <input type="checkbox" id="build-Q-F-malians" value="Q-F-malians">
+                        <label for="build-Q-F-malians">
+                            <img src="https://data.aoe4world.com/images/buildings/pit-mine-1.png" alt="露天矿区">
+                            露天矿区<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific malians">
+                        <input type="checkbox" id="build-Q-Z-malians" value="Q-Z-malians">
+                        <label for="build-Q-Z-malians">
+                            <img src="https://data.aoe4world.com/images/buildings/toll-outpost-1.png" alt="收费哨站">
+                            收费哨站<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="build-Q-A-mongol" value="Q-A-mongol">
+                        <label for="build-Q-A-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/pasture-1.png" alt="牧场">
+                            牧场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="build-Q-Q-mongol" value="Q-Q-mongol">
+                        <label for="build-Q-Q-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/ovoo-1.png" alt="敖包">
+                            敖包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="build-Q-W-mongol" value="Q-W-mongol">
+                        <label for="build-Q-W-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/ger-1.png" alt="蒙古包">
+                            蒙古包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="build-Q-F-mongol" value="Q-F-mongol">
+                        <label for="build-Q-F-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/stable-1.png" alt="马厩">
+                            马厩<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific ottomans">
+                        <input type="checkbox" id="build-Q-F-ottomans" value="Q-F-ottomans">
+                        <label for="build-Q-F-ottomans">
+                            <img src="https://data.aoe4world.com/images/buildings/military-school-1.png" alt="军事学校">
+                            军事学校<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="build-Q-W-russian" value="Q-W-russian">
+                        <label for="build-Q-W-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/hunting-cabin-1.png" alt="狩猎小屋">
+                            狩猎小屋<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="build-Q-Z-russian" value="Q-Z-russian">
+                        <label for="build-Q-Z-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/wooden-fortress-1.png" alt="木质要塞">
+                            木质要塞<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="build-Q-X-russian" value="Q-X-russian">
+                        <label for="build-Q-X-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-1.png" alt="硬木栅栏">
+                            硬木栅栏<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="build-Q-C-russian" value="Q-C-russian">
+                        <label for="build-Q-C-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-gate-1.png" alt="强化木墙门">
+                            强化木墙门<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-Q-W-sengoku" value="Q-W-sengoku">
+                        <label for="build-Q-W-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/matsuri-1.png" alt="祭典">
+                            祭典<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-Q-Q-sengoku" value="Q-Q-sengoku">
+                        <label for="build-Q-Q-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/farmhouse-1.png" alt="农舍">
+                            农舍<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-Q-R-sengoku" value="Q-R-sengoku">
+                        <label for="build-Q-R-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/forge-1.png" alt="锻造厂">
+                            锻造厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific tughlaq">
+                        <input type="checkbox" id="build-Q-W-tughlaq" value="Q-W-tughlaq">
+                        <label for="build-Q-W-tughlaq">
+                            <img src="https://data.aoe4world.com/images/units/worker-elephant-2.png" alt="工作大象">
+                            工作大象<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 时代II建筑 -->
+                <div class="age-buildings" id="age-W-buildings">
+                    <h4>时代II建筑</h4>
+                    <button class="select-all-btn" data-age="W">全选</button>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-Q" value="W-Q">
+                        <label for="build-W-Q">
+                            <img src="https://data.aoe4world.com/images/buildings/blacksmith-2.png" alt="铁匠铺">
+                            铁匠铺<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-S" value="W-S">
+                        <label for="build-W-S">
+                            <img src="https://data.aoe4world.com/images/buildings/stable-1.png" alt="马厩">
+                            马厩<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-W" value="W-W">
+                        <label for="build-W-W">
+                            <img src="https://data.aoe4world.com/images/buildings/market-2.png" alt="市场">
+                            市场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-Z" value="W-Z">
+                        <label for="build-W-Z">
+                            <img src="https://data.aoe4world.com/images/buildings/stone-wall-tower-2.png" alt="石墙塔">
+                            石墙塔<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-E" value="W-E">
+                        <label for="build-W-E">
+                            <img src="https://data.aoe4world.com/images/buildings/town-center-1.png" alt="城镇中心">
+                            城镇中心<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-X" value="W-X">
+                        <label for="build-W-X">
+                            <img src="https://data.aoe4world.com/images/buildings/stone-wall-2.png" alt="石墙">
+                            石墙<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-A" value="W-A">
+                        <label for="build-W-A">
+                            <img src="https://data.aoe4world.com/images/buildings/archery-range-2.png" alt="靶场">
+                            靶场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-W-C" value="W-C">
+                        <label for="build-W-C">
+                            <img src="https://data.aoe4world.com/images/buildings/stone-wall-gate-2.png" alt="石墙城门">
+                            石墙城门<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="build-W-D" value="W-D">
+                        <label for="build-W-D">
+                            <img src="https://data.aoe4world.com/images/buildings/mercenary-house-2.png" alt="雇佣兵之家">
+                            雇佣兵之家<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific chinese">
+                        <input type="checkbox" id="build-W-D-chinese" value="W-D-chinese">
+                        <label for="build-W-D-chinese">
+                            <img src="https://data.aoe4world.com/images/buildings/granary-1.png" alt="谷仓">
+                            谷仓<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific zhu">
+                        <input type="checkbox" id="build-W-D-zhu" value="W-D-zhu">
+                        <label for="build-W-D-zhu">
+                            <img src="https://data.aoe4world.com/images/buildings/granary-1.png" alt="谷仓">
+                            谷仓<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific lancaster">
+                        <input type="checkbox" id="build-W-D-lancaster" value="W-D-lancaster">
+                        <label for="build-W-D-lancaster">
+                            <img src="https://data.aoe4world.com/images/buildings/manor-2.png" alt="庄园">
+                            庄园<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific knights">
+                        <input type="checkbox" id="build-W-D-knights" value="W-D-knights">
+                        <label for="build-W-D-knights">
+                            <img src="https://data.aoe4world.com/images/buildings/fortress-2.png" alt="要塞">
+                            要塞<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific macedonian">
+                        <input type="checkbox" id="build-W-Q-macedonian" value="W-Q-macedonian">
+                        <label for="build-W-Q-macedonian">
+                            <img src="https://data.aoe4world.com/images/buildings/varangian-arsenal-2.png" alt="瓦兰吉兵工厂">
+                            瓦兰吉兵工厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific malians">
+                        <input type="checkbox" id="build-W-D-malians" value="W-D-malians">
+                        <label for="build-W-D-malians">
+                            <img src="https://data.aoe4world.com/images/buildings/cattle-ranch-2.png" alt="养牛场">
+                            养牛场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific tughlaq">
+                        <input type="checkbox" id="build-W-D-tughlaq" value="W-D-tughlaq">
+                        <label for="build-W-D-tughlaq">
+                            <img src="https://data.aoe4world.com/images/buildings/tughlaqabad-fort-2.png" alt="腾格拉卡巴德城堡">
+                            腾格拉卡巴德城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-W-V-sengoku" value="W-V">
+                        <label for="build-W-V-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/takeda-clan-daimyo-estate-2.png" alt="武田大名府邸">
+                            武田大名府邸<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-W-F-sengoku" value="W-F">
+                        <label for="build-W-F-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/oda-clan-daimyo-estate-2.png" alt="织田大名府邸">
+                            织田大名府邸<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-W-R-sengoku" value="W-R">
+                        <label for="build-W-R-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/hojo-clan-daimyo-estate-2.png" alt="北条大名府邸">
+                            北条大名府邸<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 时代III建筑 -->
+                <div class="age-buildings" id="age-E-buildings">
+                    <h4>时代III建筑</h4>
+                    <button class="select-all-btn" data-age="E">全选</button>
+
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-E-Q" value="E-Q">
+                        <label for="build-E-Q">
+                            <div class="monastery-images">
+                                <img src="https://data.aoe4world.com/images/buildings/monastery-3.png" alt="修道院" class="default-image">
+                                <div class="alternating-images" style="display: none;">
+                                    <img src="https://data.aoe4world.com/images/buildings/buddhist-temple-3.png" alt="佛教寺庙">
+                                    <img src="https://data.aoe4world.com/images/buildings/shinto-shrine-3.png" alt="神社">
+                                </div>
+                            </div>
+                            修道院<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-E-Q-sengoku" value="E-Q-sengoku">
+                        <label for="build-E-Q-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/buddhist-temple-3.png" alt="佛寺">
+                            佛寺<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-E-A" value="E-A">
+                        <label for="build-E-A">
+                            <img src="https://data.aoe4world.com/images/buildings/siege-workshop-3.png" alt="攻城武器厂">
+                            攻城武器厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-E-Z" value="E-Z">
+                        <label for="build-E-Z">
+                            <img src="https://data.aoe4world.com/images/buildings/keep-3.png" alt="城堡">
+                            城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific chinese">
+                        <input type="checkbox" id="build-E-S" value="E-S">
+                        <label for="build-E-S">
+                            <img src="https://data.aoe4world.com/images/buildings/pagoda-1.png" alt="宝塔">
+                            宝塔<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific zhu">
+                        <input type="checkbox" id="build-E-S-zhu" value="E-S-zhu">
+                        <label for="build-E-S-zhu">
+                            <img src="https://data.aoe4world.com/images/buildings/pagoda-1.png" alt="宝塔">
+                            宝塔<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 时代IV建筑 -->
+                <div class="age-buildings" id="age-R-buildings">
+                    <h4>时代IV建筑</h4>
+                    <button class="select-all-btn" data-age="R">全选</button>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="build-R-Q" value="R-Q">
+                        <label for="build-R-Q">
+                            <img src="https://data.aoe4world.com/images/buildings/university-4.png" alt="大学">
+                            大学<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific japanese">
+                        <input type="checkbox" id="build-R-A" value="R-A">
+                        <label for="build-R-A">
+                            <img src="https://data.aoe4world.com/images/buildings/castle-4.png" alt="城堡">
+                            城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="build-R-A-sengoku" value="R-A">
+                        <label for="build-R-A-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/castle-4.png" alt="城堡">
+                            城堡<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button id="confirm-selection-btn" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">全选</button>
+                    <button id="end-training-btn" style="background-color: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">结束训练</button>
+                </div>
+            </div>
+            <div class="game-area">
+                <div class="target" id="target"></div>
+                <div class="feedback" id="feedback"></div>
+                <div class="stats">
+                    <div>正确: <span id="correct">0</span></div>
+                    <div>错误: <span id="wrong">0</span></div>
+                    <div>时间: <span id="time">0</span>s</div>
+                    <div>进度: <span id="progress">0</span>/<span id="total-count">0</span></div>
+                </div>
+            </div>
+            <div class="key-list" id="key-list">
+                <h2>帝国时代4快捷键列表</h2>
+                
+                <h3>时代I 建筑 (按Q进入)</h3>
+                <ul>
+                    <li>Q - 房屋</li>
+                    <li>S - 兵营</li>
+                    <li>W - 磨坊</li>
+                    <li>D - 码头</li>
+                    <li>E - 伐木场</li>
+                    <li>Z - 哨站</li>
+                    <li>R - 采矿场</li>
+                    <li>X - 木栅栏</li>
+                    <li>A - 农田 (橄榄树林 - 拜占庭)</li>
+                    <li>F - 智慧宫 (黑衣大食, 阿尤布王朝) / 水池 (拜占庭) / 村庄 (中国) / 修道院 (德里苏丹)</li>
+                    <li>V - 水渠 (拜占庭)</li>
+                    <li>C - 木城门</li>
+                </ul>
+                
+                <h3>时代II 建筑 (按W进入)</h3>
+                <ul>
+                    <li>Q - 铁匠铺</li>
+                    <li>S - 马厩</li>
+                    <li>W - 市场</li>
+                    <li>Z - 石墙塔</li>
+                    <li>E - 城镇中心</li>
+                    <li>X - 石墙</li>
+                    <li>A - 靶场</li>
+                    <li>D - 雇佣兵之家 (拜占庭) / 谷仓 (中国) / 庄园 (兰开斯特王朝)</li>
+                    <li>C - 石墙城门</li>
+                </ul>
+                
+                <h3>时代III 建筑 (按E进入)</h3>
+                <ul>
+                    <li>Q - 修道院</li>
+                    <li>A - 攻城武器厂</li>
+                    <li>Z - 城堡</li>
+                    <li>S - 宝塔 (中国)</li>
+                </ul>
+                
+                <h3>时代IV 建筑 (按R进入)</h3>
+                <ul>
+                    <li>Q - 大学</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 训练模式内容 -->
+        <div id="train-mode" class="mode-content" style="display: none;">
+            <div class="controls">
+                <button id="train-start-btn">开始训练</button>
+                <button id="train-pause-btn" disabled>暂停</button>
+                <button id="train-reset-btn" disabled>重置</button>
+
+                <div class="count-selection">
+                    <label>训练次数：</label>
+                    <input type="number" id="train-training-count" min="1" max="100" value="10">
+                </div>
+            </div>
+            
+            <!-- 建筑选择区域 -->
+            <div class="building-selection">
+                <h3>建筑选择</h3>
+                
+                <!-- 时代I建筑 -->
+                <div class="age-buildings" id="train-age-Q-buildings" style="display: none;">
+                    <h4>时代I建筑</h4>
+                    <button class="select-all-btn" data-age="train-Q">全选</button>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-Q" value="Q-Q">
+                        <label for="train-build-Q-Q">
+                            <img src="https://data.aoe4world.com/images/buildings/house-1.png" alt="房屋">
+                            房屋<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific japanese">
+                        <input type="checkbox" id="train-build-Q-Q-japanese" value="Q-Q-japanese">
+                        <label for="train-build-Q-Q-japanese">
+                            <img src="https://data.aoe4world.com/images/buildings/farmhouse-1.png" alt="农舍">
+                            农舍<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-S" value="Q-S">
+                        <label for="train-build-Q-S">
+                            <img src="https://data.aoe4world.com/images/buildings/barracks-1.png" alt="兵营">
+                            兵营<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-W" value="Q-W">
+                        <label for="train-build-Q-W">
+                            <img src="https://data.aoe4world.com/images/buildings/mill-1.png" alt="磨坊">
+                            磨坊<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-D" value="Q-D">
+                        <label for="train-build-Q-D">
+                            <img src="https://data.aoe4world.com/images/buildings/dock-1.png" alt="码头">
+                            码头<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific knights">
+                        <input type="checkbox" id="train-build-Q-D-knights" value="Q-D-knights">
+                        <label for="train-build-Q-D-knights">
+                            <img src="https://data.aoe4world.com/images/buildings/dock-1.png" alt="巨港">
+                            巨港<br>
+                        </label>
+                    </div>
+
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-E" value="Q-E">
+                        <label for="train-build-Q-E">
+                            <img src="https://data.aoe4world.com/images/buildings/lumber-camp-1.png" alt="伐木场">
+                            伐木场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-Z" value="Q-Z">
+                        <label for="train-build-Q-Z">
+                            <img src="https://data.aoe4world.com/images/buildings/outpost-1.png" alt="哨站">
+                            哨站<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-R" value="Q-R">
+                        <label for="train-build-Q-R">
+                            <img src="https://data.aoe4world.com/images/buildings/mining-camp-1.png" alt="采矿场">
+                            采矿场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific japanese">
+                        <input type="checkbox" id="train-build-Q-R-japanese" value="Q-R-japanese">
+                        <label for="train-build-Q-R-japanese">
+                            <img src="https://data.aoe4world.com/images/buildings/forge-1.png" alt="锻造厂">
+                            锻造厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-X" value="Q-X">
+                        <label for="train-build-Q-X">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-1.png" alt="木栅栏">
+                            木栅栏<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-A" value="Q-A">
+                        <label for="train-build-Q-A">
+                            <img src="https://data.aoe4world.com/images/buildings/farm-1.png" alt="农田">
+                            农田<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific abbasid">
+                        <input type="checkbox" id="train-build-Q-F" value="Q-F">
+                        <label for="train-build-Q-F">
+                            <img src="https://data.aoe4world.com/images/buildings/house-of-wisdom-1.png" alt="智慧宫">
+                            智慧宫<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific ayyubid">
+                        <input type="checkbox" id="train-build-Q-F-ayyubid" value="Q-F-ayyubid">
+                        <label for="train-build-Q-F-ayyubid">
+                            <img src="https://data.aoe4world.com/images/buildings/house-of-wisdom-1.png" alt="智慧宫">
+                            智慧宫<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="train-build-Q-F-byzantine" value="Q-F-byzantine">
+                        <label for="train-build-Q-F-byzantine">
+                            <img src="https://data.aoe4world.com/images/buildings/cistern-1.png" alt="水池">
+                            水池<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="train-build-Q-V" value="Q-V">
+                        <label for="train-build-Q-V">
+                            <img src="https://data.aoe4world.com/images/buildings/aqueduct-1.png" alt="水渠">
+                            水渠<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="train-build-Q-A-byzantine" value="Q-A-byzantine">
+                        <label for="train-build-Q-A-byzantine">
+                            <img src="https://data.aoe4world.com/images/buildings/olive-grove-1.png" alt="橄榄树林">
+                            橄榄树林<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific chinese">
+                        <input type="checkbox" id="train-build-Q-F-chinese" value="Q-F-chinese">
+                        <label for="train-build-Q-F-chinese">
+                            <img src="https://data.aoe4world.com/images/buildings/village-1.png" alt="村庄">
+                            村庄<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific zhu">
+                        <input type="checkbox" id="train-build-Q-F-zhu" value="Q-F-zhu">
+                        <label for="train-build-Q-F-zhu">
+                            <img src="https://data.aoe4world.com/images/buildings/village-1.png" alt="村庄">
+                            村庄<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific delhi">
+                        <input type="checkbox" id="train-build-Q-F-delhi" value="Q-F-delhi">
+                        <label for="train-build-Q-F-delhi">
+                            <img src="https://data.aoe4world.com/images/buildings/monastery-3.png" alt="修道院">
+                            修道院<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-Q-C" value="Q-C">
+                        <label for="train-build-Q-C">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-gate-1.png" alt="木城门">
+                            木城门<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="train-build-Q-Q-goldenhorde" value="Q-Q-goldenhorde">
+                        <label for="train-build-Q-Q-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/relic-ovoo-1.png" alt="敖包">
+                            敖包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="train-build-Q-W-goldenhorde" value="Q-W-goldenhorde">
+                        <label for="train-build-Q-W-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/ger-1.png" alt="蒙古包">
+                            蒙古包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="train-build-Q-Z-goldenhorde" value="Q-Z-goldenhorde">
+                        <label for="train-build-Q-Z-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/fortified-outpost-1.png" alt="设防哨站">
+                            设防哨站<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="train-build-Q-A-goldenhorde" value="Q-A-goldenhorde">
+                        <label for="train-build-Q-A-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/stockyard-1.png" alt="牲畜围栏">
+                            牲畜围栏<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="train-build-Q-F-goldenhorde" value="Q-F-goldenhorde">
+                        <label for="train-build-Q-F-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/stable-1.png" alt="马厩">
+                            马厩<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific goldenhorde">
+                        <input type="checkbox" id="train-build-Q-V-goldenhorde" value="Q-V-goldenhorde">
+                        <label for="train-build-Q-V-goldenhorde">
+                            <img src="https://data.aoe4world.com/images/buildings/golden-tent-2.png" alt="黄金帐篷">
+                            黄金帐篷<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific macedonian">
+                        <input type="checkbox" id="train-build-Q-F-macedonian" value="Q-F-macedonian">
+                        <label for="train-build-Q-F-macedonian">
+                            <img src="https://data.aoe4world.com/images/buildings/varangian-warcamp-1.png" alt="瓦兰吉军营">
+                            瓦兰吉军营<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific macedonian">
+                        <input type="checkbox" id="train-build-Q-S-macedonian" value="Q-S-macedonian">
+                        <label for="train-build-Q-S-macedonian">
+                            <img src="https://data.aoe4world.com/images/buildings/varangian-stronghold-1.png" alt="瓦兰吉城堡">
+                            瓦兰吉城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific malians">
+                        <input type="checkbox" id="train-build-Q-F-malians" value="Q-F-malians">
+                        <label for="train-build-Q-F-malians">
+                            <img src="https://data.aoe4world.com/images/buildings/pit-mine-1.png" alt="露天矿区">
+                            露天矿区<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific malians">
+                        <input type="checkbox" id="train-build-Q-Z-malians" value="Q-Z-malians">
+                        <label for="train-build-Q-Z-malians">
+                            <img src="https://data.aoe4world.com/images/buildings/toll-outpost-1.png" alt="收费哨站">
+                            收费哨站<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="train-build-Q-A-mongol" value="Q-A-mongol">
+                        <label for="train-build-Q-A-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/pasture-1.png" alt="牧场">
+                            牧场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="train-build-Q-Q-mongol" value="Q-Q-mongol">
+                        <label for="train-build-Q-Q-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/ovoo-1.png" alt="敖包">
+                            敖包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="train-build-Q-W-mongol" value="Q-W-mongol">
+                        <label for="train-build-Q-W-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/ger-1.png" alt="蒙古包">
+                            蒙古包<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific mongol">
+                        <input type="checkbox" id="train-build-Q-F-mongol" value="Q-F-mongol">
+                        <label for="train-build-Q-F-mongol">
+                            <img src="https://data.aoe4world.com/images/buildings/stable-1.png" alt="马厩">
+                            马厩<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific ottomans">
+                        <input type="checkbox" id="train-build-Q-F-ottomans" value="Q-F-ottomans">
+                        <label for="train-build-Q-F-ottomans">
+                            <img src="https://data.aoe4world.com/images/buildings/military-school-1.png" alt="军事学校">
+                            军事学校<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="train-build-Q-W-russian" value="Q-W-russian">
+                        <label for="train-build-Q-W-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/hunting-cabin-1.png" alt="狩猎小屋">
+                            狩猎小屋<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="train-build-Q-Z-russian" value="Q-Z-russian">
+                        <label for="train-build-Q-Z-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/wooden-fortress-1.png" alt="木质要塞">
+                            木质要塞<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="train-build-Q-X-russian" value="Q-X-russian">
+                        <label for="train-build-Q-X-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-1.png" alt="硬木栅栏">
+                            硬木栅栏<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific russian">
+                        <input type="checkbox" id="train-build-Q-C-russian" value="Q-C-russian">
+                        <label for="train-build-Q-C-russian">
+                            <img src="https://data.aoe4world.com/images/buildings/palisade-gate-1.png" alt="强化木墙门">
+                            强化木墙门<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-Q-W-sengoku" value="Q-W-sengoku">
+                        <label for="train-build-Q-W-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/matsuri-1.png" alt="祭典">
+                            祭典<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-Q-Q-sengoku" value="Q-Q-sengoku">
+                        <label for="train-build-Q-Q-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/farmhouse-1.png" alt="农舍">
+                            农舍<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-Q-R-sengoku" value="Q-R-sengoku">
+                        <label for="train-build-Q-R-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/forge-1.png" alt="锻造厂">
+                            锻造厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific tughlaq">
+                        <input type="checkbox" id="train-build-Q-W-tughlaq" value="Q-W-tughlaq">
+                        <label for="train-build-Q-W-tughlaq">
+                            <img src="https://data.aoe4world.com/images/units/worker-elephant-2.png" alt="工作大象">
+                            工作大象<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 时代II建筑 -->
+                <div class="age-buildings" id="train-age-W-buildings" style="display: none;">
+                    <h4>时代II建筑</h4>
+                    <button class="select-all-btn" data-age="train-W">全选</button>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-Q" value="W-Q">
+                        <label for="train-build-W-Q">
+                            <img src="https://data.aoe4world.com/images/buildings/blacksmith-2.png" alt="铁匠铺">
+                            铁匠铺<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-S" value="W-S">
+                        <label for="train-build-W-S">
+                            <img src="https://data.aoe4world.com/images/buildings/stable-1.png" alt="马厩">
+                            马厩<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-W" value="W-W">
+                        <label for="train-build-W-W">
+                            <img src="https://data.aoe4world.com/images/buildings/market-2.png" alt="市场">
+                            市场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-Z" value="W-Z">
+                        <label for="train-build-W-Z">
+                            <img src="https://data.aoe4world.com/images/buildings/stone-wall-tower-2.png" alt="石墙塔">
+                            石墙塔<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-E" value="W-E">
+                        <label for="train-build-W-E">
+                            <img src="https://data.aoe4world.com/images/buildings/town-center-1.png" alt="城镇中心">
+                            城镇中心<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-X" value="W-X">
+                        <label for="train-build-W-X">
+                            <img src="https://data.aoe4world.com/images/buildings/stone-wall-2.png" alt="石墙">
+                            石墙<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-A" value="W-A">
+                        <label for="train-build-W-A">
+                            <img src="https://data.aoe4world.com/images/buildings/archery-range-2.png" alt="靶场">
+                            靶场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-W-C" value="W-C">
+                        <label for="train-build-W-C">
+                            <img src="https://data.aoe4world.com/images/buildings/stone-wall-gate-2.png" alt="石墙城门">
+                            石墙城门<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific byzantine">
+                        <input type="checkbox" id="train-build-W-D" value="W-D">
+                        <label for="train-build-W-D">
+                            <img src="https://data.aoe4world.com/images/buildings/mercenary-house-2.png" alt="雇佣兵之家">
+                            雇佣兵之家<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific chinese">
+                        <input type="checkbox" id="train-build-W-D-chinese" value="W-D-chinese">
+                        <label for="train-build-W-D-chinese">
+                            <img src="https://data.aoe4world.com/images/buildings/granary-1.png" alt="谷仓">
+                            谷仓<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific zhu">
+                        <input type="checkbox" id="train-build-W-D-zhu" value="W-D-zhu">
+                        <label for="train-build-W-D-zhu">
+                            <img src="https://data.aoe4world.com/images/buildings/granary-1.png" alt="谷仓">
+                            谷仓<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific lancaster">
+                        <input type="checkbox" id="train-build-W-D-lancaster" value="W-D-lancaster">
+                        <label for="train-build-W-D-lancaster">
+                            <img src="https://data.aoe4world.com/images/buildings/manor-2.png" alt="庄园">
+                            庄园<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific knights">
+                        <input type="checkbox" id="train-build-W-D-knights" value="W-D-knights">
+                        <label for="train-build-W-D-knights">
+                            <img src="https://data.aoe4world.com/images/buildings/fortress-2.png" alt="要塞">
+                            要塞<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific macedonian">
+                        <input type="checkbox" id="train-build-W-Q-macedonian" value="W-Q-macedonian">
+                        <label for="train-build-W-Q-macedonian">
+                            <img src="https://data.aoe4world.com/images/buildings/varangian-arsenal-2.png" alt="瓦兰吉兵工厂">
+                            瓦兰吉兵工厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific malians">
+                        <input type="checkbox" id="train-build-W-D-malians" value="W-D-malians">
+                        <label for="train-build-W-D-malians">
+                            <img src="https://data.aoe4world.com/images/buildings/cattle-ranch-2.png" alt="养牛场">
+                            养牛场<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific tughlaq">
+                        <input type="checkbox" id="train-build-W-D-tughlaq" value="W-D-tughlaq">
+                        <label for="train-build-W-D-tughlaq">
+                            <img src="https://data.aoe4world.com/images/buildings/tughlaqabad-fort-2.png" alt="腾格拉卡巴德城堡">
+                            腾格拉卡巴德城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-W-V-sengoku" value="W-V">
+                        <label for="train-build-W-V-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/takeda-clan-daimyo-estate-2.png" alt="武田大名府邸">
+                            武田大名府邸<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-W-F-sengoku" value="W-F">
+                        <label for="train-build-W-F-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/oda-clan-daimyo-estate-2.png" alt="织田大名府邸">
+                            织田大名府邸<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-W-R-sengoku" value="W-R">
+                        <label for="train-build-W-R-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/hojo-clan-daimyo-estate-2.png" alt="北条大名府邸">
+                            北条大名府邸<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 时代III建筑 -->
+                <div class="age-buildings" id="train-age-E-buildings" style="display: none;">
+                    <h4>时代III建筑</h4>
+                    <button class="select-all-btn" data-age="train-E">全选</button>
+
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-E-Q" value="E-Q">
+                        <label for="train-build-E-Q">
+                            <div class="monastery-images">
+                                <img src="https://data.aoe4world.com/images/buildings/monastery-3.png" alt="修道院" class="default-image">
+                                <div class="alternating-images" style="display: none;">
+                                    <img src="https://data.aoe4world.com/images/buildings/buddhist-temple-3.png" alt="佛教寺庙">
+                                    <img src="https://data.aoe4world.com/images/buildings/shinto-shrine-3.png" alt="神社">
+                                </div>
+                            </div>
+                            修道院<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-E-Q-sengoku" value="E-Q-sengoku">
+                        <label for="train-build-E-Q-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/buddhist-temple-3.png" alt="佛寺">
+                            佛寺<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-E-A" value="E-A">
+                        <label for="train-build-E-A">
+                            <img src="https://data.aoe4world.com/images/buildings/siege-workshop-3.png" alt="攻城武器厂">
+                            攻城武器厂<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-E-Z" value="E-Z">
+                        <label for="train-build-E-Z">
+                            <img src="https://data.aoe4world.com/images/buildings/keep-3.png" alt="城堡">
+                            城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific chinese">
+                        <input type="checkbox" id="train-build-E-S" value="E-S">
+                        <label for="train-build-E-S">
+                            <img src="https://data.aoe4world.com/images/buildings/pagoda-1.png" alt="宝塔">
+                            宝塔<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific zhu">
+                        <input type="checkbox" id="train-build-E-S-zhu" value="E-S-zhu">
+                        <label for="train-build-E-S-zhu">
+                            <img src="https://data.aoe4world.com/images/buildings/pagoda-1.png" alt="宝塔">
+                            宝塔<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 时代IV建筑 -->
+                <div class="age-buildings" id="train-age-R-buildings" style="display: none;">
+                    <h4>时代IV建筑</h4>
+                    <button class="select-all-btn" data-age="train-R">全选</button>
+                    <div class="building-checkbox">
+                        <input type="checkbox" id="train-build-R-Q" value="R-Q">
+                        <label for="train-build-R-Q">
+                            <img src="https://data.aoe4world.com/images/buildings/university-4.png" alt="大学">
+                            大学<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific japanese">
+                        <input type="checkbox" id="train-build-R-A" value="R-A">
+                        <label for="train-build-R-A">
+                            <img src="https://data.aoe4world.com/images/buildings/castle-4.png" alt="城堡">
+                            城堡<br>
+                        </label>
+                    </div>
+                    <div class="building-checkbox civ-specific sengoku">
+                        <input type="checkbox" id="train-build-R-A-sengoku" value="R-A">
+                        <label for="train-build-R-A-sengoku">
+                            <img src="https://data.aoe4world.com/images/buildings/castle-4.png" alt="城堡">
+                            城堡<br>
+                        </label>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button id="train-confirm-selection-btn" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">全选</button>
+                    <button id="train-end-training-btn" style="background-color: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">结束训练</button>
+                </div>
+            </div>
+            <div class="game-area">
+                <div class="target" id="train-target"></div>
+                <div class="feedback" id="train-feedback"></div>
+                <div class="stats">
+                    <div>正确: <span id="train-correct">0</span></div>
+                    <div>错误: <span id="train-wrong">0</span></div>
+                    <div>时间: <span id="train-time">0</span>s</div>
+                    <div>进度: <span id="train-progress">0</span>/<span id="train-total-count">0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script>
+// 帝国时代4快捷键映射
+const keyMappings = {
+    // 时代I 建筑 (按Q进入)
+    'Q-Q': '房屋',
+    'Q-S': '兵营',
+    'Q-W': '磨坊',
+    'Q-D': '码头',
+    'Q-E': '伐木场',
+    'Q-Z': '哨站',
+    'Q-R': '采矿场',
+    'Q-X': '木栅栏',
+    'Q-A': '农田',
+    'Q-A-byzantine': '橄榄树林', // 拜占庭
+    'Q-C': '木城门',
+    'Q-F': '智慧宫', // 黑衣大食
+    'Q-F-byzantine': '水池', // 拜占庭
+    'Q-F-chinese': '村庄', // 中国
+    'Q-F-zhu': '村庄', // 朱子遗训
+    'Q-F-ayyubid': '智慧宫', // 阿尤布王朝
+    'Q-F-delhi': '修道院', // 德里苏丹
+    'Q-F-ottomans': '军事学校', // 奥斯曼
+    'Q-V': '水渠', // 拜占庭
+    'Q-A-mongol': '牧场', // 蒙古
+    'Q-Q-mongol': '敖包', // 蒙古
+    'Q-W-mongol': '蒙古包', // 蒙古
+    'Q-F-mongol': '马厩', // 蒙古
+    'Q-Q-goldenhorde': '敖包', // 金帐汗国
+    'Q-W-goldenhorde': '蒙古包', // 金帐汗国
+    'Q-Z-goldenhorde': '设防哨站', // 金帐汗国
+    'Q-A-goldenhorde': '牲畜围栏', // 金帐汗国
+    'Q-F-goldenhorde': '马厩', // 金帐汗国
+    'Q-V-goldenhorde': '黄金帐篷', // 金帐汗国
+    'Q-W-tughlaq': '工作大象', // 图格鲁克王朝
+    'W-D-tughlaq': '腾格拉卡巴德城堡', // 图格鲁克王朝
+    'Q-Q-japanese': '农舍', // 日本
+    'Q-R-japanese': '锻造厂', // 日本
+    'Q-Q-sengoku': '农舍', // 战国大名
+    'Q-W-sengoku': '祭典', // 战国大名
+    'Q-R-sengoku': '锻造厂', // 战国大名
+    'Q-W-russian': '狩猎小屋', // 罗斯
+    'Q-Z-russian': '木质要塞', // 罗斯
+    'Q-X-russian': '硬木栅栏', // 罗斯
+    'Q-C-russian': '强化木墙门', // 罗斯
+    'E-Q-sengoku': '佛寺', // 战国大名
+    'Q-F-malians': '露天矿区', // 马里
+    'Q-Z-malians': '收费哨站', // 马里
+    'W-D-malians': '养牛场', // 马里
+    'Q-F-macedonian': '瓦兰吉军营', // 马其顿王朝
+    'Q-S-macedonian': '瓦兰吉城堡', // 马其顿王朝
+    'W-Q-macedonian': '瓦兰吉兵工厂', // 马其顿王朝
+    'Q-D-knights': '巨港', // 圣殿骑士团
+    'W-D-knights': '要塞', // 圣殿骑士团
+    'W-D-lancaster': '庄园', // 兰开斯特王朝
+    
+    // 时代II 建筑 (按W进入)
+    'W-Q': '铁匠铺',
+    'W-S': '马厩',
+    'W-W': '市场',
+    'W-Z': '石墙塔',
+    'W-E': '城镇中心',
+    'W-X': '石墙',
+    'W-A': '靶场',
+    'W-C': '石墙城门',
+    'W-D': '雇佣兵之家', // 拜占庭
+    'W-D-chinese': '谷仓', // 中国
+    'W-D-zhu': '谷仓', // 朱子遗训
+    'W-V': '武田大名府邸',
+    'W-F': '织田大名府邸',
+    'W-R': '北条大名府邸',
+    
+    // 时代III 建筑 (按E进入)
+    'E-Q': '修道院',
+    'E-A': '攻城武器厂',
+    'E-Z': '城堡',
+    'E-S': '宝塔', // 中国
+    'E-S-zhu': '宝塔', // 朱子遗训
+    
+    // 时代IV 建筑 (按R进入)
+    'R-Q': '大学',
+    'R-A': '城堡' // 日本
+};
+
+// 建筑图片URL映射
+const buildingImages = {
+    // 时代I 建筑
+    'Q-Q': 'https://data.aoe4world.com/images/buildings/house-1.png',
+    'Q-S': 'https://data.aoe4world.com/images/buildings/barracks-1.png',
+    'Q-W': 'https://data.aoe4world.com/images/buildings/mill-1.png',
+    'Q-D': 'https://data.aoe4world.com/images/buildings/dock-1.png',
+    'Q-E': 'https://data.aoe4world.com/images/buildings/lumber-camp-1.png',
+    'Q-Z': 'https://data.aoe4world.com/images/buildings/outpost-1.png',
+    'Q-R': 'https://data.aoe4world.com/images/buildings/mining-camp-1.png',
+    'Q-X': 'https://data.aoe4world.com/images/buildings/palisade-1.png',
+    'Q-A': 'https://data.aoe4world.com/images/buildings/farm-1.png',
+    'Q-A-byzantine': 'https://data.aoe4world.com/images/buildings/olive-grove-1.png', // 橄榄树林（拜占庭）
+    'Q-C': 'https://data.aoe4world.com/images/buildings/palisade-gate-1.png',
+    'Q-F': 'https://data.aoe4world.com/images/buildings/house-of-wisdom-1.png', // 智慧宫（黑衣大食、阿尤布王朝）
+    'Q-F-byzantine': 'https://data.aoe4world.com/images/buildings/cistern-1.png', // 水池（拜占庭）
+    'Q-F-chinese': 'https://data.aoe4world.com/images/buildings/village-1.png', // 村庄（中国）
+    'Q-F-zhu': 'https://data.aoe4world.com/images/buildings/village-1.png', // 村庄（朱子遗训）
+    'Q-F-ayyubid': 'https://data.aoe4world.com/images/buildings/house-of-wisdom-1.png', // 智慧宫（阿尤布王朝）
+    'Q-F-delhi': 'https://data.aoe4world.com/images/buildings/monastery-3.png', // 修道院（德里苏丹）
+    'Q-F-ottomans': 'https://data.aoe4world.com/images/buildings/military-school-1.png', // 军事学校（奥斯曼）
+    'Q-V': 'https://data.aoe4world.com/images/buildings/aqueduct-1.png', // 水渠（拜占庭）
+    'Q-A-mongol': 'https://data.aoe4world.com/images/buildings/pasture-1.png', // 牧场（蒙古）
+    'Q-Q-mongol': 'https://data.aoe4world.com/images/buildings/ovoo-1.png', // 敖包（蒙古）
+    'Q-W-mongol': 'https://data.aoe4world.com/images/buildings/ger-1.png', // 蒙古包（蒙古）
+    'Q-F-mongol': 'https://data.aoe4world.com/images/buildings/stable-1.png', // 马厩（蒙古）
+    'Q-Q-goldenhorde': 'https://data.aoe4world.com/images/buildings/relic-ovoo-1.png', // 敖包（金帐汗国）
+    'Q-W-goldenhorde': 'https://data.aoe4world.com/images/buildings/ger-1.png', // 蒙古包（金帐汗国）
+    'Q-Z-goldenhorde': 'https://data.aoe4world.com/images/buildings/fortified-outpost-1.png', // 设防哨站（金帐汗国）
+    'Q-A-goldenhorde': 'https://data.aoe4world.com/images/buildings/stockyard-1.png', // 牲畜围栏（金帐汗国）
+    'Q-F-goldenhorde': 'https://data.aoe4world.com/images/buildings/stable-1.png', // 马厩（金帐汗国）
+    'Q-V-goldenhorde': 'https://data.aoe4world.com/images/buildings/golden-tent-2.png', // 黄金帐篷（金帐汗国）
+    'Q-W-tughlaq': 'https://data.aoe4world.com/images/units/worker-elephant-2.png', // 工作大象（图格鲁克王朝）
+    'W-D-tughlaq': 'https://data.aoe4world.com/images/buildings/tughlaqabad-fort-2.png', // 腾格拉卡巴德城堡（图格鲁克王朝）
+    'Q-Q-japanese': 'https://data.aoe4world.com/images/buildings/farmhouse-1.png', // 农舍（日本）
+    'Q-R-japanese': 'https://data.aoe4world.com/images/buildings/forge-1.png', // 锻造厂（日本）
+    'Q-Q-sengoku': 'https://data.aoe4world.com/images/buildings/farmhouse-1.png', // 农舍（战国大名）
+    'Q-W-sengoku': 'https://data.aoe4world.com/images/buildings/matsuri-1.png', // 祭典（战国大名）
+    'Q-R-sengoku': 'https://data.aoe4world.com/images/buildings/forge-1.png', // 锻造厂（战国大名）
+    'Q-W-russian': 'https://data.aoe4world.com/images/buildings/hunting-cabin-1.png', // 狩猎小屋（罗斯）
+    'Q-Z-russian': 'https://data.aoe4world.com/images/buildings/wooden-fortress-1.png', // 木质要塞（罗斯）
+    'Q-X-russian': 'https://data.aoe4world.com/images/buildings/palisade-1.png', // 硬木栅栏（罗斯）
+    'Q-C-russian': 'https://data.aoe4world.com/images/buildings/palisade-gate-1.png', // 强化木墙门（罗斯）
+    'E-Q-sengoku': 'https://data.aoe4world.com/images/buildings/buddhist-temple-3.png', // 佛寺（战国大名）
+    'Q-F-malians': 'https://data.aoe4world.com/images/buildings/pit-mine-1.png', // 露天矿区（马里）
+    'Q-Z-malians': 'https://data.aoe4world.com/images/buildings/toll-outpost-1.png', // 收费哨站（马里）
+    'W-D-malians': 'https://data.aoe4world.com/images/buildings/cattle-ranch-2.png', // 养牛场（马里）
+    'Q-F-macedonian': 'https://data.aoe4world.com/images/buildings/varangian-warcamp-1.png', // 瓦兰吉军营（马其顿王朝）
+    'Q-S-macedonian': 'https://data.aoe4world.com/images/buildings/varangian-stronghold-1.png', // 瓦兰吉城堡（马其顿王朝）
+    'W-Q-macedonian': 'https://data.aoe4world.com/images/buildings/varangian-arsenal-2.png', // 瓦兰吉兵工厂（马其顿王朝）
+    'Q-D-knights': 'https://data.aoe4world.com/images/buildings/dock-1.png', // 巨港（圣殿骑士团）
+    'W-D-knights': 'https://data.aoe4world.com/images/buildings/fortress-2.png', // 要塞（圣殿骑士团）
+    'W-D-lancaster': 'https://data.aoe4world.com/images/buildings/manor-2.png', // 庄园（兰开斯特王朝）
+    
+    // 时代II 建筑
+    'W-Q': 'https://data.aoe4world.com/images/buildings/blacksmith-2.png',
+    'W-S': 'https://data.aoe4world.com/images/buildings/stable-1.png',
+    'W-W': 'https://data.aoe4world.com/images/buildings/market-2.png',
+    'W-Z': 'https://data.aoe4world.com/images/buildings/stone-wall-tower-2.png',
+    'W-E': 'https://data.aoe4world.com/images/buildings/town-center-1.png',
+    'W-X': 'https://data.aoe4world.com/images/buildings/stone-wall-2.png',
+    'W-A': 'https://data.aoe4world.com/images/buildings/archery-range-2.png',
+    'W-C': 'https://data.aoe4world.com/images/buildings/stone-wall-gate-2.png',
+    'W-D': 'https://data.aoe4world.com/images/buildings/mercenary-house-2.png', // 雇佣兵之家（拜占庭）
+    'W-D-chinese': 'https://data.aoe4world.com/images/buildings/granary-1.png', // 谷仓（中国）
+    'W-D-zhu': 'https://data.aoe4world.com/images/buildings/granary-1.png', // 谷仓（朱子遗训）
+    'W-V': 'https://data.aoe4world.com/images/buildings/takeda-clan-daimyo-estate-2.png',
+    'W-F': 'https://data.aoe4world.com/images/buildings/oda-clan-daimyo-estate-2.png',
+    'W-R': 'https://data.aoe4world.com/images/buildings/hojo-clan-daimyo-estate-2.png',
+    
+    // 时代III 建筑
+    'E-Q': 'https://data.aoe4world.com/images/buildings/monastery-3.png', // 默认修道院
+    'E-A': 'https://data.aoe4world.com/images/buildings/siege-workshop-3.png',
+    'E-Z': 'https://data.aoe4world.com/images/buildings/keep-3.png',
+    'E-S': 'https://data.aoe4world.com/images/buildings/pagoda-1.png', // 宝塔（中国）
+    'E-S-zhu': 'https://data.aoe4world.com/images/buildings/pagoda-1.png', // 宝塔（朱子遗训）
+    
+    // 时代IV 建筑
+    'R-Q': 'https://data.aoe4world.com/images/buildings/university-4.png',
+    'R-A': 'https://data.aoe4world.com/images/buildings/castle-4.png' // 城堡（日本）
+};
+
+// 游戏状态
+let gameState = {
+    isPlaying: false,
+    currentKey: null,
+    currentAge: null,
+    firstKey: null,
+    correct: 0,
+    wrong: 0,
+    time: 0,
+    timer: null,
+    difficulty: 'easy',
+    totalCount: 0,
+    currentCount: 0,
+    wrongAnswers: [], // 错题本，格式: [{ timestamp: 时间, errors: { 'key': { count: 次数, building: 建筑名 } } }]
+    currentWrongCount: 0, // 当前题目的连续错误次数
+    currentTrainingSession: null // 当前训练会话的时间戳
+};
+
+// DOM元素 - 文明选择
+let civElements;
+
+// DOM元素 - 模式选择
+let modeElements;
+
+// DOM元素 - 学习模式
+let learnElements;
+
+// DOM元素 - 训练模式
+let trainElements;
+
+// 当前活动的元素集合
+let activeElements;
+
+// 当前选择的文明
+let currentCiv = null;
+
+// 初始化函数
+function initKeyboardDisplay() {
+    // 不再需要初始化键盘显示
+}
+
+// 生成随机快捷键
+function generateRandomKey() {
+    // 获取选中的建筑
+    const selectedBuildings = getSelectedBuildings();
+    
+    // 如果没有选中任何建筑，默认选择所有可见的建筑
+    if (selectedBuildings.length === 0) {
+        // 获取所有可见的建筑
+        const visibleBuildings = [];
+        document.querySelectorAll(`.building-checkbox`).forEach(checkbox => {
+            if (checkbox.style.display !== 'none') {
+                const input = checkbox.querySelector('input[type="checkbox"]');
+                if (input) {
+                    visibleBuildings.push(input.value);
+                }
+            }
+        });
+        
+        // 如果没有符合条件的建筑，返回默认建筑
+        if (visibleBuildings.length === 0) {
+            return Object.keys(keyMappings)[Math.floor(Math.random() * Object.keys(keyMappings).length)];
+        } else {
+            return visibleBuildings[Math.floor(Math.random() * visibleBuildings.length)];
+        }
+    } else {
+        return selectedBuildings[Math.floor(Math.random() * selectedBuildings.length)];
+    }
+}
+
+// 获取选中的建筑
+function getSelectedBuildings() {
+    const selectedBuildings = [];
+    const isLearnMode = modeElements.learnMode.style.display === 'block';
+    const prefix = isLearnMode ? 'build-' : 'train-build-';
+    
+    // 只获取当前文明可见的建筑
+    document.querySelectorAll(`.building-checkbox`).forEach(checkbox => {
+        if (checkbox.style.display !== 'none') {
+            const input = checkbox.querySelector('input[type="checkbox"]');
+            if (input && input.checked) {
+                selectedBuildings.push(input.value);
+            }
+        }
+    });
+    
+    return selectedBuildings;
+}
+
+// 全选按钮功能
+function setupSelectAllButtons() {
+    // 学习模式和训练模式全选按钮
+    document.querySelectorAll('.select-all-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const age = this.getAttribute('data-age').replace('train-', '');
+            const isTrainMode = this.getAttribute('data-age').startsWith('train-');
+            const prefix = isTrainMode ? 'train-build-' : 'build-';
+            
+            // 检查当前时代是否所有建筑都已选中
+            const checkboxes = document.querySelectorAll(`[id^="${prefix}${age}-"]`);
+            let allChecked = true;
+            checkboxes.forEach(checkbox => {
+                if (!checkbox.checked) {
+                    allChecked = false;
+                }
+            });
+            
+            // 切换全选/取消全选状态
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !allChecked;
+            });
+        });
+    });
+}
+
+// 结束训练按钮功能
+function setupConfirmButtons() {
+    // 学习模式全选/取消全选按钮
+    document.getElementById('confirm-selection-btn').addEventListener('click', function() {
+        // 检查是否所有可见的建筑都已选中
+        let allChecked = true;
+        document.querySelectorAll('.building-checkbox').forEach(checkbox => {
+            if (checkbox.style.display !== 'none') {
+                const input = checkbox.querySelector('input[type="checkbox"]');
+                if (input && !input.checked) {
+                    allChecked = false;
+                }
+            }
+        });
+        
+        // 切换全选/取消全选状态
+        document.querySelectorAll('.building-checkbox').forEach(checkbox => {
+            if (checkbox.style.display !== 'none') {
+                const input = checkbox.querySelector('input[type="checkbox"]');
+                if (input) {
+                    input.checked = !allChecked;
+                }
+            }
+        });
+    });
+    
+    // 学习模式结束训练按钮
+    document.getElementById('end-training-btn').addEventListener('click', function() {
+        // 与重置按钮功能一样
+        resetGame();
+    });
+    
+    // 训练模式全选/取消全选按钮
+    document.getElementById('train-confirm-selection-btn').addEventListener('click', function() {
+        // 检查是否所有可见的建筑都已选中
+        let allChecked = true;
+        document.querySelectorAll('.building-checkbox').forEach(checkbox => {
+            if (checkbox.style.display !== 'none') {
+                const input = checkbox.querySelector('input[type="checkbox"]');
+                if (input && !input.checked) {
+                    allChecked = false;
+                }
+            }
+        });
+        
+        // 切换全选/取消全选状态
+        document.querySelectorAll('.building-checkbox').forEach(checkbox => {
+            if (checkbox.style.display !== 'none') {
+                const input = checkbox.querySelector('input[type="checkbox"]');
+                if (input) {
+                    input.checked = !allChecked;
+                }
+            }
+        });
+    });
+    
+    // 训练模式结束训练按钮
+    document.getElementById('train-end-training-btn').addEventListener('click', function() {
+        // 与重置按钮功能一样
+        resetGame();
+    });
+}
+
+// 更新目标显示
+function updateTarget() {
+    // 生成随机快捷键
+    gameState.currentKey = generateRandomKey();
+    
+    // 提取ageKey和funcKey，处理带有后缀的键值
+    const keyParts = gameState.currentKey.split('-');
+    const ageKey = keyParts[0];
+    const funcKey = keyParts[1]; // 忽略后缀部分
+    gameState.currentAge = ageKey;
+    gameState.currentWrongCount = 0; // 重置当前题目的连续错误次数
+    
+    // 获取时代名称
+    const ageNames = {
+        'Q': '时代I',
+        'W': '时代II',
+        'E': '时代III',
+        'R': '时代IV'
+    };
+    const ageName = ageNames[ageKey] || '';
+    
+    // 获取建筑信息
+    const buildingImage = buildingImages[gameState.currentKey] || '';
+    const buildingName = keyMappings[gameState.currentKey] || '';
+    
+    // 快速计算错误次数
+    let wrongCount = 0;
+    for (let i = 0; i < gameState.wrongAnswers.length; i++) {
+        const session = gameState.wrongAnswers[i];
+        if (session.errors[gameState.currentKey]) {
+            wrongCount += session.errors[gameState.currentKey].count;
+        }
+    }
+    
+    // 生成高亮样式
+    let highlightStyle = '';
+    let warningText = '';
+    if (wrongCount > 2) {
+        highlightStyle = 'border: 3px solid #ff4444; border-radius: 10px; padding: 10px; background-color: rgba(255, 68, 68, 0.1);';
+        warningText = `<div style="color: #ff4444; font-weight: bold; margin-top: 10px;">⚠️ 易错点</div>`;
+    } else if (wrongCount > 0) {
+        highlightStyle = 'border: 2px solid #ffaa00; border-radius: 8px; padding: 8px; background-color: rgba(255, 170, 0, 0.1);';
+        warningText = `<div style="color: #ffaa00; font-weight: bold; margin-top: 8px;">⚠️ 注意</div>`;
+    }
+    
+    // 检查当前模式
+    const isLearnMode = modeElements.learnMode.style.display === 'block';
+    
+    // 快速生成HTML
+    let targetHTML = '';
+    
+    // 日本修道院特殊处理
+    if (currentCiv === 'japanese' && gameState.currentKey === 'E-Q') {
+        if (isLearnMode) {
+            targetHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; ${highlightStyle};">
+                    <div style="position: relative; width: 100px; height: 100px;">
+                        <img src="https://data.aoe4world.com/images/buildings/buddhist-temple-3.png" alt="佛教寺庙" style="position: absolute; width: 100px; height: 100px; animation: blink 2s infinite;">
+                        <img src="https://data.aoe4world.com/images/buildings/shinto-shrine-3.png" alt="神社" style="position: absolute; width: 100px; height: 100px; animation: blink 2s infinite reverse;">
+                    </div>
+                    <div style="text-align: left;">
+                        <div>${ageName} (${ageKey}) → ${funcKey}</div>
+                        <div style="font-size: 32px; font-weight: bold;">${buildingName}</div>
+                        ${warningText}
+                    </div>
+                </div>
+                <style>
+                    @keyframes blink {
+                        0%, 100% { opacity: 1; }
+                        50% { opacity: 0; }
+                    }
+                </style>
+            `;
+        } else {
+            targetHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; ${highlightStyle};">
+                    <div style="position: relative; width: 120px; height: 120px;">
+                        <img src="https://data.aoe4world.com/images/buildings/buddhist-temple-3.png" alt="佛教寺庙" style="position: absolute; width: 120px; height: 120px; animation: blink 2s infinite;">
+                        <img src="https://data.aoe4world.com/images/buildings/shinto-shrine-3.png" alt="神社" style="position: absolute; width: 120px; height: 120px; animation: blink 2s infinite reverse;">
+                    </div>
+                    <div style="font-size: 36px; font-weight: bold;">${buildingName}</div>
+                </div>
+                <style>
+                    @keyframes blink {
+                        0%, 100% { opacity: 1; }
+                        50% { opacity: 0; }
+                    }
+                </style>
+            `;
+        }
+    } else {
+        if (isLearnMode) {
+            targetHTML = `
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; ${highlightStyle};">
+                    <img src="${buildingImage}" alt="${buildingName}" style="width: 100px; height: 100px;">
+                    <div style="text-align: left;">
+                        <div>${ageName} (${ageKey}) → ${funcKey}</div>
+                        <div style="font-size: 32px; font-weight: bold;">${buildingName}</div>
+                        ${warningText}
+                    </div>
+                </div>
+            `;
+        } else {
+            targetHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; ${highlightStyle};">
+                    <img src="${buildingImage}" alt="${buildingName}" style="width: 120px; height: 120px;">
+                    <div style="font-size: 36px; font-weight: bold;">${buildingName}</div>
+                </div>
+            `;
+        }
+    }
+    
+    // 一次性更新DOM
+    activeElements.target.innerHTML = targetHTML;
+}
+
+// 处理键盘按下
+function handleKeyDown(e) {
+    if (!gameState.isPlaying) return;
+    
+    const pressedKey = e.key.toUpperCase();
+    const isLearnMode = modeElements.learnMode.style.display === 'block';
+    const isTrainMode = modeElements.trainMode.style.display === 'block';
+    
+    if (!gameState.firstKey) {
+        // 第一次按键（时代键）
+        if (pressedKey === gameState.currentAge) {
+            gameState.firstKey = pressedKey;
+            
+            // 快速更新反馈
+            activeElements.feedback.textContent = isLearnMode ? `时代键正确: ${pressedKey}` : '正确!';
+            activeElements.feedback.className = 'feedback correct';
+        } else {
+            gameState.currentWrongCount++;
+            
+            // 检查是否连错三次
+            if (gameState.currentWrongCount >= 3) {
+                // 提取ageKey和funcKey
+                const keyParts = gameState.currentKey.split('-');
+                const ageKey = keyParts[0];
+                const funcKey = keyParts[1];
+                
+                // 更新反馈
+                activeElements.feedback.textContent = `正确按键：${ageKey} → ${funcKey}`;
+                activeElements.feedback.className = 'feedback wrong';
+                gameState.wrong++;
+                
+                // 记录错题（只在训练模式下）
+                if (isTrainMode && gameState.currentTrainingSession) {
+                    // 快速找到当前训练会话
+                    for (let i = 0; i < gameState.wrongAnswers.length; i++) {
+                        const session = gameState.wrongAnswers[i];
+                        if (session.timestamp === gameState.currentTrainingSession) {
+                            if (!session.errors[gameState.currentKey]) {
+                                session.errors[gameState.currentKey] = {
+                                    count: 1,
+                                    building: keyMappings[gameState.currentKey]
+                                };
+                            } else {
+                                session.errors[gameState.currentKey].count++;
+                            }
+                            break;
+                        }
+                    }
+                }
+                
+                // 等待用户下一次按键
+                document.addEventListener('keydown', function handleNextKey(e) {
+                    const nextKey = e.key.toUpperCase();
+                    if (nextKey === ageKey || nextKey === funcKey) {
+                        activeElements.feedback.textContent = '';
+                        activeElements.feedback.className = 'feedback';
+                        gameState.currentCount++;
+                        activeElements.progress.textContent = gameState.currentCount;
+                        
+                        // 检查是否达到训练次数
+                        if (gameState.currentCount >= gameState.totalCount) {
+                            activeElements.feedback.textContent = `训练完成! 共${gameState.totalCount}次`;
+                            activeElements.feedback.className = 'feedback correct';
+                            setTimeout(() => {
+                                resetGame();
+                            }, 2000);
+                        } else {
+                            updateTarget();
+                        }
+                        document.removeEventListener('keydown', handleNextKey);
+                    }
+                });
+            } else {
+                // 更新反馈
+                activeElements.feedback.textContent = isLearnMode ? `时代键错误，应为: ${gameState.currentAge}` : '错误!';
+                activeElements.feedback.className = 'feedback wrong';
+                gameState.wrong++;
+                
+                // 记录错题（只在训练模式下）
+                if (isTrainMode && gameState.currentTrainingSession) {
+                    // 快速找到当前训练会话
+                    for (let i = 0; i < gameState.wrongAnswers.length; i++) {
+                        const session = gameState.wrongAnswers[i];
+                        if (session.timestamp === gameState.currentTrainingSession) {
+                            if (!session.errors[gameState.currentKey]) {
+                                session.errors[gameState.currentKey] = {
+                                    count: 1,
+                                    building: keyMappings[gameState.currentKey]
+                                };
+                            } else {
+                                session.errors[gameState.currentKey].count++;
+                            }
+                            break;
+                        }
+                    }
+                }
+                
+                // 快速清除反馈
+                setTimeout(() => {
+                    activeElements.feedback.textContent = '';
+                    activeElements.feedback.className = 'feedback';
+                }, 500);
+            }
+        }
+    } else {
+        // 第二次按键（功能键）
+        const fullKey = `${gameState.firstKey}-${pressedKey}`;
+        
+        // 快速检查匹配
+        const isMatch = fullKey === gameState.currentKey || gameState.currentKey.startsWith(`${fullKey}-`);
+        
+        if (isMatch) {
+            // 快速更新反馈
+            activeElements.feedback.textContent = '完全正确!';
+            activeElements.feedback.className = 'feedback correct';
+            gameState.correct++;
+            gameState.currentCount++;
+            activeElements.progress.textContent = gameState.currentCount;
+            gameState.firstKey = null;
+            
+            // 快速更新错误记录
+            for (let i = 0; i < gameState.wrongAnswers.length; i++) {
+                const session = gameState.wrongAnswers[i];
+                if (session.errors[gameState.currentKey]) {
+                    session.errors[gameState.currentKey].count--;
+                    if (session.errors[gameState.currentKey].count <= 0) {
+                        delete session.errors[gameState.currentKey];
+                    }
+                }
+            }
+            
+            // 检查是否达到训练次数
+            if (gameState.currentCount >= gameState.totalCount) {
+                activeElements.feedback.textContent = `训练完成! 共${gameState.totalCount}次`;
+                activeElements.feedback.className = 'feedback correct';
+                setTimeout(() => {
+                    resetGame();
+                }, 2000);
+            } else {
+                updateTarget();
+            }
+        } else {
+            gameState.currentWrongCount++;
+            
+            // 检查是否连错三次
+            if (gameState.currentWrongCount >= 3) {
+                // 提取ageKey和funcKey
+                const keyParts = gameState.currentKey.split('-');
+                const ageKey = keyParts[0];
+                const funcKey = keyParts[1];
+                
+                // 更新反馈
+                activeElements.feedback.textContent = `正确按键：${ageKey} → ${funcKey}`;
+                activeElements.feedback.className = 'feedback wrong';
+                gameState.wrong++;
+                
+                // 记录错题（只在训练模式下）
+                if (isTrainMode && gameState.currentTrainingSession) {
+                    // 快速找到当前训练会话
+                    for (let i = 0; i < gameState.wrongAnswers.length; i++) {
+                        const session = gameState.wrongAnswers[i];
+                        if (session.timestamp === gameState.currentTrainingSession) {
+                            if (!session.errors[gameState.currentKey]) {
+                                session.errors[gameState.currentKey] = {
+                                    count: 1,
+                                    building: keyMappings[gameState.currentKey]
+                                };
+                            } else {
+                                session.errors[gameState.currentKey].count++;
+                            }
+                            break;
+                        }
+                    }
+                }
+                
+                // 等待用户下一次按键
+                document.addEventListener('keydown', function handleNextKey(e) {
+                    if (e.key.toUpperCase() === funcKey) {
+                        activeElements.feedback.textContent = '';
+                        activeElements.feedback.className = 'feedback';
+                        gameState.currentCount++;
+                        activeElements.progress.textContent = gameState.currentCount;
+                        gameState.firstKey = null;
+                        
+                        // 检查是否达到训练次数
+                        if (gameState.currentCount >= gameState.totalCount) {
+                            activeElements.feedback.textContent = `训练完成! 共${gameState.totalCount}次`;
+                            activeElements.feedback.className = 'feedback correct';
+                            setTimeout(() => {
+                                resetGame();
+                            }, 2000);
+                        } else {
+                            updateTarget();
+                        }
+                        document.removeEventListener('keydown', handleNextKey);
+                    }
+                });
+            } else {
+                // 更新反馈
+                activeElements.feedback.textContent = isLearnMode ? '功能键错误!' : '错误!';
+                activeElements.feedback.className = 'feedback wrong';
+                gameState.wrong++;
+                
+                // 记录错题（只在训练模式下）
+                if (isTrainMode && gameState.currentTrainingSession) {
+                    // 快速找到当前训练会话
+                    for (let i = 0; i < gameState.wrongAnswers.length; i++) {
+                        const session = gameState.wrongAnswers[i];
+                        if (session.timestamp === gameState.currentTrainingSession) {
+                            if (!session.errors[gameState.currentKey]) {
+                                session.errors[gameState.currentKey] = {
+                                    count: 1,
+                                    building: keyMappings[gameState.currentKey]
+                                };
+                            } else {
+                                session.errors[gameState.currentKey].count++;
+                            }
+                            break;
+                        }
+                    }
+                }
+                
+                gameState.firstKey = null;
+                
+                // 快速清除反馈
+                setTimeout(() => {
+                    activeElements.feedback.textContent = '';
+                    activeElements.feedback.className = 'feedback';
+                }, 500);
+            }
+        }
+    }
+}
+
+// 开始游戏
+function startGame() {
+    gameState.isPlaying = true;
+    gameState.totalCount = parseInt(activeElements.trainingCount.value) || 10;
+    gameState.currentCount = 0;
+    
+    // 检查是否是训练模式
+    const isTrainMode = modeElements.trainMode.style.display === 'block';
+    if (isTrainMode) {
+        // 创建新的训练会话
+        gameState.currentTrainingSession = new Date().toISOString();
+        gameState.wrongAnswers.push({
+            timestamp: gameState.currentTrainingSession,
+            errors: {}
+        });
+    }
+    
+    activeElements.startBtn.disabled = true;
+    activeElements.pauseBtn.disabled = false;
+    activeElements.resetBtn.disabled = false;
+    activeElements.trainingCount.disabled = true;
+    
+    // 更新训练次数显示
+    activeElements.totalCount.textContent = gameState.totalCount;
+    activeElements.progress.textContent = '0';
+    
+    updateTarget();
+    
+    // 滚动到游戏区域
+    const gameArea = document.querySelector('.game-area');
+    if (gameArea) {
+        gameArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    gameState.timer = setInterval(() => {
+        gameState.time++;
+        activeElements.time.textContent = gameState.time;
+    }, 1000);
+}
+
+// 暂停游戏
+function pauseGame() {
+    gameState.isPlaying = false;
+    
+    activeElements.startBtn.disabled = false;
+    activeElements.pauseBtn.disabled = true;
+    activeElements.resetBtn.disabled = false;
+    activeElements.trainingCount.disabled = false;
+    
+    clearInterval(gameState.timer);
+}
+
+// 重置游戏
+function resetGame() {
+    gameState.isPlaying = false;
+    gameState.currentKey = null;
+    gameState.currentAge = null;
+    gameState.firstKey = null;
+    gameState.correct = 0;
+    gameState.wrong = 0;
+    gameState.time = 0;
+    gameState.totalCount = 0;
+    gameState.currentCount = 0;
+    gameState.currentWrongCount = 0;
+    // 保留错题本数据
+    
+    clearInterval(gameState.timer);
+    
+    activeElements.startBtn.disabled = false;
+    activeElements.pauseBtn.disabled = true;
+    activeElements.resetBtn.disabled = true;
+    activeElements.trainingCount.disabled = false;
+    
+    activeElements.target.textContent = '';
+    activeElements.feedback.textContent = '';
+    activeElements.feedback.className = 'feedback';
+    activeElements.correct.textContent = '0';
+    activeElements.wrong.textContent = '0';
+    activeElements.time.textContent = '0';
+}
+
+// 事件监听器
+function setupEventListeners() {
+    // 页面加载时设置初始背景图片
+    function setInitialBackground() {
+        const initialBgUrl = 'https://www.ageofempires.com/wp-content/themes/ageOfEmpires/public/images/heros/age4-landinghero-desk.e1dec96816745ed2.webp';
+        let bgElement = document.querySelector('.civ-background');
+        if (!bgElement) {
+            bgElement = document.createElement('div');
+            bgElement.className = 'civ-background';
+            document.body.appendChild(bgElement);
+        }
+        bgElement.style.backgroundImage = `url(${initialBgUrl})`;
+    }
+    
+    // 调用设置初始背景图片的函数
+    setInitialBackground();
+    
+    // 文明选择按钮点击事件
+    civElements.civBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const civ = this.getAttribute('data-civ');
+            const bgUrl = this.getAttribute('data-bg');
+            currentCiv = civ;
+            
+            // 设置文明背景
+            let bgElement = document.querySelector('.civ-background');
+            if (!bgElement) {
+                bgElement = document.createElement('div');
+                bgElement.className = 'civ-background';
+                document.body.appendChild(bgElement);
+            }
+            bgElement.style.backgroundImage = `url(${bgUrl})`;
+            
+            // 显示/隐藏文明特定建筑
+            updateCivSpecificBuildings();
+            
+            // 隐藏文明选择页面，显示模式选择
+            civElements.civSelection.style.display = 'none';
+            civElements.modeSelector.style.display = 'flex';
+        });
+    });
+    
+    // 更新文明特定建筑的显示状态
+    function updateCivSpecificBuildings() {
+        // 1. 先隐藏所有建筑
+        document.querySelectorAll('.building-checkbox').forEach(el => {
+            el.style.display = 'none';
+        });
+        
+        // 2. 显示所有默认建筑（不包括带有civ-specific类的建筑）
+        let defaultBuildings = [
+            '#build-Q-Q', '#build-Q-W', '#build-Q-E', '#build-Q-R', '#build-Q-A', '#build-Q-S', '#build-Q-D', '#build-Q-Z', '#build-Q-X', '#build-Q-C',
+            '#build-W-Q', '#build-W-S', '#build-W-W', '#build-W-Z', '#build-W-E', '#build-W-X', '#build-W-A', '#build-W-C',
+            '#build-E-Q', '#build-E-A', '#build-E-Z',
+            '#build-R-Q',
+            '#train-build-Q-Q', '#train-build-Q-W', '#train-build-Q-E', '#train-build-Q-R', '#train-build-Q-A', '#train-build-Q-S', '#train-build-Q-D', '#train-build-Q-Z', '#train-build-Q-X', '#train-build-Q-C',
+            '#train-build-W-Q', '#train-build-W-S', '#train-build-W-W', '#train-build-W-Z', '#train-build-W-E', '#train-build-W-X', '#train-build-W-A', '#train-build-W-C',
+            '#train-build-E-Q', '#train-build-E-A', '#train-build-E-Z',
+            '#train-build-R-Q'
+        ];
+        
+        defaultBuildings.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                const buildingCheckbox = element.closest('.building-checkbox');
+                if (buildingCheckbox && !buildingCheckbox.classList.contains('civ-specific')) {
+                    buildingCheckbox.style.display = 'inline-block';
+                }
+            }
+        });
+        
+        // 显示所有时代
+        const ageLabels = ['#age-Q', '#age-W', '#age-E', '#age-R'];
+        ageLabels.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                const label = element.closest('label');
+                if (label) {
+                    label.style.display = 'inline-block';
+                }
+            }
+        });
+        
+        const ageBuildings = ['#age-Q-buildings', '#age-W-buildings', '#age-E-buildings', '#age-R-buildings'];
+        ageBuildings.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.style.display = 'block';
+            }
+        });
+        
+        const trainAgeLabels = ['#train-age-Q', '#train-age-W', '#train-age-E', '#train-age-R'];
+        trainAgeLabels.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                const label = element.closest('label');
+                if (label) {
+                    label.style.display = 'inline-block';
+                }
+            }
+        });
+        
+        const trainAgeBuildings = ['#train-age-Q-buildings', '#train-age-W-buildings', '#train-age-E-buildings', '#train-age-R-buildings'];
+        trainAgeBuildings.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.style.display = 'block';
+            }
+        });
+        
+        // 为其他文明显示默认的修道院图标
+        document.querySelectorAll('.monastery-images').forEach(el => {
+            const defaultImage = el.querySelector('.default-image');
+            const alternatingImages = el.querySelector('.alternating-images');
+            if (defaultImage) {
+                defaultImage.style.display = 'block';
+            }
+            if (alternatingImages) {
+                alternatingImages.style.display = 'none';
+            }
+        });
+        
+        // 3. 隐藏所有文明特定建筑
+        document.querySelectorAll('.civ-specific').forEach(el => {
+            el.style.display = 'none';
+        });
+        
+        // 4. 根据当前选择的文明隐藏需要隐藏的建筑
+        if (currentCiv) {
+            // 为拜占庭隐藏需要的建筑
+            if (currentCiv === 'byzantine') {
+                // 隐藏拜占庭的农田
+                document.querySelectorAll('[id^="build-Q-A"], [id^="train-build-Q-A"]').forEach(element => {
+                    const buildingCheckbox = element.closest('.building-checkbox');
+                    if (buildingCheckbox) {
+                        buildingCheckbox.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 为圣殿骑士团隐藏需要的建筑
+            if (currentCiv === 'knights') {
+                // 隐藏圣殿骑士团的码头、堡垒和伐木场
+                const knightsBuildings = [
+                    'build-Q-D', 'build-Q-E', 'build-E-Z',
+                    'train-build-Q-D', 'train-build-Q-E', 'train-build-E-Z'
+                ];
+                
+                knightsBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // 为马其顿王朝隐藏需要的建筑
+            if (currentCiv === 'macedonian') {
+                // 隐藏马其顿王朝的兵营、铁匠铺和大学
+                const macedonianBuildings = [
+                    'build-Q-S', 'build-W-Q', 'build-R-Q',
+                    'train-build-Q-S', 'train-build-W-Q', 'train-build-R-Q'
+                ];
+                
+                macedonianBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // 为马里隐藏需要的建筑
+            if (currentCiv === 'malians') {
+                // 隐藏马里的哨站
+                const maliansBuildings = [
+                    'build-Q-Z',
+                    'train-build-Q-Z'
+                ];
+                
+                maliansBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // 为蒙古隐藏需要的建筑
+            if (currentCiv === 'mongol') {
+                // 隐藏蒙古的房子、磨坊、伐木场、采矿场、农田、石塔、石墙、石门、堡垒、大学、木栅栏墙、木栅栏门、市场和智慧宫
+                const mongolBuildings = [
+                    'Q-Q', 'Q-W', 'Q-E', 'Q-R', 'Q-A', 'Q-F',
+                    'W-Z', 'W-X', 'W-C', 'W-W', 'E-Z', 'R-Q', 'Q-X', 'Q-C'
+                ];
+                
+                // 隐藏学习模式和训练模式的建筑
+                mongolBuildings.forEach(key => {
+                    // 学习模式建筑
+                    document.querySelectorAll('[id^="build-' + key + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                    
+                    // 训练模式建筑
+                    document.querySelectorAll('[id^="train-build-' + key + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+                
+                // 隐藏蒙古的第四时代
+                const ageRLabel = document.querySelector('#age-R');
+                if (ageRLabel) {
+                    const label = ageRLabel.closest('label');
+                    if (label) {
+                        label.style.display = 'none';
+                    }
+                }
+                
+                const ageRBuildings = document.querySelector('#age-R-buildings');
+                if (ageRBuildings) {
+                    ageRBuildings.style.display = 'none';
+                }
+                
+                const trainAgeRLabel = document.querySelector('#train-age-R');
+                if (trainAgeRLabel) {
+                    const label = trainAgeRLabel.closest('label');
+                    if (label) {
+                        label.style.display = 'none';
+                    }
+                }
+                
+                const trainAgeRBuildings = document.querySelector('#train-age-R-buildings');
+                if (trainAgeRBuildings) {
+                    trainAgeRBuildings.style.display = 'none';
+                }
+                
+                // 隐藏蒙古的马厩（从时代II移到时代I）
+                document.querySelectorAll('[id^="build-W-S"], [id^="train-build-W-S"]').forEach(element => {
+                    const buildingCheckbox = element.closest('.building-checkbox');
+                    if (buildingCheckbox) {
+                        buildingCheckbox.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 为罗斯隐藏需要的建筑
+            if (currentCiv === 'russian') {
+                // 隐藏罗斯的磨坊、哨站、木栅栏墙和木栅栏门
+                const russianBuildings = [
+                    'build-Q-W', 'build-Q-Z', 'build-Q-X', 'build-Q-C',
+                    'train-build-Q-W', 'train-build-Q-Z', 'train-build-Q-X', 'train-build-Q-C'
+                ];
+                
+                russianBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // 为日本隐藏需要的建筑
+            if (currentCiv === 'japanese') {
+                // 隐藏日本的房子、磨坊、采矿场、铁匠铺、堡垒
+                const japaneseBuildings = [
+                    'build-Q-Q', 'build-Q-W', 'build-Q-R', 'build-W-Q', 'build-E-Z',
+                    'train-build-Q-Q', 'train-build-Q-W', 'train-build-Q-R', 'train-build-W-Q', 'train-build-E-Z'
+                ];
+                
+                japaneseBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+                // 为日本显示交替的修道院图标
+                document.querySelectorAll('.monastery-images').forEach(el => {
+                    const defaultImage = el.querySelector('.default-image');
+                    const alternatingImages = el.querySelector('.alternating-images');
+                    if (defaultImage) {
+                        defaultImage.style.display = 'none';
+                    }
+                    if (alternatingImages) {
+                        alternatingImages.style.display = 'block';
+                    }
+                });
+            }
+            
+            // 为战国大名隐藏需要的建筑
+            if (currentCiv === 'sengoku') {
+                // 隐藏战国大名的房屋、磨坊、采矿场、市场、时代三城堡和修道院
+                const sengokuBuildings = [
+                    'build-Q-Q', 'build-Q-W', 'build-Q-R', 'build-W-W', 'build-E-Z', 'build-E-Q',
+                    'train-build-Q-Q', 'train-build-Q-W', 'train-build-Q-R', 'train-build-W-W', 'train-build-E-Z', 'train-build-E-Q'
+                ];
+                
+                sengokuBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // 为图格鲁克王朝隐藏需要的建筑
+            if (currentCiv === 'tughlaq') {
+                // 隐藏图格鲁克的磨坊、伐木场、采矿场和堡垒
+                const tughlaqBuildings = [
+                    'build-Q-W', 'build-Q-E', 'build-Q-R', 'build-E-Z',
+                    'train-build-Q-W', 'train-build-Q-E', 'train-build-Q-R', 'train-build-E-Z'
+                ];
+                
+                tughlaqBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+            }
+            
+            // 为金帐汗国隐藏需要的建筑
+            if (currentCiv === 'goldenhorde') {
+                // 隐藏金帐汗国的默认建筑
+                const goldenHordeBuildings = [
+                    'build-Q-Q', 'build-Q-W', 'build-Q-E', 'build-Q-R', 'build-Q-A',
+                    'build-W-Z', 'build-W-X', 'build-W-C', 'build-E-Z', 'build-R-Q', 'build-Q-Z',
+                    'train-build-Q-Q', 'train-build-Q-W', 'train-build-Q-E', 'train-build-Q-R', 'train-build-Q-A',
+                    'train-build-W-Z', 'train-build-W-X', 'train-build-W-C', 'train-build-E-Z', 'train-build-R-Q', 'train-build-Q-Z'
+                ];
+                
+                goldenHordeBuildings.forEach(prefix => {
+                    document.querySelectorAll('[id^="' + prefix + '"]').forEach(element => {
+                        const buildingCheckbox = element.closest('.building-checkbox');
+                        if (buildingCheckbox) {
+                            buildingCheckbox.style.display = 'none';
+                        }
+                    });
+                });
+                
+                // 隐藏金帐汗国的第四时代
+                const ageRLabel = document.querySelector('#age-R');
+                if (ageRLabel) {
+                    const label = ageRLabel.closest('label');
+                    if (label) {
+                        label.style.display = 'none';
+                    }
+                }
+                
+                const ageRBuildings = document.querySelector('#age-R-buildings');
+                if (ageRBuildings) {
+                    ageRBuildings.style.display = 'none';
+                }
+                
+                const trainAgeRLabel = document.querySelector('#train-age-R');
+                if (trainAgeRLabel) {
+                    const label = trainAgeRLabel.closest('label');
+                    if (label) {
+                        label.style.display = 'none';
+                    }
+                }
+                
+                const trainAgeRBuildings = document.querySelector('#train-age-R-buildings');
+                if (trainAgeRBuildings) {
+                    trainAgeRBuildings.style.display = 'none';
+                }
+                
+                // 隐藏金帐汗国的马厩（从时代II移到时代I）
+                document.querySelectorAll('[id^="build-W-S"], [id^="train-build-W-S"]').forEach(element => {
+                    const buildingCheckbox = element.closest('.building-checkbox');
+                    if (buildingCheckbox) {
+                        buildingCheckbox.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 为德里苏丹隐藏需要的建筑
+            if (currentCiv === 'delhi') {
+                // 隐藏德里苏丹的时代III修道院
+                document.querySelectorAll('[id^="build-E-Q"], [id^="train-build-E-Q"]').forEach(element => {
+                    const buildingCheckbox = element.closest('.building-checkbox');
+                    if (buildingCheckbox) {
+                        buildingCheckbox.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 5. 显示当前文明的特定建筑
+            document.querySelectorAll(`.civ-specific.${currentCiv}`).forEach(el => {
+                el.style.display = 'inline-block';
+            });
+            
+            // 特殊处理：阿尤布王朝也显示智慧宫
+            if (currentCiv === 'ayyubid') {
+                document.querySelectorAll('.civ-specific.ayyubid').forEach(el => {
+                    el.style.display = 'inline-block';
+                });
+            }
+        }
+    }
+    
+    // 重新选择文明按钮点击事件
+    function reselectCiv() {
+        // 显示文明选择页面
+        civElements.civSelection.style.display = 'block';
+        // 隐藏模式选择和学习/训练模式
+        civElements.modeSelector.style.display = 'none';
+        modeElements.learnMode.style.display = 'none';
+        modeElements.trainMode.style.display = 'none';
+        // 重置当前选择的文明
+        currentCiv = null;
+        // 隐藏所有文明特定建筑
+        updateCivSpecificBuildings();
+    }
+    
+    // 模式选择页面的重新选择文明按钮
+    civElements.reselectCivBtn.addEventListener('click', reselectCiv);
+    
+    // 错题本按钮点击事件
+    civElements.wrongAnswersBtn.addEventListener('click', showWrongAnswers);
+    
+    // 返回模式选择按钮点击事件
+    civElements.backToModeSelectBtn.addEventListener('click', () => {
+        document.getElementById('wrong-answers-page').style.display = 'none';
+        civElements.modeSelector.style.display = 'flex';
+    });
+    
+    // 清空错题记录按钮点击事件
+    civElements.clearWrongAnswersBtn.addEventListener('click', clearWrongAnswers);
+    
+    // 模式切换
+    modeElements.learnBtn.addEventListener('click', () => {
+        modeElements.learnMode.style.display = 'block';
+        modeElements.trainMode.style.display = 'none';
+        document.getElementById('wrong-answers-page').style.display = 'none';
+        activeElements = learnElements;
+    });
+    
+    modeElements.trainBtn.addEventListener('click', () => {
+        modeElements.learnMode.style.display = 'none';
+        modeElements.trainMode.style.display = 'block';
+        document.getElementById('wrong-answers-page').style.display = 'none';
+        activeElements = trainElements;
+    });
+    
+    // 学习模式控制
+    learnElements.startBtn.addEventListener('click', startGame);
+    learnElements.pauseBtn.addEventListener('click', pauseGame);
+    learnElements.resetBtn.addEventListener('click', resetGame);
+    
+    // 训练模式控制
+    trainElements.startBtn.addEventListener('click', startGame);
+    trainElements.pauseBtn.addEventListener('click', pauseGame);
+    trainElements.resetBtn.addEventListener('click', resetGame);
+    
+
+    
+    // 键盘事件
+    document.addEventListener('keydown', handleKeyDown);
+}
+
+// 显示错题本
+function showWrongAnswers() {
+    const wrongAnswersList = document.getElementById('wrong-answers-list');
+    
+    if (gameState.wrongAnswers.length === 0) {
+        wrongAnswersList.innerHTML = '<p>暂无错题记录</p>';
+    } else {
+        // 按时间倒序排序训练会话
+        const sortedSessions = [...gameState.wrongAnswers]
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        let html = '<h3>错题列表</h3>';
+        
+        sortedSessions.forEach((session, index) => {
+            const sessionTime = new Date(session.timestamp).toLocaleString();
+            const hasErrors = Object.keys(session.errors).length > 0;
+            
+            if (hasErrors) {
+                html += `<div style="margin-bottom: 20px; border: 1px solid #444; border-radius: 8px; padding: 15px;">`;
+                html += `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">`;
+                html += `<h4>训练会话 ${index + 1} (${sessionTime})</h4>`;
+                html += `<button onclick="clearSessionErrors(${index})" style="background-color: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">清空此会话</button>`;
+                html += `</div>`;
+                
+                html += '<table style="width: 100%; border-collapse: collapse; margin-top: 10px;">';
+                html += '<tr style="border-bottom: 1px solid #444;"><th style="text-align: left; padding: 8px;">建筑</th><th style="text-align: left; padding: 8px;">快捷键</th><th style="text-align: left; padding: 8px;">错误次数</th></tr>';
+                
+                Object.entries(session.errors).forEach(([key, data]) => {
+                    const [ageKey, funcKey] = key.split('-');
+                    html += `<tr style="border-bottom: 1px solid #333;">`;
+                    html += `<td style="padding: 8px;">${data.building}</td>`;
+                    html += `<td style="padding: 8px;">${ageKey} → ${funcKey}</td>`;
+                    html += `<td style="padding: 8px;">${data.count}</td>`;
+                    html += `</tr>`;
+                });
+                
+                html += '</table>';
+                html += '</div>';
+            }
+        });
+        
+        wrongAnswersList.innerHTML = html;
+    }
+    
+    // 显示错题本页面
+    civElements.modeSelector.style.display = 'none';
+    modeElements.learnMode.style.display = 'none';
+    modeElements.trainMode.style.display = 'none';
+    document.getElementById('wrong-answers-page').style.display = 'block';
+}
+
+// 清空单个训练会话的错题记录
+function clearSessionErrors(sessionIndex) {
+    // 直接删除整个会话，而不是只清空错误
+    gameState.wrongAnswers.splice(sessionIndex, 1);
+    showWrongAnswers();
+}
+
+// 清空错题记录
+function clearWrongAnswers() {
+    gameState.wrongAnswers = [];
+    showWrongAnswers();
+}
+
+// 初始化
+function init() {
+    // 在DOM加载完成后初始化元素
+    civElements = {
+        civSelection: document.getElementById('civ-selection'),
+        modeSelector: document.getElementById('mode-selector'),
+        civBtns: document.querySelectorAll('.civ-btn'),
+        reselectCivBtn: document.getElementById('reselect-civ-btn'),
+        wrongAnswersBtn: document.getElementById('wrong-answers-btn'),
+        backToModeSelectBtn: document.getElementById('back-to-mode-select-btn'),
+        clearWrongAnswersBtn: document.getElementById('clear-wrong-answers-btn')
+    };
+    
+    modeElements = {
+        learnBtn: document.getElementById('learn-btn'),
+        trainBtn: document.getElementById('train-btn'),
+        learnMode: document.getElementById('learn-mode'),
+        trainMode: document.getElementById('train-mode')
+    };
+    
+    // 学习模式元素
+    learnElements = {
+        startBtn: document.getElementById('start-btn'),
+        pauseBtn: document.getElementById('pause-btn'),
+        resetBtn: document.getElementById('reset-btn'),
+        trainingCount: document.getElementById('training-count'),
+        target: document.getElementById('target'),
+        feedback: document.getElementById('feedback'),
+        correct: document.getElementById('correct'),
+        wrong: document.getElementById('wrong'),
+        time: document.getElementById('time'),
+        progress: document.getElementById('progress'),
+        totalCount: document.getElementById('total-count')
+    };
+    
+    // 训练模式元素
+    trainElements = {
+        startBtn: document.getElementById('train-start-btn'),
+        pauseBtn: document.getElementById('train-pause-btn'),
+        resetBtn: document.getElementById('train-reset-btn'),
+        trainingCount: document.getElementById('train-training-count'),
+        target: document.getElementById('train-target'),
+        feedback: document.getElementById('train-feedback'),
+        correct: document.getElementById('train-correct'),
+        wrong: document.getElementById('train-wrong'),
+        time: document.getElementById('train-time'),
+        progress: document.getElementById('train-progress'),
+        totalCount: document.getElementById('train-total-count')
+    };
+    
+    initKeyboardDisplay();
+    setupEventListeners();
+    setupSelectAllButtons();
+    setupConfirmButtons();
+}
+
+// 启动应用
+window.addEventListener('DOMContentLoaded', init);
+
+// 全局函数，用于清空单个训练会话的错题记录
+window.clearSessionErrors = clearSessionErrors;
+</script>
+</body>
+</html>

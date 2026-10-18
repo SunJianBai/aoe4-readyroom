@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">AOEvillager 罗马数字 IV 图标</title>
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a3952"/>
+      <stop offset="1" stop-color="#071321"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8e1a4"/>
+      <stop offset="1" stop-color="#c49a53"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="248" height="248" rx="45" fill="url(#navy)"/>
+  <rect x="9" y="9" width="238" height="238" rx="40" fill="none" stroke="#d5b16d" stroke-width="7"/>
+  <path d="M48 72H100V92H84V166H100V186H48V166H64V92H48Z" fill="url(#gold)"/>
+  <path d="M105 72H131L157 155 183 72H209L170 186H144Z" fill="url(#gold)"/>
+</svg>
