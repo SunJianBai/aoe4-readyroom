@@ -19,7 +19,7 @@ OUTPUT = ROOT / "assets" / "practice"
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 DATA_PREFIX = "https://data.aoe4world.com/images/"
 GITHUB_PREFIX = "https://raw.githubusercontent.com/aoe4world/data/main/images/"
-CIV_NAME_CORRECTIONS = {"ayyubid": "阿尤布王朝"}
+CIV_NAME_CORRECTIONS = {"ayyubid": "阿尤布"}
 
 
 def object_entries(source: str, variable: str) -> dict[str, str]:
