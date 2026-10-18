@@ -19,6 +19,7 @@ OUTPUT = ROOT / "assets" / "practice"
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 DATA_PREFIX = "https://data.aoe4world.com/images/"
 GITHUB_PREFIX = "https://raw.githubusercontent.com/aoe4world/data/main/images/"
+CIV_NAME_CORRECTIONS = {"ayyubid": "阿尤布王朝"}
 
 
 def object_entries(source: str, variable: str) -> dict[str, str]:
@@ -66,7 +67,11 @@ def main(source_path: Path) -> None:
     for civ_id, icon_url, display_name in civ_matches:
         icon = f"civs/{civ_id}.png"
         fetch_png(icon_url, OUTPUT / icon)
-        civilizations.append({"id": civ_id, "name": display_name, "icon": icon})
+        civilizations.append({
+            "id": civ_id,
+            "name": CIV_NAME_CORRECTIONS.get(civ_id, display_name),
+            "icon": icon,
+        })
 
     buildings = []
     for classes, item_id, shortcut in item_matches:
