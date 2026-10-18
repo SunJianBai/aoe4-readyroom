@@ -18,9 +18,9 @@ from .ui import TrainingPage
 class ToolboxWindow(QMainWindow):
     TOOL_NAMES = ("自动训练村民工具", "快捷键练习")
 
-    def __init__(self, store: SettingsStore, practice_html: Path) -> None:
+    def __init__(self, store: SettingsStore, practice_assets: Path) -> None:
         super().__init__()
-        self._practice_html = practice_html
+        self._practice_assets = practice_assets
         self.setWindowTitle("帝国时代 4 工具箱")
         self.setMinimumSize(680, 670)
         screen = QApplication.primaryScreen()
@@ -161,15 +161,10 @@ class ToolboxWindow(QMainWindow):
             return
         from .practice import HotkeyPracticePage
 
-        self.practice = HotkeyPracticePage(self._practice_html)
+        self.practice = HotkeyPracticePage(self._practice_assets)
         self.pages.removeWidget(self._practice_slot)
         self._practice_slot.deleteLater()
         self.pages.insertWidget(1, self.practice)
-        self.practice.web.loadFinished.connect(self._focus_practice_if_active)
-
-    def _focus_practice_if_active(self, loaded: bool) -> None:
-        if loaded and self.pages.currentIndex() == 1 and self.practice is not None:
-            self.practice.activate()
 
     def _update_navigation(self, width: int) -> None:
         compact = width < 980

@@ -32,15 +32,15 @@ if errorlevel 1 goto :error
     --onefile ^
     --windowed ^
     --name AOE4Toolbox ^
-    --icon "assets\aoevillager.ico" ^
-    --add-data "assets\aoevillager.png;assets" ^
-    --add-data "web\hotkeys.html;web" ^
+    --icon "%~dp0assets\aoevillager.ico" ^
+    --add-data "%~dp0assets\aoevillager.png;assets" ^
+    --add-data "%~dp0assets\practice;assets\practice" ^
     --hidden-import pynput.keyboard._win32 ^
     --hidden-import pynput.mouse._win32 ^
     main.py
 if errorlevel 1 goto :error
 
-"%APP_PYTHON%" -c "from PyInstaller.archive.readers import CArchiveReader; import sys; names = CArchiveReader(sys.argv[1]).toc; bad = [name for name in names if name.lower().endswith('icuuc.dll')]; icon = any(name.replace('\\', '/').endswith('assets/aoevillager.png') for name in names); page = any(name.replace('\\', '/').endswith('web/hotkeys.html') for name in names); print('Unexpected bundled ICU DLL: ' + ', '.join(bad) if bad else 'Bundle DLL check passed'); print('Runtime icon asset bundled' if icon else 'Runtime icon asset missing'); print('Practice page bundled' if page else 'Practice page missing'); sys.exit(bool(bad) or not icon or not page)" "%~dp0dist\AOE4Toolbox.exe"
+"%APP_PYTHON%" scripts\verify_bundle.py "%~dp0dist\AOE4Toolbox.exe"
 if errorlevel 1 goto :error
 
 echo.

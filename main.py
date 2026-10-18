@@ -48,7 +48,7 @@ def main() -> int:
     app.setWindowIcon(icon)
     configure_logging()
     try:
-        window = ToolboxWindow(SettingsStore(), base / "web" / "hotkeys.html")
+        window = ToolboxWindow(SettingsStore(), base / "assets" / "practice")
         window.setWindowIcon(icon)
     except Exception as exc:
         logging.exception("Unable to initialize application")

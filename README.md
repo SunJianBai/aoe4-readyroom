@@ -24,7 +24,7 @@ Windows / AOE4 非官方工具箱。现在有两个子页面：“自动训练�
 
 ## 快捷键练习
 
-内置于 `web\hotkeys.html`，内容来自 `D:\Games\AOE4\aoe4-hotkeys-single.html` 的独立副本，原文件不修改。可选择文明，使用学习模式或训练模式练习建筑快捷键，并查看本次运行期间的错题。HTML、CSS 与 JavaScript 都随 EXE 打包；文明和建筑图片仍由原页面所引用的外部站点加载，因此显示图片需要联网。练习时请让练习页面保持焦点。离开该子页面时，正在进行的练习会暂停。
+原生 PyQt6 页面，不再使用 Qt WebEngine 或在运行时加载 HTML。练习内容从原始 `D:\Games\AOE4\aoe4-hotkeys-single.html` 迁移为 `assets\practice\catalog.json`；原文件不修改。页面可选择文明、学习模式或训练模式、练习次数与建筑，支持两键顺序输入、学习提示、进度统计和本次运行的错题本。离开练习子页面时自动暂停。文明和建筑图标都在 `assets\practice` 中，随单文件 EXE 打包；运行时不需要网络。图片来自原页面引用的 [AoE4 World 数据仓库](https://github.com/aoe4world/data)及文明图标地址；`scripts\import_hotkey_catalog.py` 是一次性数据迁移脚本，不参与运行。
 
 ## 使用前须知
 
@@ -37,4 +37,4 @@ Windows / AOE4 非官方工具箱。现在有两个子页面：“自动训练�
 
 ## 版本管理与构建产物
 
-Git 管理源码、练习页面、图标资源和启动/构建脚本。当前发布文件是 `dist\AOE4Toolbox.exe`；由于单文件程序较大，EXE、构建缓存、虚拟环境和自动生成的 `.spec` 文件不纳入 Git。需要重新构建时运行 `build_exe.bat`，它会按需重建虚拟环境和临时文件。
+Git 管理源码、练习数据、图标资源和启动/构建脚本。当前发布文件是 `dist\AOE4Toolbox.exe`；EXE、构建缓存、虚拟环境和自动生成的 `.spec` 文件不纳入 Git。需要重新构建时运行 `build_exe.bat`。

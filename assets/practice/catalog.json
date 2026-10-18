@@ -1,0 +1,620 @@
+{
+  "civilizations": [
+    {
+      "id": "abbasid",
+      "name": "黑衣大食",
+      "icon": "civs/abbasid.png"
+    },
+    {
+      "id": "ayyubid",
+      "name": "阿尤王朝",
+      "icon": "civs/ayyubid.png"
+    },
+    {
+      "id": "byzantine",
+      "name": "拜占庭",
+      "icon": "civs/byzantine.png"
+    },
+    {
+      "id": "chinese",
+      "name": "中国",
+      "icon": "civs/chinese.png"
+    },
+    {
+      "id": "delhi",
+      "name": "德里苏丹",
+      "icon": "civs/delhi.png"
+    },
+    {
+      "id": "english",
+      "name": "英格兰",
+      "icon": "civs/english.png"
+    },
+    {
+      "id": "french",
+      "name": "法兰西",
+      "icon": "civs/french.png"
+    },
+    {
+      "id": "goldenhorde",
+      "name": "金帐汗国",
+      "icon": "civs/goldenhorde.png"
+    },
+    {
+      "id": "holyroman",
+      "name": "神圣罗马帝国",
+      "icon": "civs/holyroman.png"
+    },
+    {
+      "id": "lancaster",
+      "name": "兰开斯特王朝",
+      "icon": "civs/lancaster.png"
+    },
+    {
+      "id": "japanese",
+      "name": "日本",
+      "icon": "civs/japanese.png"
+    },
+    {
+      "id": "jeannedarc",
+      "name": "圣女贞德",
+      "icon": "civs/jeannedarc.png"
+    },
+    {
+      "id": "knights",
+      "name": "圣殿骑士团",
+      "icon": "civs/knights.png"
+    },
+    {
+      "id": "macedonian",
+      "name": "马其顿王朝",
+      "icon": "civs/macedonian.png"
+    },
+    {
+      "id": "malians",
+      "name": "马里",
+      "icon": "civs/malians.png"
+    },
+    {
+      "id": "mongol",
+      "name": "蒙古",
+      "icon": "civs/mongol.png"
+    },
+    {
+      "id": "odyssey",
+      "name": "龙之骑士团",
+      "icon": "civs/odyssey.png"
+    },
+    {
+      "id": "ottomans",
+      "name": "奥斯曼",
+      "icon": "civs/ottomans.png"
+    },
+    {
+      "id": "russian",
+      "name": "罗斯",
+      "icon": "civs/russian.png"
+    },
+    {
+      "id": "sengoku",
+      "name": "战国大名",
+      "icon": "civs/sengoku.png"
+    },
+    {
+      "id": "tughlaq",
+      "name": "图格鲁克王朝",
+      "icon": "civs/tughlaq.png"
+    },
+    {
+      "id": "zhu",
+      "name": "朱子遗训",
+      "icon": "civs/zhu.png"
+    }
+  ],
+  "buildings": [
+    {
+      "id": "Q-Q",
+      "key": "Q-Q",
+      "name": "房屋",
+      "civ": null,
+      "icon": "buildings/house-1.png"
+    },
+    {
+      "id": "Q-Q-japanese",
+      "key": "Q-Q-japanese",
+      "name": "农舍",
+      "civ": "japanese",
+      "icon": "buildings/farmhouse-1.png"
+    },
+    {
+      "id": "Q-S",
+      "key": "Q-S",
+      "name": "兵营",
+      "civ": null,
+      "icon": "buildings/barracks-1.png"
+    },
+    {
+      "id": "Q-W",
+      "key": "Q-W",
+      "name": "磨坊",
+      "civ": null,
+      "icon": "buildings/mill-1.png"
+    },
+    {
+      "id": "Q-D",
+      "key": "Q-D",
+      "name": "码头",
+      "civ": null,
+      "icon": "buildings/dock-1.png"
+    },
+    {
+      "id": "Q-D-knights",
+      "key": "Q-D-knights",
+      "name": "巨港",
+      "civ": "knights",
+      "icon": "buildings/dock-1.png"
+    },
+    {
+      "id": "Q-E",
+      "key": "Q-E",
+      "name": "伐木场",
+      "civ": null,
+      "icon": "buildings/lumber-camp-1.png"
+    },
+    {
+      "id": "Q-Z",
+      "key": "Q-Z",
+      "name": "哨站",
+      "civ": null,
+      "icon": "buildings/outpost-1.png"
+    },
+    {
+      "id": "Q-R",
+      "key": "Q-R",
+      "name": "采矿场",
+      "civ": null,
+      "icon": "buildings/mining-camp-1.png"
+    },
+    {
+      "id": "Q-R-japanese",
+      "key": "Q-R-japanese",
+      "name": "锻造厂",
+      "civ": "japanese",
+      "icon": "buildings/forge-1.png"
+    },
+    {
+      "id": "Q-X",
+      "key": "Q-X",
+      "name": "木栅栏",
+      "civ": null,
+      "icon": "buildings/palisade-1.png"
+    },
+    {
+      "id": "Q-A",
+      "key": "Q-A",
+      "name": "农田",
+      "civ": null,
+      "icon": "buildings/farm-1.png"
+    },
+    {
+      "id": "Q-F",
+      "key": "Q-F",
+      "name": "智慧宫",
+      "civ": "abbasid",
+      "icon": "buildings/house-of-wisdom-1.png"
+    },
+    {
+      "id": "Q-F-ayyubid",
+      "key": "Q-F-ayyubid",
+      "name": "智慧宫",
+      "civ": "ayyubid",
+      "icon": "buildings/house-of-wisdom-1.png"
+    },
+    {
+      "id": "Q-F-byzantine",
+      "key": "Q-F-byzantine",
+      "name": "水池",
+      "civ": "byzantine",
+      "icon": "buildings/cistern-1.png"
+    },
+    {
+      "id": "Q-V",
+      "key": "Q-V",
+      "name": "水渠",
+      "civ": "byzantine",
+      "icon": "buildings/aqueduct-1.png"
+    },
+    {
+      "id": "Q-A-byzantine",
+      "key": "Q-A-byzantine",
+      "name": "橄榄树林",
+      "civ": "byzantine",
+      "icon": "buildings/olive-grove-1.png"
+    },
+    {
+      "id": "Q-F-chinese",
+      "key": "Q-F-chinese",
+      "name": "村庄",
+      "civ": "chinese",
+      "icon": "buildings/village-1.png"
+    },
+    {
+      "id": "Q-F-zhu",
+      "key": "Q-F-zhu",
+      "name": "村庄",
+      "civ": "zhu",
+      "icon": "buildings/village-1.png"
+    },
+    {
+      "id": "Q-F-delhi",
+      "key": "Q-F-delhi",
+      "name": "修道院",
+      "civ": "delhi",
+      "icon": "buildings/monastery-3.png"
+    },
+    {
+      "id": "Q-C",
+      "key": "Q-C",
+      "name": "木城门",
+      "civ": null,
+      "icon": "buildings/palisade-gate-1.png"
+    },
+    {
+      "id": "Q-Q-goldenhorde",
+      "key": "Q-Q-goldenhorde",
+      "name": "敖包",
+      "civ": "goldenhorde",
+      "icon": "buildings/relic-ovoo-1.png"
+    },
+    {
+      "id": "Q-W-goldenhorde",
+      "key": "Q-W-goldenhorde",
+      "name": "蒙古包",
+      "civ": "goldenhorde",
+      "icon": "buildings/ger-1.png"
+    },
+    {
+      "id": "Q-Z-goldenhorde",
+      "key": "Q-Z-goldenhorde",
+      "name": "设防哨站",
+      "civ": "goldenhorde",
+      "icon": "buildings/fortified-outpost-1.png"
+    },
+    {
+      "id": "Q-A-goldenhorde",
+      "key": "Q-A-goldenhorde",
+      "name": "牲畜围栏",
+      "civ": "goldenhorde",
+      "icon": "buildings/stockyard-1.png"
+    },
+    {
+      "id": "Q-F-goldenhorde",
+      "key": "Q-F-goldenhorde",
+      "name": "马厩",
+      "civ": "goldenhorde",
+      "icon": "buildings/stable-1.png"
+    },
+    {
+      "id": "Q-V-goldenhorde",
+      "key": "Q-V-goldenhorde",
+      "name": "黄金帐篷",
+      "civ": "goldenhorde",
+      "icon": "buildings/golden-tent-2.png"
+    },
+    {
+      "id": "Q-F-macedonian",
+      "key": "Q-F-macedonian",
+      "name": "瓦兰吉军营",
+      "civ": "macedonian",
+      "icon": "buildings/varangian-warcamp-1.png"
+    },
+    {
+      "id": "Q-S-macedonian",
+      "key": "Q-S-macedonian",
+      "name": "瓦兰吉城堡",
+      "civ": "macedonian",
+      "icon": "buildings/varangian-stronghold-1.png"
+    },
+    {
+      "id": "Q-F-malians",
+      "key": "Q-F-malians",
+      "name": "露天矿区",
+      "civ": "malians",
+      "icon": "buildings/pit-mine-1.png"
+    },
+    {
+      "id": "Q-Z-malians",
+      "key": "Q-Z-malians",
+      "name": "收费哨站",
+      "civ": "malians",
+      "icon": "buildings/toll-outpost-1.png"
+    },
+    {
+      "id": "Q-A-mongol",
+      "key": "Q-A-mongol",
+      "name": "牧场",
+      "civ": "mongol",
+      "icon": "buildings/pasture-1.png"
+    },
+    {
+      "id": "Q-Q-mongol",
+      "key": "Q-Q-mongol",
+      "name": "敖包",
+      "civ": "mongol",
+      "icon": "buildings/ovoo-1.png"
+    },
+    {
+      "id": "Q-W-mongol",
+      "key": "Q-W-mongol",
+      "name": "蒙古包",
+      "civ": "mongol",
+      "icon": "buildings/ger-1.png"
+    },
+    {
+      "id": "Q-F-mongol",
+      "key": "Q-F-mongol",
+      "name": "马厩",
+      "civ": "mongol",
+      "icon": "buildings/stable-1.png"
+    },
+    {
+      "id": "Q-F-ottomans",
+      "key": "Q-F-ottomans",
+      "name": "军事学校",
+      "civ": "ottomans",
+      "icon": "buildings/military-school-1.png"
+    },
+    {
+      "id": "Q-W-russian",
+      "key": "Q-W-russian",
+      "name": "狩猎小屋",
+      "civ": "russian",
+      "icon": "buildings/hunting-cabin-1.png"
+    },
+    {
+      "id": "Q-Z-russian",
+      "key": "Q-Z-russian",
+      "name": "木质要塞",
+      "civ": "russian",
+      "icon": "buildings/wooden-fortress-1.png"
+    },
+    {
+      "id": "Q-X-russian",
+      "key": "Q-X-russian",
+      "name": "硬木栅栏",
+      "civ": "russian",
+      "icon": "buildings/palisade-1.png"
+    },
+    {
+      "id": "Q-C-russian",
+      "key": "Q-C-russian",
+      "name": "强化木墙门",
+      "civ": "russian",
+      "icon": "buildings/palisade-gate-1.png"
+    },
+    {
+      "id": "Q-W-sengoku",
+      "key": "Q-W-sengoku",
+      "name": "祭典",
+      "civ": "sengoku",
+      "icon": "buildings/matsuri-1.png"
+    },
+    {
+      "id": "Q-Q-sengoku",
+      "key": "Q-Q-sengoku",
+      "name": "农舍",
+      "civ": "sengoku",
+      "icon": "buildings/farmhouse-1.png"
+    },
+    {
+      "id": "Q-R-sengoku",
+      "key": "Q-R-sengoku",
+      "name": "锻造厂",
+      "civ": "sengoku",
+      "icon": "buildings/forge-1.png"
+    },
+    {
+      "id": "Q-W-tughlaq",
+      "key": "Q-W-tughlaq",
+      "name": "工作大象",
+      "civ": "tughlaq",
+      "icon": "units/worker-elephant-2.png"
+    },
+    {
+      "id": "W-Q",
+      "key": "W-Q",
+      "name": "铁匠铺",
+      "civ": null,
+      "icon": "buildings/blacksmith-2.png"
+    },
+    {
+      "id": "W-S",
+      "key": "W-S",
+      "name": "马厩",
+      "civ": null,
+      "icon": "buildings/stable-1.png"
+    },
+    {
+      "id": "W-W",
+      "key": "W-W",
+      "name": "市场",
+      "civ": null,
+      "icon": "buildings/market-2.png"
+    },
+    {
+      "id": "W-Z",
+      "key": "W-Z",
+      "name": "石墙塔",
+      "civ": null,
+      "icon": "buildings/stone-wall-tower-2.png"
+    },
+    {
+      "id": "W-E",
+      "key": "W-E",
+      "name": "城镇中心",
+      "civ": null,
+      "icon": "buildings/town-center-1.png"
+    },
+    {
+      "id": "W-X",
+      "key": "W-X",
+      "name": "石墙",
+      "civ": null,
+      "icon": "buildings/stone-wall-2.png"
+    },
+    {
+      "id": "W-A",
+      "key": "W-A",
+      "name": "靶场",
+      "civ": null,
+      "icon": "buildings/archery-range-2.png"
+    },
+    {
+      "id": "W-C",
+      "key": "W-C",
+      "name": "石墙城门",
+      "civ": null,
+      "icon": "buildings/stone-wall-gate-2.png"
+    },
+    {
+      "id": "W-D",
+      "key": "W-D",
+      "name": "雇佣兵之家",
+      "civ": "byzantine",
+      "icon": "buildings/mercenary-house-2.png"
+    },
+    {
+      "id": "W-D-chinese",
+      "key": "W-D-chinese",
+      "name": "谷仓",
+      "civ": "chinese",
+      "icon": "buildings/granary-1.png"
+    },
+    {
+      "id": "W-D-zhu",
+      "key": "W-D-zhu",
+      "name": "谷仓",
+      "civ": "zhu",
+      "icon": "buildings/granary-1.png"
+    },
+    {
+      "id": "W-D-lancaster",
+      "key": "W-D-lancaster",
+      "name": "庄园",
+      "civ": "lancaster",
+      "icon": "buildings/manor-2.png"
+    },
+    {
+      "id": "W-D-knights",
+      "key": "W-D-knights",
+      "name": "要塞",
+      "civ": "knights",
+      "icon": "buildings/fortress-2.png"
+    },
+    {
+      "id": "W-Q-macedonian",
+      "key": "W-Q-macedonian",
+      "name": "瓦兰吉兵工厂",
+      "civ": "macedonian",
+      "icon": "buildings/varangian-arsenal-2.png"
+    },
+    {
+      "id": "W-D-malians",
+      "key": "W-D-malians",
+      "name": "养牛场",
+      "civ": "malians",
+      "icon": "buildings/cattle-ranch-2.png"
+    },
+    {
+      "id": "W-D-tughlaq",
+      "key": "W-D-tughlaq",
+      "name": "腾格拉卡巴德城堡",
+      "civ": "tughlaq",
+      "icon": "buildings/tughlaqabad-fort-2.png"
+    },
+    {
+      "id": "W-V-sengoku",
+      "key": "W-V",
+      "name": "武田大名府邸",
+      "civ": "sengoku",
+      "icon": "buildings/takeda-clan-daimyo-estate-2.png"
+    },
+    {
+      "id": "W-F-sengoku",
+      "key": "W-F",
+      "name": "织田大名府邸",
+      "civ": "sengoku",
+      "icon": "buildings/oda-clan-daimyo-estate-2.png"
+    },
+    {
+      "id": "W-R-sengoku",
+      "key": "W-R",
+      "name": "北条大名府邸",
+      "civ": "sengoku",
+      "icon": "buildings/hojo-clan-daimyo-estate-2.png"
+    },
+    {
+      "id": "E-Q",
+      "key": "E-Q",
+      "name": "修道院",
+      "civ": null,
+      "icon": "buildings/monastery-3.png"
+    },
+    {
+      "id": "E-Q-sengoku",
+      "key": "E-Q-sengoku",
+      "name": "佛寺",
+      "civ": "sengoku",
+      "icon": "buildings/buddhist-temple-3.png"
+    },
+    {
+      "id": "E-A",
+      "key": "E-A",
+      "name": "攻城武器厂",
+      "civ": null,
+      "icon": "buildings/siege-workshop-3.png"
+    },
+    {
+      "id": "E-Z",
+      "key": "E-Z",
+      "name": "城堡",
+      "civ": null,
+      "icon": "buildings/keep-3.png"
+    },
+    {
+      "id": "E-S",
+      "key": "E-S",
+      "name": "宝塔",
+      "civ": "chinese",
+      "icon": "buildings/pagoda-1.png"
+    },
+    {
+      "id": "E-S-zhu",
+      "key": "E-S-zhu",
+      "name": "宝塔",
+      "civ": "zhu",
+      "icon": "buildings/pagoda-1.png"
+    },
+    {
+      "id": "R-Q",
+      "key": "R-Q",
+      "name": "大学",
+      "civ": null,
+      "icon": "buildings/university-4.png"
+    },
+    {
+      "id": "R-A",
+      "key": "R-A",
+      "name": "城堡",
+      "civ": "japanese",
+      "icon": "buildings/castle-4.png"
+    },
+    {
+      "id": "R-A-sengoku",
+      "key": "R-A",
+      "name": "城堡",
+      "civ": "sengoku",
+      "icon": "buildings/castle-4.png"
+    }
+  ]
+}
