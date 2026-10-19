@@ -26,7 +26,7 @@ Windows 上的非官方《帝国时代 IV》辅助工具，包含“自动训练
 
 ## 快捷键练习
 
-原生 PyQt6 页面，不再使用 Qt WebEngine 或在运行时加载 HTML。练习内容从原始 `D:\Games\AOE4\aoe4-hotkeys-single.html` 迁移为 `assets\practice\catalog.json`；原文件不修改。首次进入先显示可搜索的文明旗帜网格，选定文明后进入练习，也可随时返回更换。练习页提供学习模式、训练模式、练习次数与建筑选择，支持两键顺序输入、学习提示、进度统计和本次运行的错题本。离开练习子页面时自动暂停。文明和建筑图标都随单文件 EXE 打包，运行时不需要网络；文明选择页复用开局流程的大幅旗帜素材。图片来自原页面引用的 [AoE4 World 数据仓库](https://github.com/aoe4world/data)及文明图标地址；`scripts\import_hotkey_catalog.py` 是一次性数据迁移脚本，不参与运行。
+原生 PyQt6 页面，不再使用 Qt WebEngine 或在运行时加载 HTML。练习内容从原始单文件练习页迁移为 `assets\practice\catalog.json`；原文件不修改。首次进入先显示可搜索的文明旗帜网格，选定文明后进入练习，也可随时返回更换。练习页提供学习模式、训练模式、练习次数与建筑选择，支持两键顺序输入、学习提示、进度统计和本次运行的错题本。离开练习子页面时自动暂停。文明和建筑图标都随单文件 EXE 打包，运行时不需要网络；文明选择页复用开局流程的大幅旗帜素材。图片来自原页面引用的 [AoE4 World 数据仓库](https://github.com/aoe4world/data)及文明图标地址；`scripts\import_hotkey_catalog.py` 是一次性数据迁移脚本，不参与运行。
 
 ## 开局流程
 
