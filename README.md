@@ -2,6 +2,8 @@
 
 Windows 上的非官方《帝国时代 IV》辅助工具，包含“自动训练村民工具”、“快捷键练习”、“开局流程”和“文明胜率”四个页面。宽窗口显示侧栏，窄窗口切换为顶部导航。源代码可双击 `start.bat` 运行（需要 Python）；无 Python 的电脑可运行 `dist\AOE4ReadyRoom.exe`。`build_exe.bat` 用于重新生成单文件 EXE。应用图标源文件在 `assets\aoevillager.svg`，构建时生成多尺寸 ICO，嵌入 EXE，并用作窗口与任务栏图标。
 
+开局流程原文及其作者信息来自 [AOE4 Guides 原网站](https://aoe4guides.com/)；应用内每篇流程均保留作者和原文链接。文明胜率来自 [AOE4 World](https://aoe4world.com/stats/rm_solo/matchups)。本项目与上述网站及《帝国时代 IV》官方均无关联。原站链接和署名仅用于标明来源，不代表第三方内容已获得开放再分发许可；详情见 [素材与数据说明](assets/guides/NOTICE.txt)。
+
 ## 自动训练村民工具
 
 此子页面保留简单模式、自定义模式、全局开关与悬浮窗。切换到“快捷键练习”时，会先停止自动训练、隐藏悬浮窗，并暂停自动训练的全局快捷键；返回时恢复悬浮窗和快捷键。
