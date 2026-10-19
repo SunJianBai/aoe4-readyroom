@@ -9,7 +9,7 @@ from pathlib import Path
 from PyQt6.QtCore import (
     QAbstractTableModel, QModelIndex, QRect, QSize, Qt, QThread, QTimer, QUrl, pyqtSignal,
 )
-from PyQt6.QtGui import QColor, QDesktopServices, QFont, QIcon, QPainter
+from PyQt6.QtGui import QColor, QDesktopServices, QFont, QFontMetrics, QIcon, QPainter
 from PyQt6.QtWidgets import (
     QAbstractItemView, QComboBox, QFrame, QHBoxLayout, QHeaderView, QLabel,
     QPushButton, QStyle, QStyledItemDelegate, QTabWidget, QTableView, QTableWidget,
@@ -27,25 +27,29 @@ STATS_STYLE = """
 QWidget#statsRoot { background:#1d2432; color:#e9ebee; }
 QFrame#statsPanel { background:#324156; border:1px solid #52627a; border-radius:8px; }
 QFrame#statsDetail { background:#253950; border:1px solid #8f794e; border-radius:7px; }
-QLabel#statsTitle { color:#e7c05e; font-size:19px; font-weight:700; }
-QLabel#statsMuted { color:#bfcbda; font-size:11px; }
-QLabel#statsValue { color:#f5dfa9; font-size:14px; font-weight:700; }
+QLabel#statsMuted { color:#bfcbda; font-size:10px; }
+QLabel#statsValue { color:#f5dfa9; font-size:11px; font-weight:700; }
 QComboBox { background:#233449; color:#f4e3bd; border:1px solid #8a7758;
-  border-radius:5px; min-height:27px; padding:4px 8px; }
+  border-radius:5px; min-height:23px; padding:2px 6px; }
 QComboBox QAbstractItemView { background:#26394d; color:#f4e3bd;
   selection-background-color:#826a45; }
 QPushButton#statsAction { background:#3b5169; color:#f5e2b0;
-  border:1px solid #a08859; border-radius:5px; min-height:27px; padding:4px 11px; }
+  border:1px solid #a08859; border-radius:5px; min-height:23px; padding:2px 8px; }
 QPushButton#statsAction:hover { background:#4b6480; border-color:#e7c05e; }
 QPushButton#statsAction:disabled { color:#8793a2; border-color:#536072; }
+QPushButton#statsMiniAction { background:#3b5169; color:#f5e2b0;
+  border:1px solid #a08859; border-radius:4px; min-height:20px;
+  padding:1px 6px; font-size:10px; }
+QPushButton#statsMiniAction:hover { background:#4b6480; border-color:#e7c05e; }
+QPushButton#statsMiniAction:disabled { color:#8793a2; border-color:#536072; }
 QTabWidget::pane { border:1px solid #4b5d75; border-radius:5px; background:#202d3e; }
-QTabBar::tab { background:#324156; color:#dbe2e9; padding:7px 16px;
-  border:1px solid #4b5d75; min-width:84px; }
+QTabBar::tab { background:#324156; color:#dbe2e9; padding:4px 10px;
+  border:1px solid #4b5d75; min-width:72px; }
 QTabBar::tab:selected { background:#d8b667; color:#14243a; font-weight:700; }
 QTableView, QTableWidget { background:#101b2a; alternate-background-color:#1c2b3d;
   color:#e7e9ec; gridline-color:#28374a; border:0; selection-background-color:#38546b; }
 QHeaderView::section { background:#26384e; color:#f2d187; border:1px solid #435670;
-  padding:5px; font-weight:600; }
+  padding:2px; font-weight:600; }
 QTableCornerButton::section { background:#26384e; border:1px solid #435670; }
 QToolTip { background:#173047; color:#f5dfa9; border:1px solid #c5a466; }
 """
@@ -97,7 +101,8 @@ class MatchupModel(QAbstractTableModel):
                 total = overall_excluding_mirrors(snapshot["matchups"], slug)
                 self.totals[slug] = total or (float(row["win_rate"]), int(row["games_count"]))
                 self.slugs.append(slug)
-            self.slugs.sort(key=lambda slug: self.totals[slug][0], reverse=True)
+            self.slugs.sort(key=lambda slug: (-self.totals[slug][0],
+                                             -self.totals[slug][1], _name(slug)))
         self.endResetModel()
 
     def rowCount(self, parent: QModelIndex = QModelIndex()) -> int:  # noqa: N802
@@ -146,7 +151,11 @@ class MatchupModel(QAbstractTableModel):
                    role: int = Qt.ItemDataRole.DisplayRole):  # noqa: N802
         if orientation == Qt.Orientation.Horizontal:
             if section == 0:
-                return "总体" if role == Qt.ItemDataRole.DisplayRole else None
+                if role == Qt.ItemDataRole.DisplayRole:
+                    return "总体"
+                if role == Qt.ItemDataRole.ToolTipRole:
+                    return "总体胜率（不含镜像对局）"
+                return None
             slug = self.slugs[section - 1] if section <= len(self.slugs) else ""
         else:
             slug = self.slugs[section] if section < len(self.slugs) else ""
@@ -171,25 +180,100 @@ class FlagHeader(QHeaderView):
     """Center flag-only headings while keeping full names in header tooltips."""
 
     def paintSection(self, painter: QPainter, rect: QRect, logical_index: int) -> None:  # noqa: N802
-        if self.orientation() == Qt.Orientation.Horizontal and logical_index == 0:
-            super().paintSection(painter, rect, logical_index)
-            return
         flag = self.model().headerData(
             logical_index, self.orientation(), Qt.ItemDataRole.DecorationRole
         )
-        if flag is None or flag.isNull():
-            super().paintSection(painter, rect, logical_index)
-            return
         painter.save()
         painter.fillRect(rect, QColor("#26384e"))
         painter.setPen(QColor("#435670"))
         painter.drawRect(rect.adjusted(0, 0, -1, -1))
-        painter.drawPixmap(
-            rect.left() + (rect.width() - flag.width()) // 2,
-            rect.top() + (rect.height() - flag.height()) // 2,
-            flag,
-        )
+        if flag is not None and not flag.isNull():
+            available = rect.size() - QSize(4, 3)
+            scaled = flag.scaled(available, Qt.AspectRatioMode.KeepAspectRatio,
+                                 Qt.TransformationMode.SmoothTransformation)
+            painter.drawPixmap(
+                rect.left() + (rect.width() - scaled.width()) // 2,
+                rect.top() + (rect.height() - scaled.height()) // 2,
+                scaled,
+            )
+        elif self.orientation() == Qt.Orientation.Horizontal and logical_index == 0:
+            font = QFont(painter.font())
+            font.setBold(True)
+            font.setPixelSize(min(12, max(8, rect.width() // 3)))
+            painter.setFont(font)
+            painter.setPen(QColor("#f2d187"))
+            painter.drawText(rect, Qt.AlignmentFlag.AlignCenter, "总体")
         painter.restore()
+
+
+class MatchupTableView(QTableView):
+    """Fit the entire matrix by default; Ctrl+wheel opts into scrollable zoom."""
+
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.zoom_factor = 1.0
+        self._fit_timer = QTimer(self)
+        self._fit_timer.setSingleShot(True)
+        self._fit_timer.timeout.connect(self.fit_grid)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
+    def schedule_fit(self) -> None:
+        self._fit_timer.start(0)
+
+    def resizeEvent(self, event) -> None:  # noqa: N802
+        super().resizeEvent(event)
+        self.schedule_fit()
+
+    def showEvent(self, event) -> None:  # noqa: N802
+        super().showEvent(event)
+        self.schedule_fit()
+
+    def wheelEvent(self, event) -> None:  # noqa: N802
+        if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
+            delta = event.angleDelta().y()
+            if delta:
+                self.set_zoom(self.zoom_factor * (1.15 if delta > 0 else 1 / 1.15))
+            event.accept()
+            return
+        super().wheelEvent(event)
+
+    def set_zoom(self, value: float) -> None:
+        self.zoom_factor = 1.0 if value <= 1.03 else min(3.0, value)
+        policy = (Qt.ScrollBarPolicy.ScrollBarAlwaysOff if self.zoom_factor == 1.0
+                  else Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.setHorizontalScrollBarPolicy(policy)
+        self.setVerticalScrollBarPolicy(policy)
+        if self.zoom_factor == 1.0:
+            self.horizontalScrollBar().setValue(0)
+            self.verticalScrollBar().setValue(0)
+        self.schedule_fit()
+
+    def fit_grid(self) -> None:
+        model = self.model()
+        if model is None or not model.rowCount():
+            return
+        columns, rows = model.columnCount(), model.rowCount()
+        self.verticalHeader().setFixedWidth(max(24, min(42, self.width() // 30)))
+        self.horizontalHeader().setFixedHeight(max(20, min(30, self.height() // 25)))
+        # Qt can finalize header geometry a few pixels after a resize event.
+        # Keep a small safety margin so the last row/column never gets clipped.
+        width = max(1, self.viewport().width() - 8)
+        height = max(1, self.viewport().height() - 8)
+        if self.zoom_factor == 1.0:
+            cell_width, extra_columns = divmod(width, columns)
+            cell_height, extra_rows = divmod(height, rows)
+            for column in range(columns):
+                self.setColumnWidth(column, cell_width + (column < extra_columns))
+            for row in range(rows):
+                self.setRowHeight(row, cell_height + (row < extra_rows))
+        else:
+            cell_width = max(18, round(width / columns * self.zoom_factor))
+            cell_height = max(12, round(height / rows * self.zoom_factor))
+            for column in range(columns):
+                self.setColumnWidth(column, cell_width)
+            for row in range(rows):
+                self.setRowHeight(row, cell_height)
 
 
 class MatchupDelegate(QStyledItemDelegate):
@@ -214,19 +298,30 @@ class MatchupDelegate(QStyledItemDelegate):
             painter.drawRect(rect.adjusted(0, 0, -1, -1))
         if low_sample and not mirror:
             foreground, secondary = "#d9c6a9", "#a79783"
-        top = QRect(rect.left(), rect.top() + 4, rect.width(), 20)
-        bottom = QRect(rect.left(), rect.top() + 24, rect.width(), 16)
+        show_games = rect.height() >= 16 and rect.width() >= 28
+        rate_text = f"{rate:.1f}%"
+        games_text = f"{games:,}"
         font = QFont(option.font)
         font.setBold(True)
-        font.setPointSize(9)
+        top_height = max(1, round(rect.height() * 0.56)) if show_games else rect.height()
+        font.setPixelSize(max(6, min(15, top_height - 1, rect.width() // 4)))
+        while font.pixelSize() > 5 and QFontMetrics(font).horizontalAdvance(rate_text) > rect.width() - 2:
+            font.setPixelSize(font.pixelSize() - 1)
         painter.setFont(font)
         painter.setPen(QColor(foreground))
-        painter.drawText(top, Qt.AlignmentFlag.AlignCenter, f"{rate:.1f}%")
-        font.setBold(False)
-        font.setPointSize(8)
-        painter.setFont(font)
-        painter.setPen(QColor(secondary))
-        painter.drawText(bottom, Qt.AlignmentFlag.AlignCenter, f"{games:,}")
+        painter.drawText(QRect(rect.left(), rect.top(), rect.width(), top_height),
+                         Qt.AlignmentFlag.AlignCenter, rate_text)
+        if show_games:
+            font.setBold(False)
+            font.setPixelSize(max(5, min(11, rect.height() - top_height - 1,
+                                         rect.width() // 5)))
+            while font.pixelSize() > 5 and QFontMetrics(font).horizontalAdvance(games_text) > rect.width() - 2:
+                font.setPixelSize(font.pixelSize() - 1)
+            painter.setFont(font)
+            painter.setPen(QColor(secondary))
+            painter.drawText(QRect(rect.left(), rect.top() + top_height,
+                                   rect.width(), rect.height() - top_height),
+                             Qt.AlignmentFlag.AlignCenter, games_text)
         painter.restore()
 
 
@@ -271,30 +366,14 @@ class StatsPage(QWidget):
 
     def _build_ui(self) -> None:
         root = QVBoxLayout(self)
-        root.setContentsMargins(6, 5, 6, 5)
-        root.setSpacing(8)
-        header = QFrame()
-        header.setObjectName("statsPanel")
-        header_row = QHBoxLayout(header)
-        title_box = QVBoxLayout()
-        title = QLabel("文明胜率 · 排位单挑")
-        title.setObjectName("statsTitle")
-        title_box.addWidget(title)
-        hint = QLabel("对阵格显示我方胜率与场次数；颜色仅表示高于或低于 50%，不代表文明强弱结论。")
-        hint.setObjectName("statsMuted")
-        hint.setWordWrap(True)
-        title_box.addWidget(hint)
-        header_row.addLayout(title_box, 1)
-        self.refresh_button = QPushButton("刷新数据")
-        self.refresh_button.setObjectName("statsAction")
-        self.refresh_button.clicked.connect(lambda: self._load_or_fetch(force=True))
-        header_row.addWidget(self.refresh_button)
-        root.addWidget(header)
+        root.setContentsMargins(4, 3, 4, 3)
+        root.setSpacing(5)
 
         controls = QFrame()
         controls.setObjectName("statsPanel")
         filter_row = QHBoxLayout(controls)
-        filter_row.setContentsMargins(10, 7, 10, 7)
+        filter_row.setContentsMargins(8, 4, 8, 4)
+        filter_row.setSpacing(5)
         self.patch_combo = self._combo([("当前补丁范围", ""), ("全部补丁", "any")])
         self.rank_combo = self._combo(RANK_LEVELS)
         self.rating_combo = self._combo(RATINGS)
@@ -302,6 +381,11 @@ class StatsPage(QWidget):
                              ("分数", self.rating_combo)):
             filter_row.addWidget(QLabel(label))
             filter_row.addWidget(combo, 1)
+        self.refresh_button = QPushButton("刷新")
+        self.refresh_button.setObjectName("statsAction")
+        self.refresh_button.setToolTip("重新获取当前筛选条件的公开统计")
+        self.refresh_button.clicked.connect(lambda: self._load_or_fetch(force=True))
+        filter_row.addWidget(self.refresh_button)
         self.patch_combo.currentIndexChanged.connect(self._filter_changed)
         self.rank_combo.currentIndexChanged.connect(self._rank_changed)
         self.rating_combo.currentIndexChanged.connect(self._rating_changed)
@@ -309,7 +393,7 @@ class StatsPage(QWidget):
 
         self.tabs = QTabWidget()
         self.matrix_model = MatchupModel(self.flags, self)
-        self.matrix = QTableView()
+        self.matrix = MatchupTableView()
         self.matrix.setModel(self.matrix_model)
         self.matrix.setHorizontalHeader(FlagHeader(Qt.Orientation.Horizontal, self.matrix))
         self.matrix.setVerticalHeader(FlagHeader(Qt.Orientation.Vertical, self.matrix))
@@ -317,18 +401,19 @@ class StatsPage(QWidget):
         self.matrix.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.matrix.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectItems)
         self.matrix.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-        self.matrix.verticalHeader().setDefaultSectionSize(46)
         self.matrix.verticalHeader().setDefaultAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.matrix.verticalHeader().setFixedWidth(42)
-        self.matrix.horizontalHeader().setDefaultSectionSize(70)
-        self.matrix.horizontalHeader().setMinimumSectionSize(66)
+        self.matrix.verticalHeader().setMinimumSectionSize(1)
+        self.matrix.horizontalHeader().setMinimumSectionSize(1)
+        self.matrix.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
         self.matrix.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
-        self.matrix.setColumnWidth(0, 76)
+        self.matrix.setWordWrap(False)
         self.matrix.clicked.connect(self._matrix_clicked)
         self.tabs.addTab(self.matrix, "对阵热力图")
 
         self.overview = QTableWidget(0, 5)
-        self.overview.setHorizontalHeaderLabels(("文明", "胜率（含镜像）", "选择率", "场次", "对局中位时长"))
+        self.overview.setHorizontalHeaderLabels(("文明", "胜率", "选择率", "场次", "对局中位时长"))
+        self.overview.horizontalHeaderItem(1).setToolTip("总体胜率（不含镜像），按此列从高到低排序")
+        self.overview.horizontalHeaderItem(3).setToolTip("不含镜像的对阵场次")
         self.overview.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.overview.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.overview.setIconSize(QSize(30, 20))
@@ -370,24 +455,39 @@ class StatsPage(QWidget):
         detail = QFrame()
         detail.setObjectName("statsDetail")
         detail_row = QHBoxLayout(detail)
-        self.detail_text = QLabel("选择文明或对阵格，查看对应统计。")
+        detail_row.setContentsMargins(8, 2, 8, 2)
+        detail_row.setSpacing(5)
+        self.detail_text = QLabel("点击国旗或对阵格查看统计")
         self.detail_text.setObjectName("statsValue")
-        self.detail_text.setWordWrap(True)
+        self.detail_text.setWordWrap(False)
+        self.detail_text.setMinimumWidth(0)
         detail_row.addWidget(self.detail_text, 1)
-        self.guides_button = QPushButton("查看该文明开局流程")
-        self.guides_button.setObjectName("statsAction")
+        self.guides_button = QPushButton("开局流程")
+        self.guides_button.setObjectName("statsMiniAction")
+        self.guides_button.setToolTip("查看当前文明的开局流程")
         self.guides_button.setEnabled(False)
         self.guides_button.clicked.connect(self._open_guides)
         detail_row.addWidget(self.guides_button)
-        source_button = QPushButton("在原站查看")
-        source_button.setObjectName("statsAction")
+        source_button = QPushButton("原站详情")
+        source_button.setObjectName("statsMiniAction")
+        source_button.setToolTip("在 AOE4 World 查看当前对阵")
         source_button.clicked.connect(self._open_source)
         detail_row.addWidget(source_button)
         root.addWidget(detail)
         self.status = QLabel("数据来源：AOE4 World · 首次打开将读取公开统计。")
         self.status.setObjectName("statsMuted")
-        self.status.setWordWrap(True)
+        self.status.setWordWrap(False)
+        self.status.setFixedHeight(16)
+        self.status.setToolTip(self.status.text())
         root.addWidget(self.status)
+
+    def _set_status(self, message: str) -> None:
+        self.status.setText(message)
+        self.status.setToolTip(message)
+
+    def _set_detail(self, message: str, full_message: str | None = None) -> None:
+        self.detail_text.setText(message)
+        self.detail_text.setToolTip(full_message or message)
 
     @staticmethod
     def _combo(items) -> QComboBox:
@@ -430,7 +530,7 @@ class StatsPage(QWidget):
             cached = self.store.load(filters)
         except StatsError as exc:
             cached = None
-            self.status.setText(str(exc))
+            self._set_status(str(exc))
         if cached:
             self._display(cached, stale=not is_fresh(cached))
         else:
@@ -443,7 +543,7 @@ class StatsPage(QWidget):
         self._start_worker(filters)
 
     def _start_worker(self, filters: StatsFilter) -> None:
-        self.status.setText("正在读取 AOE4 World 公开统计；旧缓存会保留到新数据完整返回…")
+        self._set_status("正在读取 AOE4 World 公开统计；旧缓存会保留到新数据完整返回…")
         self.refresh_button.setEnabled(False)
         self.worker = StatsWorker(self.store, filters, self)
         self.worker.result_ready.connect(self._result_ready)
@@ -458,11 +558,11 @@ class StatsPage(QWidget):
         else:
             if self.snapshot:
                 fetched = datetime.fromisoformat(self.snapshot["fetched_at"]).astimezone().strftime("%Y-%m-%d %H:%M")
-                self.status.setText(
+                self._set_status(
                     f"刷新失败：{error}。仍显示 {fetched} 抓取的本地缓存，数据可能已过时。"
                 )
             else:
-                self.status.setText(f"刷新失败：{error}。当前筛选无本地缓存。")
+                self._set_status(f"刷新失败：{error}。当前筛选无本地缓存。")
 
     def _worker_finished(self) -> None:
         if self.worker:
@@ -490,6 +590,7 @@ class StatsPage(QWidget):
     def _display(self, snapshot: dict | None, stale: bool = False) -> None:
         self.snapshot = snapshot
         self.matrix_model.set_snapshot(snapshot)
+        self.matrix.schedule_fit()
         self.overview.setRowCount(0)
         self.focused_table.setRowCount(0)
         if not snapshot:
@@ -498,7 +599,7 @@ class StatsPage(QWidget):
             self.civ_combo.blockSignals(False)
             self.selected_civ = ""
             self.selected_opponent = ""
-            self.detail_text.setText("当前筛选暂无本地数据，正在等待统计接口。")
+            self._set_detail("当前筛选暂无本地数据，正在等待统计接口。")
             self.guides_button.setEnabled(False)
             return
         self._patch_options(snapshot.get("patch", ""))
@@ -515,16 +616,16 @@ class StatsPage(QWidget):
         self._show_selection()
         fetched = datetime.fromisoformat(snapshot["fetched_at"]).astimezone().strftime("%Y-%m-%d %H:%M")
         marker = " · 离线历史缓存" if stale else ""
-        self.status.setText(
+        self._set_status(
             f"来源 AOE4 World · 排位单挑 · 补丁 {snapshot.get('patch') or '未标明'}"
             f" · 本机抓取 {fetched}{marker} · 低于 100 场的格子已弱化显示"
         )
 
     def _fill_overview(self, snapshot: dict) -> None:
-        rows = sorted(snapshot["civilizations"], key=lambda item: item["win_rate"], reverse=True)
-        self.overview.setRowCount(len(rows))
-        for position, row in enumerate(rows):
-            slug = row["civilization"]
+        by_slug = {row["civilization"]: row for row in snapshot["civilizations"]}
+        self.overview.setRowCount(len(self.matrix_model.slugs))
+        for position, slug in enumerate(self.matrix_model.slugs):
+            row = by_slug[slug]
             name = QTableWidgetItem("")
             name.setData(Qt.ItemDataRole.UserRole, slug)
             name.setToolTip(_name(slug))
@@ -533,9 +634,8 @@ class StatsPage(QWidget):
             if code:
                 name.setIcon(QIcon(str(self.flags / f"{code.lower()}-small.webp")))
             self.overview.setItem(position, 0, name)
-            rate = float(row["win_rate"])
+            rate, games = self.matrix_model.totals[slug]
             pick = float(row.get("pick_rate") or 0)
-            games = int(row["games_count"])
             duration = round(float(row.get("duration_median") or 0) / 60, 1)
             for column, item in enumerate((
                 _NumberItem(f"{rate:.1f}%", rate),
@@ -607,20 +707,25 @@ class StatsPage(QWidget):
             self.selected_opponent = ""
         self.guides_button.setEnabled(bool(WORLD_TO_CODE.get(slug)))
         if not slug or not self.snapshot:
-            self.detail_text.setText("选择文明或对阵格，查看对应统计。")
+            self._set_detail("点击国旗或对阵格查看统计")
             return
         if self.selected_opponent:
             row = self.matrix_model.cells.get((slug, self.selected_opponent))
             if row:
                 games = int(row["games_count"])
                 note = " · 样本较少" if games < 100 else ""
-                self.detail_text.setText(
-                    f"{_name(slug)} 对 {_name(self.selected_opponent)}  "
-                    f"{_percent(row['win_rate'])} · {games:,} 场{note}"
+                self._set_detail(
+                    f"{_name(slug)} vs {_name(self.selected_opponent)} · "
+                    f"{_percent(row['win_rate'])} · {games:,} 场{note}",
+                    f"{_name(slug)} 对 {_name(self.selected_opponent)}："
+                    f"我方胜率 {_percent(row['win_rate'])}，共 {games:,} 场{note}"
                 )
                 return
         rate, games = self.matrix_model.totals[slug]
-        self.detail_text.setText(f"{_name(slug)} 总体胜率（不含镜像） {_percent(rate)} · {games:,} 场")
+        self._set_detail(
+            f"{_name(slug)} · 总体 {_percent(rate)} · {games:,} 场",
+            f"{_name(slug)} 总体胜率（不含镜像） {_percent(rate)} · {games:,} 场",
+        )
 
     def _open_guides(self) -> None:
         code = WORLD_TO_CODE.get(self.selected_civ)

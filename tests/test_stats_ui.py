@@ -7,9 +7,11 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QPoint, QPointF, Qt
+from PyQt6.QtGui import QWheelEvent
 from PyQt6.QtWidgets import QApplication
 
+from aoevillager.stats_data import WORLD_TO_CODE
 from aoevillager.stats_ui import StatsPage
 from tests.test_stats_data import sample_snapshot
 
@@ -24,10 +26,17 @@ class StatsPageTests(unittest.TestCase):
             page = StatsPage(Path(folder))
             page.resize(1050, 700)
             page.show()
-            page._display(sample_snapshot())
+            snapshot = sample_snapshot()
+            # API's mirror-inclusive rates rank these in the opposite order.
+            snapshot["civilizations"][0]["win_rate"] = 42.0
+            snapshot["civilizations"][1]["win_rate"] = 58.0
+            page._display(snapshot)
             self.app.processEvents()
             self.assertEqual((page.matrix_model.rowCount(), page.matrix_model.columnCount()), (2, 3))
             self.assertEqual(page.overview.rowCount(), 2)
+            self.assertEqual(page.matrix_model.slugs, ["english", "french"])
+            self.assertEqual(page.overview.item(0, 0).data(Qt.ItemDataRole.UserRole), "english")
+            self.assertEqual(page.overview.item(0, 1).text(), "60.0%")
             row = page.matrix_model.slugs.index("english")
             column = page.matrix_model.slugs.index("french") + 1
             self.assertEqual(page.matrix_model.headerData(
@@ -62,6 +71,58 @@ class StatsPageTests(unittest.TestCase):
             page.rating_combo.setCurrentIndex(page.rating_combo.findData(">1200"))
             self.assertEqual(page._filters().rating, ">1200")
             self.assertEqual(page._filters().rank_level, "")
+            page.shutdown()
+            page.close()
+
+    def test_entire_matrix_fits_small_and_large_windows_without_scrollbars(self) -> None:
+        slugs = list(WORLD_TO_CODE)
+        snapshot = sample_snapshot()
+        snapshot["civilizations"] = [
+            {"civilization": slug, "win_rate": 50.0 + index / 10,
+             "pick_rate": 4.0, "games_count": 10000, "duration_median": 1200}
+            for index, slug in enumerate(slugs)
+        ]
+        snapshot["matchups"] = [
+            {"civilization": slug, "other_civilization": other,
+             "win_rate": 50.0, "win_count": 500,
+             "player_games_count": 1000, "games_count": 500}
+            for slug in slugs for other in slugs
+        ]
+        with tempfile.TemporaryDirectory() as folder:
+            page = StatsPage(Path(folder))
+            page.show()
+            page._display(snapshot)
+            for width, height in ((620, 450), (1200, 760)):
+                page.resize(width, height)
+                self.app.processEvents()
+                self.app.processEvents()
+                matrix = page.matrix
+                self.assertEqual(matrix.model().columnCount(), 24)
+                self.assertEqual(matrix.model().rowCount(), 23)
+                self.assertEqual(matrix.horizontalScrollBarPolicy(),
+                                 Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+                self.assertEqual(matrix.verticalScrollBarPolicy(),
+                                 Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+                self.assertLessEqual(sum(matrix.columnWidth(i) for i in range(24)),
+                                     matrix.viewport().width())
+                self.assertLessEqual(sum(matrix.rowHeight(i) for i in range(23)),
+                                     matrix.viewport().height())
+            wheel = QWheelEvent(
+                QPointF(10, 10), QPointF(10, 10), QPoint(0, 0), QPoint(0, 120),
+                Qt.MouseButton.NoButton, Qt.KeyboardModifier.ControlModifier,
+                Qt.ScrollPhase.ScrollUpdate, False,
+            )
+            matrix.wheelEvent(wheel)
+            self.app.processEvents()
+            self.assertGreater(matrix.zoom_factor, 1.0)
+            self.assertEqual(matrix.horizontalScrollBarPolicy(),
+                             Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+            self.assertGreater(sum(matrix.columnWidth(i) for i in range(24)),
+                               matrix.viewport().width())
+            matrix.set_zoom(1.0)
+            self.app.processEvents()
+            self.assertEqual(matrix.horizontalScrollBarPolicy(),
+                             Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
             page.shutdown()
             page.close()
 
