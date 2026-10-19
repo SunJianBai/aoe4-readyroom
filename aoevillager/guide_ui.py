@@ -1413,7 +1413,7 @@ class GuidePage(QWidget):
         dialog.resize(440, 210)
         layout = QVBoxLayout(dialog)
         notice = QLabel(
-            'Age of Empires IV © Microsoft Corporation. AOE4 Toolbox was created under '
+            'Age of Empires IV © Microsoft Corporation. AOE4 ReadyRoom was created under '
             'Microsoft\'s <a href="https://www.xbox.com/en-US/developers/rules">Game Content Usage Rules</a> '
             'using assets from Age of Empires IV, and it is not endorsed by or affiliated with Microsoft.'
             '<br><br>游戏图片和图标目录来自 '

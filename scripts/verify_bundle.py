@@ -52,5 +52,5 @@ def main(exe_path: Path) -> int:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        raise SystemExit("Usage: verify_bundle.py <AOE4Toolbox.exe>")
+        raise SystemExit("Usage: verify_bundle.py <AOE4ReadyRoom.exe>")
     raise SystemExit(main(Path(sys.argv[1])))

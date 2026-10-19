@@ -1,6 +1,6 @@
-# 帝国时代 4 工具箱
+# 帝国备战室 · AOE4 ReadyRoom
 
-Windows / AOE4 非官方工具箱。现在有四个子页面：“自动训练村民工具”、“快捷键练习”、“开局流程”和“文明胜率”；宽窗口显示侧栏，窄窗口切换为顶部导航。源代码可双击 `start.bat` 运行（需要 Python）；无 Python 的电脑可运行 `dist\AOE4Toolbox.exe`。`build_exe.bat` 用于重新生成单文件 EXE。应用图标源文件在 `assets\aoevillager.svg`，构建时生成多尺寸 ICO，嵌入 EXE，并用作窗口与任务栏图标。
+Windows 上的非官方《帝国时代 IV》辅助工具，包含“自动训练村民工具”、“快捷键练习”、“开局流程”和“文明胜率”四个页面。宽窗口显示侧栏，窄窗口切换为顶部导航。源代码可双击 `start.bat` 运行（需要 Python）；无 Python 的电脑可运行 `dist\AOE4ReadyRoom.exe`。`build_exe.bat` 用于重新生成单文件 EXE。应用图标源文件在 `assets\aoevillager.svg`，构建时生成多尺寸 ICO，嵌入 EXE，并用作窗口与任务栏图标。
 
 ## 自动训练村民工具
 
@@ -45,10 +45,10 @@ Windows / AOE4 非官方工具箱。现在有四个子页面：“自动训练�
 - 游戏窗口需处于前台，并在游戏里确认 `H`、`Q`、编队 0 的映射与你的设置一致。此工具只发送键盘事件，不读取游戏状态，也不会判断当前是否有足够资源训练村民。
 - 每轮执行期间会短暂屏蔽物理键盘和鼠标输入，防止真实输入插入按键序列。优先使用 Windows `BlockInput`，失败时使用低级键鼠钩子。若目标游戏以管理员权限运行，可能也需要以相同权限运行本工具。
 - `Ctrl+Alt+Delete` 等系统保留组合键无法模拟。运行前请保存其他工作；遇到键鼠无法响应时，可通过系统安全界面中断。
-- BAT 方式首次运行需联网安装依赖；单文件 EXE 不需要 Python。若 EXE 在目标电脑无法启动，请查看 `%LOCALAPPDATA%\AOEvillager\AOE4Toolbox\aoe4toolbox.log`（路径以系统实际 Qt 配置为准）。
+- BAT 方式首次运行需联网安装依赖；单文件 EXE 不需要 Python。若 EXE 在目标电脑无法启动，请查看 `%LOCALAPPDATA%\AOEvillager\AOE4Toolbox\aoe4toolbox.log`（为保留原有设置而沿用的内部路径，实际以系统 Qt 配置为准）。
 
 源代码来自原连点器的循环输入与键鼠屏蔽模块；新项目没有鼠标连点功能，也不会修改原连点器文件。
 
 ## 版本管理与构建产物
 
-Git 管理源码、练习数据、图标资源和启动/构建脚本。当前发布文件是 `dist\AOE4Toolbox.exe`；EXE、构建缓存、虚拟环境和自动生成的 `.spec` 文件不纳入 Git。需要重新构建时运行 `build_exe.bat`。
+Git 管理源码、练习数据、图标资源和启动/构建脚本。当前发布文件是 `dist\AOE4ReadyRoom.exe`；EXE、构建缓存、虚拟环境和自动生成的 `.spec` 文件不纳入 Git。需要重新构建时运行 `build_exe.bat`。

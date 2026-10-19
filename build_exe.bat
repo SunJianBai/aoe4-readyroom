@@ -4,7 +4,7 @@ cd /d "%~dp0"
 
 set "APP_PYTHON=.venv\Scripts\python.exe"
 if not exist "%APP_PYTHON%" (
-    echo [AOE4Toolbox] Creating Python environment...
+    echo [AOE4ReadyRoom] Creating Python environment...
     where.exe python >nul 2>&1
     if not errorlevel 1 (
         python -m venv .venv
@@ -16,11 +16,11 @@ if not exist "%APP_PYTHON%" (
     if errorlevel 1 goto :error
 )
 
-echo [AOE4Toolbox] Installing build dependencies...
+echo [AOE4ReadyRoom] Installing build dependencies...
 "%APP_PYTHON%" -m pip install --disable-pip-version-check -r requirements.txt "pyinstaller>=6,<7"
 if errorlevel 1 goto :error
 
-echo [AOE4Toolbox] Building single-file Windows executable...
+echo [AOE4ReadyRoom] Building single-file Windows executable...
 rem Isolate PATH so unrelated applications cannot leak incompatible Qt or ICU DLLs.
 set "PATH=%~dp0.venv\Scripts;%SystemRoot%\System32;%SystemRoot%"
 "%APP_PYTHON%" generate_icon.py
@@ -31,7 +31,7 @@ if errorlevel 1 goto :error
     --specpath "build" ^
     --onefile ^
     --windowed ^
-    --name AOE4Toolbox ^
+    --name AOE4ReadyRoom ^
     --icon "%~dp0assets\aoevillager.ico" ^
     --add-data "%~dp0assets\aoevillager.png;assets" ^
     --add-data "%~dp0assets\practice;assets\practice" ^
@@ -41,17 +41,17 @@ if errorlevel 1 goto :error
     main.py
 if errorlevel 1 goto :error
 
-"%APP_PYTHON%" scripts\verify_bundle.py "%~dp0dist\AOE4Toolbox.exe"
+"%APP_PYTHON%" scripts\verify_bundle.py "%~dp0dist\AOE4ReadyRoom.exe"
 if errorlevel 1 goto :error
 
 echo.
-echo Built: "%~dp0dist\AOE4Toolbox.exe"
+echo Built: "%~dp0dist\AOE4ReadyRoom.exe"
 pause
 exit /b 0
 
 :python_missing
 echo.
-echo Python is required only to build the EXE. You can run dist\AOE4Toolbox.exe directly without Python.
+echo Python is required only to build the EXE. You can run dist\AOE4ReadyRoom.exe directly without Python.
 pause
 exit /b 1
 

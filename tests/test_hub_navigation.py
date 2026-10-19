@@ -52,6 +52,7 @@ class NavigationTests(unittest.TestCase):
     def test_wide_shell_keeps_sidebar_when_opening_guides(self) -> None:
         with patch("aoevillager.hub.TrainingPage", _Training):
             window = ToolboxWindow(object(), Path("."))
+        self.assertEqual(window.windowTitle(), "帝国备战室")
         window._ensure_guides = lambda: None
         window.resize(1200, 800)
         window.show()

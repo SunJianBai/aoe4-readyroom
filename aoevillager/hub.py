@@ -21,7 +21,7 @@ class ToolboxWindow(QMainWindow):
     def __init__(self, store: SettingsStore, practice_assets: Path) -> None:
         super().__init__()
         self._practice_assets = practice_assets
-        self.setWindowTitle("帝国时代 4 工具箱")
+        self.setWindowTitle("帝国备战室")
         self.setMinimumSize(680, 670)
         screen = QApplication.primaryScreen()
         available = screen.availableGeometry() if screen else None
@@ -51,7 +51,7 @@ class ToolboxWindow(QMainWindow):
         header_row.addWidget(self.mark)
         header_copy = QVBoxLayout()
         header_copy.setSpacing(1)
-        title = QLabel("帝国时代 4 工具箱")
+        title = QLabel("帝国备战室")
         title.setObjectName("shellTitle")
         header_copy.addWidget(title)
         self.subtitle = QLabel("自动训练村民 · 快捷键练习 · 开局流程 · 文明胜率")

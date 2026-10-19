@@ -3,7 +3,7 @@ asset library (https://github.com/jensbuehl/aoe4-guides, public/assets/).
 The site's software license does not cover its visual assets. This free,
 noncommercial fan tool does not claim ownership of those assets.
 
-Age of Empires IV © Microsoft Corporation. AOE4 Toolbox was created under
+Age of Empires IV © Microsoft Corporation. AOE4 ReadyRoom was created under
 Microsoft's "Game Content Usage Rules" using assets from Age of Empires IV,
 and it is not endorsed by or affiliated with Microsoft.
 https://www.xbox.com/en-US/developers/rules

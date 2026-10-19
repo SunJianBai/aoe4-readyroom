@@ -4,7 +4,7 @@ cd /d "%~dp0"
 
 set "APP_PYTHON=.venv\Scripts\python.exe"
 if not exist "%APP_PYTHON%" (
-    echo [AOE4Toolbox] Creating Python environment...
+    echo [AOE4ReadyRoom] Creating Python environment...
     where.exe python >nul 2>&1
     if not errorlevel 1 (
         python -m venv .venv
@@ -26,7 +26,7 @@ exit /b %errorlevel%
 
 :python_missing
 echo.
-echo Python is required for start.bat. You can run dist\AOE4Toolbox.exe directly without Python.
+echo Python is required for start.bat. You can run dist\AOE4ReadyRoom.exe directly without Python.
 pause
 exit /b 1
 

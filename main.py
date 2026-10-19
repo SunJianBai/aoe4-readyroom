@@ -42,7 +42,7 @@ def main() -> int:
     app = QApplication(sys.argv)
     app.setOrganizationName("AOEvillager")
     app.setApplicationName("AOE4Toolbox")
-    app.setApplicationDisplayName("帝国时代 4 工具箱")
+    app.setApplicationDisplayName("帝国备战室")
     base = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
     icon = QIcon(str(base / "assets" / "aoevillager.png"))
     app.setWindowIcon(icon)
@@ -52,7 +52,7 @@ def main() -> int:
         window.setWindowIcon(icon)
     except Exception as exc:
         logging.exception("Unable to initialize application")
-        QMessageBox.critical(None, "帝国时代 4 工具箱启动失败", str(exc))
+        QMessageBox.critical(None, "帝国备战室启动失败", str(exc))
         return 1
     window.show()
     return app.exec()

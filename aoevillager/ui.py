@@ -541,7 +541,7 @@ class TrainingPage(QWidget):
             self.overlay.hide()
 
     def _show_error(self, message: str) -> None:
-        QMessageBox.warning(self, "AOEvillager", message)
+        QMessageBox.warning(self, "帝国备战室", message)
 
     def eventFilter(self, watched, event) -> bool:  # noqa: N802
         if watched is self.hotkey_edit:
