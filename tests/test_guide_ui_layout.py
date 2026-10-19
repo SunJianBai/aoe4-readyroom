@@ -11,7 +11,7 @@ from PyQt6.QtCore import QEvent, QObject, QUrl
 from PyQt6.QtGui import QTextDocument
 from PyQt6.QtWidgets import QApplication
 
-from aoevillager.guide_ui import CivCard, GuideAgeRow, GuidePage, GuideStepRow, ResourcePill
+from aoevillager.guide_ui import CivCard, GuideAgeRow, GuideCard, GuidePage, GuideStepRow, ResourcePill
 
 
 class _TopLevelCivCardWatcher(QObject):
@@ -45,6 +45,18 @@ class GuideLayoutTests(unittest.TestCase):
                 page.close()
         finally:
             self.app.removeEventFilter(watcher)
+
+    def test_home_does_not_build_hidden_flow_cards(self) -> None:
+        with tempfile.TemporaryDirectory() as folder:
+            page = GuidePage(Path(folder))
+            page.show()
+            self.app.processEvents()
+            self.assertEqual(page.pages.currentIndex(), 0)
+            self.assertEqual(len(page.findChildren(GuideCard)), 0)
+            page._show_civ(page.data["builds"][0]["civ"])
+            self.app.processEvents()
+            self.assertGreater(len(page.findChildren(GuideCard)), 0)
+            page.close()
 
     def test_list_cards_scroll_without_overlapping(self) -> None:
         with tempfile.TemporaryDirectory() as folder:

@@ -997,7 +997,8 @@ class GuidePage(QWidget):
         self.status_timer.setSingleShot(True)
         self.status_timer.timeout.connect(self.status.hide)
         self._refresh_home()
-        self._refresh_list()
+        # The list is hidden on first entry. Creating every bundled GuideCard
+        # here delays the home screen; _show_civ builds only the requested list.
         self._show_home()
 
     def _make_home(self) -> None:
