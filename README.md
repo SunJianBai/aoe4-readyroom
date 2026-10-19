@@ -4,6 +4,10 @@ Windows 上的非官方《帝国时代 IV》辅助工具，包含“自动训练
 
 开局流程原文及其作者信息来自 [AOE4 Guides 原网站](https://aoe4guides.com/)；应用内每篇流程均保留作者和原文链接。文明胜率来自 [AOE4 World](https://aoe4world.com/stats/rm_solo/matchups)。本项目与上述网站及《帝国时代 IV》官方均无关联。原站链接和署名仅用于标明来源，不代表第三方内容已获得开放再分发许可；详情见 [素材与数据说明](assets/guides/NOTICE.txt)。
 
+## 下载
+
+Windows 用户可在 [Releases](https://github.com/SunJianBai/aoe4-readyroom/releases/latest) 下载 `AOE4ReadyRoom.exe`，无需安装 Python。若要从源码运行，请安装 Python 3.12，并双击 `start.bat`；自行构建单文件程序可使用 `build_exe.bat`。
+
 ## 自动训练村民工具
 
 此子页面保留简单模式、自定义模式、全局开关与悬浮窗。切换到“快捷键练习”时，会先停止自动训练、隐藏悬浮窗，并暂停自动训练的全局快捷键；返回时恢复悬浮窗和快捷键。
