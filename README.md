@@ -1,6 +1,6 @@
 # 帝国时代 4 工具箱
 
-Windows / AOE4 非官方工具箱。现在有两个子页面：“自动训练村民工具”和“快捷键练习”；宽窗口显示侧栏，窄窗口切换为顶部导航，后续工具可接入同一导航与页面容器。源代码可双击 `start.bat` 运行（需要 Python）；无 Python 的电脑可运行 `dist\AOE4Toolbox.exe`。`build_exe.bat` 用于重新生成单文件 EXE。应用图标源文件在 `assets\aoevillager.svg`，构建时生成多尺寸 ICO，嵌入 EXE，并用作窗口与任务栏图标。
+Windows / AOE4 非官方工具箱。现在有三个子页面：“自动训练村民工具”、“快捷键练习”和“开局流程”；宽窗口显示侧栏，窄窗口切换为顶部导航。源代码可双击 `start.bat` 运行（需要 Python）；无 Python 的电脑可运行 `dist\AOE4Toolbox.exe`。`build_exe.bat` 用于重新生成单文件 EXE。应用图标源文件在 `assets\aoevillager.svg`，构建时生成多尺寸 ICO，嵌入 EXE，并用作窗口与任务栏图标。
 
 ## 自动训练村民工具
 
@@ -24,7 +24,15 @@ Windows / AOE4 非官方工具箱。现在有两个子页面：“自动训练�
 
 ## 快捷键练习
 
-原生 PyQt6 页面，不再使用 Qt WebEngine 或在运行时加载 HTML。练习内容从原始 `D:\Games\AOE4\aoe4-hotkeys-single.html` 迁移为 `assets\practice\catalog.json`；原文件不修改。页面可选择文明、学习模式或训练模式、练习次数与建筑，支持两键顺序输入、学习提示、进度统计和本次运行的错题本。离开练习子页面时自动暂停。文明和建筑图标都在 `assets\practice` 中，随单文件 EXE 打包；运行时不需要网络。图片来自原页面引用的 [AoE4 World 数据仓库](https://github.com/aoe4world/data)及文明图标地址；`scripts\import_hotkey_catalog.py` 是一次性数据迁移脚本，不参与运行。
+原生 PyQt6 页面，不再使用 Qt WebEngine 或在运行时加载 HTML。练习内容从原始 `D:\Games\AOE4\aoe4-hotkeys-single.html` 迁移为 `assets\practice\catalog.json`；原文件不修改。首次进入先显示可搜索的文明旗帜网格，选定文明后进入练习，也可随时返回更换。练习页提供学习模式、训练模式、练习次数与建筑选择，支持两键顺序输入、学习提示、进度统计和本次运行的错题本。离开练习子页面时自动暂停。文明和建筑图标都随单文件 EXE 打包，运行时不需要网络；文明选择页复用开局流程的大幅旗帜素材。图片来自原页面引用的 [AoE4 World 数据仓库](https://github.com/aoe4world/data)及文明图标地址；`scripts\import_hotkey_catalog.py` 是一次性数据迁移脚本，不参与运行。
+
+## 开局流程
+
+原生 Qt 阅读页，采用 AOE4 Guides 的深蓝／金色视觉层次与公开阅读路径：文明旗帜网格 → 热门／经典／最新流程卡片与本地筛选 → 时代时间轴及可展开的经济曲线 → 图标化原文步骤表 → 逐步播放或置顶悬浮播放。图标悬停显示原站名称、说明及成本；常见资源、单位和建筑另有人工整理的中文说明。可生成手机扫码查看原站流程的二维码，但不显示视频。页面保留作者与来源链接，不对作者的流程文字做机器翻译。发布、编辑、登录、评论与跨设备播放同步未迁移。
+
+当前开发者精选快照位于 `assets/guides/guides.json`：由原有本地 230 篇与 28 篇指定公开流程按 ID 去重合并，共 258 篇、覆盖 23 个文明。流程正文、结构数据、旗帜与游戏图标均随单文件 EXE 打包，阅读无需联网；应用内不提供更新或链接导入，只有开发者更换快照并重新构建才会变化。卡片上的“热门／经典／最新”仅对**已收录的离线内容**排序，不代表网站对应榜单的完整结果；已人工选择的补充条目与理由记录在 `assets/guides/curated_ids.json`。不保证每种打法在每个文明都有合适的公开流程，也不会用不相干的流程凑数。
+
+开发者更新时可用 `python scripts/refresh_guide_bundle.py` 按清单读取指定流程并合并原有本地缓存，或在获得可分发的 JSON 后运行 `python scripts/prepare_guide_bundle.py <导出文件.json>`。两者都按流程 ID 去重，运行时程序本身不会访问 API。公开 API 不提供全站分页，站点也要求批量数据需求先联系作者；这些脚本不扫描 sitemap 或枚举全站 ID。第三方流程文字、图片的使用与再分发限制见 `assets/guides/NOTICE.txt`；若要公开分发 EXE，请先确认相关授权。
 
 ## 使用前须知
 

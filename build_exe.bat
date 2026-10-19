@@ -35,6 +35,7 @@ if errorlevel 1 goto :error
     --icon "%~dp0assets\aoevillager.ico" ^
     --add-data "%~dp0assets\aoevillager.png;assets" ^
     --add-data "%~dp0assets\practice;assets\practice" ^
+    --add-data "%~dp0assets\guides;assets\guides" ^
     --hidden-import pynput.keyboard._win32 ^
     --hidden-import pynput.mouse._win32 ^
     main.py

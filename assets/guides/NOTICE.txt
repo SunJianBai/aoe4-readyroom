@@ -1,0 +1,16 @@
+Game images and civilization flags were obtained from the public AOE4 Guides
+asset library (https://github.com/jensbuehl/aoe4-guides, public/assets/).
+The site's software license does not cover its visual assets. This free,
+noncommercial fan tool does not claim ownership of those assets.
+
+Age of Empires IV © Microsoft Corporation. AOE4 Toolbox was created under
+Microsoft's "Game Content Usage Rules" using assets from Age of Empires IV,
+and it is not endorsed by or affiliated with Microsoft.
+https://www.xbox.com/en-US/developers/rules
+
+Build-order text is supplied by individual AOE4 Guides contributors. The
+offline snapshot contains a selected set of public guides, with author and
+source links retained in the UI. Public readability is not a blanket license
+to redistribute that text or the game's images. Before distributing a build
+containing assets/guides/guides.json to others, verify the applicable rights
+and obtain permission from the relevant owners where required.

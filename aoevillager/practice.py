@@ -10,49 +10,66 @@ from PyQt6.QtCore import QEvent, QSize, Qt, QTimer
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtWidgets import (
     QApplication, QCheckBox, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QPushButton, QScrollArea, QStackedWidget, QTreeWidget,
-    QTreeWidgetItem, QVBoxLayout, QWidget,
+    QLabel, QLineEdit, QPushButton, QScrollArea, QSizePolicy, QStackedWidget,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget,
 )
 
+from .guide_data import CIVILIZATIONS
+from .guide_ui import CivCard
 from .practice_catalog import AGE_NAMES, Building, PracticeCatalog
 from .widgets import NoWheelComboBox, NoWheelSpinBox
 
 
 PRACTICE_STYLE = """
-QWidget#practiceRoot { background: #071321; color: #ead09b; font-family: 'Microsoft YaHei UI'; }
-QFrame#practiceCard, QFrame#practiceHeader {
-  background: #10263d; border: 1px solid #756549; border-radius: 5px;
+QWidget#practiceRoot, QWidget#practiceWorkspace, QWidget#civPicker, QWidget#civGridContent { background: #1d2432; color: #edf1f4; font-family: 'Microsoft YaHei UI'; }
+QWidget#practiceBuildingContent { background: #324156; }
+QFrame#practiceCard, QFrame#practiceHeader, QFrame#civHero {
+  background: #324156; border: 1px solid #50627a; border-radius: 8px;
 }
-QFrame#practiceTarget { background: #0d2033; border: 1px solid #a8844b; border-radius: 5px; }
-QLabel { color: #ead09b; background: transparent; }
-QLabel#practiceTitle { color: #f5dfa9; font-size: 17px; font-weight: 700; }
-QLabel#practiceMuted { color: #c9b88e; font-size: 11px; }
-QLabel#practiceBuilding { color: #f5dfa9; font-size: 25px; font-weight: 700; }
-QLabel#practiceKey { color: #dfbd79; font-size: 16px; font-weight: 700; }
-QLabel#practiceStat { color: #f5dfa9; font-size: 13px; font-weight: 700; }
-QComboBox, QSpinBox, QTreeWidget {
-  background: #071626; color: #f3dba6; border: 1px solid #917a50;
-  border-radius: 4px; padding: 5px 8px; min-height: 28px;
+QFrame#practiceHeader, QFrame#civHero {
+  background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 #354960,stop:1 #26374b);
+  border-color: #9a7d4a;
 }
-QComboBox QAbstractItemView { background: #10243a; color: #f3dba6;
-  selection-background-color: #7b643e; }
-QPushButton { background: #17314a; color: #edd29a; border: 1px solid #94784d;
-  border-radius: 4px; padding: 7px 12px; min-height: 28px; font-weight: 600; }
-QPushButton:hover { background: #244663; border-color: #e0bc79; }
-QPushButton:checked, QPushButton#practicePrimary { background: #d6b16e;
-  color: #0b1b2d; border-color: #f0d99f; }
-QPushButton:disabled { color: #807258; background: #102031; border-color: #48483d; }
-QPushButton:focus, QComboBox:focus, QSpinBox:focus, QCheckBox:focus {
-  border: 2px solid #fff0bc;
+QFrame#practiceTarget { background: #273b51; border: 1px solid #ba9453; border-radius: 8px; }
+QLabel { color: #edf1f4; background: transparent; }
+QLabel#practiceTitle { color: #f6d987; font-size: 16px; font-weight: 700; }
+QLabel#practiceSectionTitle { color: #f6d987; font-size: 15px; font-weight: 700; }
+QLabel#pickerTitle { color: #f6d987; font-size: 25px; font-weight: 700; }
+QLabel#practiceMuted { color: #c5d0dd; font-size: 12px; }
+QLabel#practiceBuilding { color: #fff0c1; font-size: 21px; font-weight: 700; }
+QLabel#practiceKey { color: #e8c36e; font-size: 14px; font-weight: 700; }
+QLabel#practiceStat { color: #f2d28e; background: #273b51; border: 1px solid #516078;
+  border-radius: 5px; padding: 3px 8px; font-size: 12px; font-weight: 700; }
+QLineEdit, QComboBox, QSpinBox, QTreeWidget {
+  background: #202f42; color: #f5e5bf; border: 1px solid #7f755c;
+  border-radius: 6px; padding: 7px 10px; min-height: 30px;
 }
-QCheckBox { color: #f0d7a1; spacing: 8px; padding: 5px; min-height: 35px; }
-QCheckBox::indicator { width: 16px; height: 16px; }
-QCheckBox:hover { background: #1a3852; }
+QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QTreeWidget:focus { border: 2px solid #f5d995; }
+QComboBox QAbstractItemView { background: #26394d; color: #f5e5bf; selection-background-color: #50637c; }
+QPushButton { background: #3b5169; color: #f5e2b0; border: 1px solid #8c7853;
+  border-radius: 6px; padding: 7px 14px; min-height: 30px; font-weight: 600; }
+QPushButton:hover { background: #4b6480; border-color: #e8c36e; }
+QPushButton:pressed { background: #2e4056; }
+QPushButton:checked { background: #e0bd72; color: #17283b; border-color: #f4da9a; }
+QPushButton#practicePrimary { background: #e0bd72; color: #17283b; border-color: #f4da9a; }
+QPushButton#practicePrimary:hover { background: #f2d68f; }
+QPushButton#practiceMode, QPushButton#practicePrimary, QPushButton#practiceAction,
+QPushButton#practiceCivSwitch { padding: 4px 11px; min-height: 28px; }
+QPushButton#practiceAgeAction { padding: 3px 9px; min-height: 24px; }
+QPushButton#civCard { padding: 0; min-height: 132px; max-height: 132px;
+  border: none; background: transparent; }
+QPushButton:disabled { color: #8591a0; background: #2c3948; border-color: #4d5661; }
+QPushButton:focus, QToolButton:focus, QCheckBox:focus { border: 2px solid #fff0bc; }
+QCheckBox { color: #edf1f4; spacing: 8px; padding: 5px; min-height: 35px; }
+QCheckBox::indicator { width: 16px; height: 16px; border-radius: 3px; }
+QCheckBox::indicator:unchecked { background: #f0f2f5; border: 1px solid #aab7c4; }
+QCheckBox::indicator:checked { background: #e0bd72; border: 3px solid #f6e5b7; }
+QCheckBox:hover { background: #3a516b; }
 QScrollArea { background: transparent; border: none; }
-QScrollBar:vertical { background: #0b1b2b; width: 9px; }
-QScrollBar::handle:vertical { background: #856d48; border-radius: 4px; min-height: 22px; }
-QTreeWidget::item { min-height: 25px; }
-QTreeWidget::item:selected { background: #6b5737; color: #fff2cf; }
+QScrollBar:vertical { background: #263445; width: 9px; }
+QScrollBar::handle:vertical { background: #a1885b; border-radius: 4px; min-height: 22px; }
+QTreeWidget::item { min-height: 29px; }
+QTreeWidget::item:selected { background: #586d88; color: #fff2cf; }
 """
 
 
@@ -71,6 +88,7 @@ def styled_label(text: str, name: str) -> QLabel:
 class HotkeyPracticePage(QWidget):
     def __init__(self, asset_dir: Path) -> None:
         super().__init__()
+        self._asset_dir = asset_dir
         self.catalog = PracticeCatalog(asset_dir)
         self.setObjectName("practiceRoot")
         self.setAccessibleName("帝国时代 4 快捷键练习")
@@ -94,24 +112,34 @@ class HotkeyPracticePage(QWidget):
         self._set_civilization()
 
     def _build(self) -> None:
-        outer = QVBoxLayout(self)
+        root = QVBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+        self.page_stack = QStackedWidget()
+        root.addWidget(self.page_stack)
+        self._build_civilization_picker()
+
+        workspace = QWidget()
+        workspace.setObjectName("practiceWorkspace")
+        outer = QVBoxLayout(workspace)
         outer.setContentsMargins(0, 0, 0, 0)
-        outer.setSpacing(9)
+        outer.setSpacing(7)
         header = styled_frame("practiceHeader")
         row = QHBoxLayout(header)
-        row.setContentsMargins(14, 8, 14, 8)
-        title = styled_label("快捷键练习", "practiceTitle")
-        row.addWidget(title)
+        row.setContentsMargins(13, 6, 13, 6)
+        row.addWidget(styled_label("建筑快捷键练习", "practiceTitle"))
         row.addStretch()
-        row.addWidget(QLabel("文明"))
-        self.civ_combo = NoWheelComboBox()
-        self.civ_combo.setMinimumWidth(180)
+        self.civ_combo = NoWheelComboBox(workspace)
         self.civ_combo.setAccessibleName("选择练习文明")
         self.civ_combo.addItem("请选择文明", None)
         for civ in self.catalog.civilizations:
             self.civ_combo.addItem(QIcon(str(civ.icon)), civ.name, civ.id)
         self.civ_combo.currentIndexChanged.connect(lambda _index: self._set_civilization())
-        row.addWidget(self.civ_combo)
+        self.civ_combo.hide()
+        self.civ_button = QPushButton("更换文明")
+        self.civ_button.setObjectName("practiceCivSwitch")
+        self.civ_button.setAccessibleName("返回文明选择页面")
+        self.civ_button.clicked.connect(self._show_civilization_picker)
+        row.addWidget(self.civ_button)
         outer.addWidget(header)
 
         modes = QHBoxLayout()
@@ -119,26 +147,32 @@ class HotkeyPracticePage(QWidget):
         self.mode_buttons = {}
         for value, label in (("learn", "学习模式"), ("train", "训练模式"), ("wrong", "错题本")):
             button = QPushButton(label)
+            button.setObjectName("practiceMode")
             button.setCheckable(True)
             button.setChecked(value == "learn")
             button.clicked.connect(lambda checked=False, mode=value: self._select_mode(mode))
             modes.addWidget(button)
             self.mode_buttons[value] = button
-        outer.addLayout(modes)
+        mode_card = styled_frame("practiceCard")
+        mode_card.setLayout(modes)
+        modes.setContentsMargins(6, 4, 6, 4)
+        outer.addWidget(mode_card)
 
         self.views = QStackedWidget()
         practice = QWidget()
         practice_layout = QVBoxLayout(practice)
         practice_layout.setContentsMargins(0, 0, 0, 0)
-        practice_layout.setSpacing(9)
+        practice_layout.setSpacing(6)
         controls = styled_frame("practiceCard")
         row = QHBoxLayout(controls)
-        row.setContentsMargins(13, 8, 13, 8)
+        row.setContentsMargins(9, 4, 9, 4)
         self.start_button = QPushButton("开始练习")
         self.start_button.setObjectName("practicePrimary")
         self.start_button.setAccessibleName("开始或继续快捷键练习")
         self.pause_button = QPushButton("暂停")
         self.reset_button = QPushButton("重置")
+        self.pause_button.setObjectName("practiceAction")
+        self.reset_button.setObjectName("practiceAction")
         self.start_button.clicked.connect(self._start)
         self.pause_button.clicked.connect(self.pause)
         self.reset_button.clicked.connect(self._reset)
@@ -156,26 +190,35 @@ class HotkeyPracticePage(QWidget):
 
         target = styled_frame("practiceTarget")
         row = QHBoxLayout(target)
-        row.setContentsMargins(16, 10, 16, 10)
+        row.setContentsMargins(12, 6, 12, 6)
+        row.setSpacing(12)
         self.target_icon = QLabel()
-        self.target_icon.setFixedSize(96, 96)
+        self.target_icon.setFixedSize(70, 70)
         self.target_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
         row.addWidget(self.target_icon)
+        self.target_icon.hide()
         copy = QVBoxLayout()
-        copy.setSpacing(4)
+        copy.setSpacing(2)
         self.target_caption = styled_label("选择文明和建筑，点击开始练习", "practiceMuted")
         self.target_name = styled_label("等待开始", "practiceBuilding")
         self.target_key = styled_label("按时代键 → 建筑键", "practiceKey")
         self.feedback = QLabel("")
         self.feedback.setAccessibleName("按键反馈")
-        for label in (self.target_caption, self.target_name, self.target_key, self.feedback):
+        self.feedback.setWordWrap(True)
+        for label in (self.target_caption, self.target_name):
             copy.addWidget(label)
-        row.addLayout(copy, 1)
+        row.addLayout(copy, 2)
+        status = QVBoxLayout()
+        status.setSpacing(2)
+        status.addWidget(self.target_key)
+        status.addWidget(self.feedback)
+        row.addLayout(status, 3)
         practice_layout.addWidget(target)
 
         stat_card = styled_frame("practiceCard")
         row = QHBoxLayout(stat_card)
-        row.setContentsMargins(13, 6, 13, 6)
+        row.setContentsMargins(8, 4, 8, 4)
+        row.setSpacing(8)
         self.correct_label, self.wrong_label = QLabel(), QLabel()
         self.time_label, self.progress_label = QLabel(), QLabel()
         for label in (self.correct_label, self.wrong_label, self.time_label, self.progress_label):
@@ -186,15 +229,21 @@ class HotkeyPracticePage(QWidget):
 
         selection = styled_frame("practiceCard")
         selection_layout = QVBoxLayout(selection)
-        selection_layout.setContentsMargins(13, 10, 13, 10)
-        selection_layout.setSpacing(6)
-        selection_layout.addWidget(styled_label("建筑选择", "practiceTitle"))
-        selection_layout.addWidget(styled_label(
+        selection_layout.setContentsMargins(10, 7, 10, 8)
+        selection_layout.setSpacing(5)
+        selection_heading = QHBoxLayout()
+        selection_heading.setSpacing(12)
+        selection_heading.addWidget(styled_label("建筑选择", "practiceSectionTitle"))
+        selection_heading.addStretch()
+        selection_heading.addWidget(styled_label(
             "勾选要练习的建筑；未勾选时练习当前文明的全部建筑。", "practiceMuted"
         ))
+        selection_layout.addLayout(selection_heading)
         self.building_scroll = QScrollArea()
         self.building_scroll.setWidgetResizable(True)
+        self.building_scroll.viewport().setStyleSheet("background: #324156;")
         self.building_content = QWidget()
+        self.building_content.setObjectName("practiceBuildingContent")
         self.building_layout = QVBoxLayout(self.building_content)
         self.building_layout.setContentsMargins(0, 0, 5, 0)
         self.building_scroll.setWidget(self.building_content)
@@ -221,13 +270,119 @@ class HotkeyPracticePage(QWidget):
         wrong_layout.addWidget(self.wrong_tree, 1)
         self.views.addWidget(wrong)
         outer.addWidget(self.views, 1)
+        self.page_stack.addWidget(workspace)
         self._refresh_controls()
         self._refresh_stats()
+
+    def _build_civilization_picker(self) -> None:
+        picker = QWidget()
+        picker.setObjectName("civPicker")
+        layout = QVBoxLayout(picker)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(12)
+
+        hero = styled_frame("civHero")
+        hero_layout = QVBoxLayout(hero)
+        hero_layout.setContentsMargins(22, 17, 22, 17)
+        hero_layout.setSpacing(5)
+        hero_layout.addWidget(styled_label("快捷键练习  /  文明选择", "practiceMuted"))
+        hero_layout.addWidget(styled_label("选择你的文明", "pickerTitle"))
+        hero_layout.addWidget(styled_label(
+            "选择后练习该文明的建筑快捷键；可随时返回更换。", "practiceMuted"
+        ))
+        layout.addWidget(hero)
+
+        tools = QHBoxLayout()
+        tools.setSpacing(12)
+        self.civ_count = styled_label("", "practiceMuted")
+        tools.addWidget(self.civ_count)
+        tools.addStretch()
+        self.civ_search = QLineEdit()
+        self.civ_search.setPlaceholderText("搜索文明")
+        self.civ_search.setAccessibleName("搜索练习文明")
+        self.civ_search.setClearButtonEnabled(True)
+        self.civ_search.setMinimumWidth(170)
+        self.civ_search.setMaximumWidth(260)
+        self.civ_search.textChanged.connect(self._filter_civilizations)
+        tools.addWidget(self.civ_search)
+        layout.addLayout(tools)
+
+        self.civ_scroll = QScrollArea()
+        self.civ_scroll.setWidgetResizable(True)
+        self.civ_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.civ_grid_content = QWidget()
+        self.civ_grid_content.setObjectName("civGridContent")
+        self.civ_scroll.viewport().setStyleSheet("background: #1d2432;")
+        self.civ_grid = QGridLayout(self.civ_grid_content)
+        self.civ_grid.setContentsMargins(0, 0, 8, 4)
+        self.civ_grid.setHorizontalSpacing(12)
+        self.civ_grid.setVerticalSpacing(12)
+        guide_codes = {name: code for code, name in CIVILIZATIONS.items()}
+        self.civ_cards: list[tuple[str, CivCard]] = []
+        for civ in self.catalog.civilizations:
+            code = guide_codes.get(civ.name, "")
+            flag = self._asset_dir.parent / "guides" / "flags" / f"{code.lower()}-large.webp"
+            card = CivCard(code, civ.name, flag if flag.is_file() else civ.icon)
+            card.setObjectName("civCard")
+            card.setToolTip(f"练习{civ.name}的 {len(self.catalog.available(civ.id))} 个建筑快捷键")
+            card.setAccessibleName(f"选择{civ.name}，进入快捷键练习")
+            card.setMinimumWidth(148)
+            card.setFixedHeight(132)
+            card.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            card.clicked.connect(lambda checked=False, civ_id=civ.id: self._choose_civilization(civ_id))
+            self.civ_cards.append((civ.id, card))
+        self.civ_empty = styled_label("没有找到匹配的文明，请换个关键词。", "practiceMuted")
+        self.civ_scroll.setWidget(self.civ_grid_content)
+        layout.addWidget(self.civ_scroll, 1)
+        self.page_stack.addWidget(picker)
+        self._filter_civilizations("")
+
+    def _filter_civilizations(self, query: str) -> None:
+        query = query.strip().casefold()
+        while self.civ_grid.count():
+            self.civ_grid.takeAt(0)
+        visible = [(civ_id, card) for civ_id, card in self.civ_cards
+                   if query in card.name.casefold()]
+        columns = max(2, min(5, (max(self.width(), 560) - 20) // 170))
+        for index, (_, card) in enumerate(visible):
+            self.civ_grid.addWidget(card, index // columns, index % columns)
+            card.show()
+        visible_ids = {civ_id for civ_id, _ in visible}
+        for civ_id, card in self.civ_cards:
+            if civ_id not in visible_ids:
+                card.hide()
+        self.civ_empty.setVisible(not visible)
+        if not visible:
+            self.civ_grid.addWidget(self.civ_empty, 0, 0, 1, columns)
+        self.civ_grid.setRowStretch((len(visible) + columns - 1) // columns, 1)
+        self.civ_count.setText(f"已收录 {len(visible)} / {len(self.civ_cards)} 个文明")
+
+    def _choose_civilization(self, civ_id: str) -> None:
+        index = self.civ_combo.findData(civ_id)
+        if index < 0:
+            return
+        self.civ_combo.setCurrentIndex(index)
+        self.page_stack.setCurrentIndex(1)
+        self.activate()
+
+    def _show_civilization_picker(self) -> None:
+        self.pause()
+        self.civ_search.clear()
+        self.page_stack.setCurrentIndex(0)
+        self.civ_search.setFocus(Qt.FocusReason.OtherFocusReason)
+
+    def resizeEvent(self, event) -> None:  # noqa: N802
+        super().resizeEvent(event)
+        if hasattr(self, "civ_grid"):
+            self._filter_civilizations(self.civ_search.text())
 
     def _set_civilization(self) -> None:
         self._reset()
         civ = self.civ_combo.currentData()
         self._available = self.catalog.available(civ) if civ else ()
+        if civ:
+            name = self.civ_combo.currentText()
+            self.civ_button.setText(f"{name}  ·  更换文明")
         self._rebuild_buildings()
         self._refresh_controls()
 
@@ -243,11 +398,13 @@ class HotkeyPracticePage(QWidget):
                 continue
             group = styled_frame("practiceCard")
             group_layout = QVBoxLayout(group)
-            group_layout.setContentsMargins(9, 6, 9, 6)
+            group_layout.setContentsMargins(8, 4, 8, 4)
+            group_layout.setSpacing(3)
             row = QHBoxLayout()
             row.addWidget(QLabel(f"{age_name}  /  {age_key}"))
             row.addStretch()
             select = QPushButton("全选 / 取消")
+            select.setObjectName("practiceAgeAction")
             select.setAccessibleName(f"{age_name}建筑全选或取消")
             select.clicked.connect(lambda checked=False, age=age_key: self._toggle_age(age))
             row.addWidget(select)
@@ -332,6 +489,7 @@ class HotkeyPracticePage(QWidget):
         self._correct = self._wrong = self._elapsed = self._progress = self._total = 0
         if hasattr(self, "target_name"):
             self.target_icon.clear()
+            self.target_icon.hide()
             self.target_name.setText("等待开始")
             self.target_key.setText("按时代键 → 建筑键")
             self.target_caption.setText("选择文明和建筑，点击开始练习")
@@ -345,8 +503,9 @@ class HotkeyPracticePage(QWidget):
         self._first_key = self._revealed = False
         self._consecutive_errors = 0
         pixmap = QPixmap(str(self._target.icon))
+        self.target_icon.show()
         self.target_icon.setPixmap(pixmap.scaled(
-            88, 88, Qt.AspectRatioMode.KeepAspectRatio,
+            64, 64, Qt.AspectRatioMode.KeepAspectRatio,
             Qt.TransformationMode.SmoothTransformation
         ) if not pixmap.isNull() else QPixmap())
         self.target_name.setText(self._target.name)

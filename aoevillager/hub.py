@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QStandardPaths, QTimer
 from PyQt6.QtWidgets import (
     QApplication, QFrame, QHBoxLayout, QLabel, QMainWindow, QMessageBox, QPushButton,
     QStackedWidget, QVBoxLayout, QWidget,
@@ -16,7 +16,7 @@ from .ui import TrainingPage
 
 
 class ToolboxWindow(QMainWindow):
-    TOOL_NAMES = ("自动训练村民工具", "快捷键练习")
+    TOOL_NAMES = ("自动训练村民工具", "快捷键练习", "开局流程")
 
     def __init__(self, store: SettingsStore, practice_assets: Path) -> None:
         super().__init__()
@@ -41,6 +41,7 @@ class ToolboxWindow(QMainWindow):
 
         header = QFrame()
         header.setObjectName("shellHeader")
+        self.shell_header = header
         header_row = QHBoxLayout(header)
         header_row.setContentsMargins(15, 9, 15, 9)
         header_row.setSpacing(11)
@@ -53,7 +54,7 @@ class ToolboxWindow(QMainWindow):
         title = QLabel("帝国时代 4 工具箱")
         title.setObjectName("shellTitle")
         header_copy.addWidget(title)
-        self.subtitle = QLabel("自动训练村民 · 快捷键练习")
+        self.subtitle = QLabel("自动训练村民 · 快捷键练习 · 开局流程")
         self.subtitle.setObjectName("shellMuted")
         header_copy.addWidget(self.subtitle)
         header_row.addLayout(header_copy, 1)
@@ -93,9 +94,12 @@ class ToolboxWindow(QMainWindow):
         self.pages = QStackedWidget()
         self.training = TrainingPage(store)
         self.practice = None
+        self.guides = None
         self._practice_slot = QWidget()
+        self._guides_slot = QWidget()
         self.pages.addWidget(self.training)
         self.pages.addWidget(self._practice_slot)
+        self.pages.addWidget(self._guides_slot)
         body.addWidget(self.pages, 1)
         outer.addLayout(body, 1)
 
@@ -115,13 +119,15 @@ class ToolboxWindow(QMainWindow):
         for position, pair in enumerate(self._nav_buttons):
             for button in pair:
                 button.setChecked(position == index)
+                if position != index and button.hasFocus():
+                    button.clearFocus()
 
     def select_tool(self, index: int) -> None:
         if index == self.pages.currentIndex():
             self._pending_index = None
             self._mark_selected(index)
             return
-        if index == 1 and self.training.engine.is_running:
+        if index != 0 and self.training.engine.is_running:
             self._pending_index = index
             self.training.engine.stop()
             return
@@ -144,17 +150,29 @@ class ToolboxWindow(QMainWindow):
                 self._ensure_practice()
             except Exception as exc:
                 QMessageBox.warning(self, "快捷键练习无法打开", str(exc))
-                self._mark_selected(0)
+                self._mark_selected(self.pages.currentIndex())
                 return
             self.training.set_tool_active(False)
             self.pages.setCurrentIndex(1)
             QTimer.singleShot(0, self.practice.activate)
+        elif index == 2:
+            try:
+                self._ensure_guides()
+            except Exception as exc:
+                QMessageBox.warning(self, "开局流程无法打开", str(exc))
+                self._mark_selected(self.pages.currentIndex())
+                return
+            if self.practice is not None:
+                self.practice.pause()
+            self.training.set_tool_active(False)
+            self.pages.setCurrentIndex(2)
         else:
             if self.practice is not None:
                 self.practice.pause()
             self.pages.setCurrentIndex(0)
             self.training.set_tool_active(True)
         self._mark_selected(index)
+        self._update_navigation(self.width())
 
     def _ensure_practice(self) -> None:
         if self.practice is not None:
@@ -166,11 +184,25 @@ class ToolboxWindow(QMainWindow):
         self._practice_slot.deleteLater()
         self.pages.insertWidget(1, self.practice)
 
+    def _ensure_guides(self) -> None:
+        if self.guides is not None:
+            return
+        from .guide_ui import GuidePage
+
+        folder = Path(QStandardPaths.writableLocation(
+            QStandardPaths.StandardLocation.AppLocalDataLocation
+        )) / "guides"
+        self.guides = GuidePage(folder)
+        self.pages.removeWidget(self._guides_slot)
+        self._guides_slot.deleteLater()
+        self.pages.insertWidget(2, self.guides)
+
     def _update_navigation(self, width: int) -> None:
-        compact = width < 980
+        compact = width < 820
         if getattr(self, "_compact", None) == compact:
             return
         self._compact = compact
+        self.shell_header.setVisible(True)
         self.sidebar.setVisible(not compact)
         self.top_nav.setVisible(compact)
         self.subtitle.setVisible(not compact)
@@ -184,5 +216,7 @@ class ToolboxWindow(QMainWindow):
 
     def closeEvent(self, event) -> None:  # noqa: N802
         self._pending_index = None
+        if self.guides is not None:
+            self.guides.shutdown()
         self.training.close()
         super().closeEvent(event)

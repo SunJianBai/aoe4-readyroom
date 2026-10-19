@@ -49,9 +49,9 @@ class StatusOverlay(QWidget):
         card.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, True)
         card.setStyleSheet(
             "QFrame#overlayCard {"
-            " background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 #193650,stop:1 #0a1b2e);"
-            " border: 1px solid #c7a263; border-radius: 5px; }"
-            "QLabel { color: #f3dba6; border: none; background: transparent; }"
+            " background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 #354960,stop:1 #26374b);"
+            " border: 1px solid #c7a263; border-radius: 8px; }"
+            "QLabel { color: #edf1f4; border: none; background: transparent; }"
         )
         outer.addWidget(card)
         row = QHBoxLayout(card)
@@ -65,14 +65,14 @@ class StatusOverlay(QWidget):
         self.title = QLabel("自动训练村民已就绪")
         self.title.setStyleSheet("color: #f5dfa9; font-size: 15px; font-weight: 700")
         self.hint = QLabel(f"按 {hotkey} 开始")
-        self.hint.setStyleSheet("color: #c8b488; font-size: 12px")
+        self.hint.setStyleSheet("color: #c5d0dd; font-size: 12px")
         copy.addWidget(self.title)
         copy.addWidget(self.hint)
         row.addLayout(copy, 1)
         self.keycap = QLabel(hotkey)
         self.keycap.setStyleSheet(
-            "background: #0b1d30; color: #f5dfa9; border: 1px solid #ac8952;"
-            "border-radius: 3px; padding: 5px 9px; font-weight: 700"
+            "background: #202f42; color: #f5dfa9; border: 1px solid #ac8952;"
+            "border-radius: 6px; padding: 5px 9px; font-weight: 700"
         )
         row.addWidget(self.keycap)
 
