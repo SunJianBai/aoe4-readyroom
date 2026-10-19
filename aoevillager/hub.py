@@ -16,7 +16,7 @@ from .ui import TrainingPage
 
 
 class ToolboxWindow(QMainWindow):
-    TOOL_NAMES = ("自动训练村民工具", "快捷键练习", "开局流程")
+    TOOL_NAMES = ("自动训练村民工具", "快捷键练习", "开局流程", "文明胜率")
 
     def __init__(self, store: SettingsStore, practice_assets: Path) -> None:
         super().__init__()
@@ -54,7 +54,7 @@ class ToolboxWindow(QMainWindow):
         title = QLabel("帝国时代 4 工具箱")
         title.setObjectName("shellTitle")
         header_copy.addWidget(title)
-        self.subtitle = QLabel("自动训练村民 · 快捷键练习 · 开局流程")
+        self.subtitle = QLabel("自动训练村民 · 快捷键练习 · 开局流程 · 文明胜率")
         self.subtitle.setObjectName("shellMuted")
         header_copy.addWidget(self.subtitle)
         header_row.addLayout(header_copy, 1)
@@ -95,11 +95,14 @@ class ToolboxWindow(QMainWindow):
         self.training = TrainingPage(store)
         self.practice = None
         self.guides = None
+        self.stats = None
         self._practice_slot = QWidget()
         self._guides_slot = QWidget()
+        self._stats_slot = QWidget()
         self.pages.addWidget(self.training)
         self.pages.addWidget(self._practice_slot)
         self.pages.addWidget(self._guides_slot)
+        self.pages.addWidget(self._stats_slot)
         body.addWidget(self.pages, 1)
         outer.addLayout(body, 1)
 
@@ -166,6 +169,18 @@ class ToolboxWindow(QMainWindow):
                 self.practice.pause()
             self.training.set_tool_active(False)
             self.pages.setCurrentIndex(2)
+        elif index == 3:
+            try:
+                self._ensure_stats()
+            except Exception as exc:
+                QMessageBox.warning(self, "文明胜率无法打开", str(exc))
+                self._mark_selected(self.pages.currentIndex())
+                return
+            if self.practice is not None:
+                self.practice.pause()
+            self.training.set_tool_active(False)
+            self.pages.setCurrentIndex(3)
+            QTimer.singleShot(0, self.stats.activate)
         else:
             if self.practice is not None:
                 self.practice.pause()
@@ -197,6 +212,25 @@ class ToolboxWindow(QMainWindow):
         self._guides_slot.deleteLater()
         self.pages.insertWidget(2, self.guides)
 
+    def _ensure_stats(self) -> None:
+        if self.stats is not None:
+            return
+        from .stats_ui import StatsPage
+
+        folder = Path(QStandardPaths.writableLocation(
+            QStandardPaths.StandardLocation.AppLocalDataLocation
+        )) / "stats"
+        self.stats = StatsPage(folder)
+        self.stats.guide_requested.connect(self._open_civ_guides)
+        self.pages.removeWidget(self._stats_slot)
+        self._stats_slot.deleteLater()
+        self.pages.insertWidget(3, self.stats)
+
+    def _open_civ_guides(self, code: str) -> None:
+        self.select_tool(2)
+        if self.pages.currentIndex() == 2 and self.guides is not None:
+            self.guides._show_civ(code)
+
     def _update_navigation(self, width: int) -> None:
         compact = width < 820
         if getattr(self, "_compact", None) == compact:
@@ -218,5 +252,7 @@ class ToolboxWindow(QMainWindow):
         self._pending_index = None
         if self.guides is not None:
             self.guides.shutdown()
+        if self.stats is not None:
+            self.stats.shutdown()
         self.training.close()
         super().closeEvent(event)

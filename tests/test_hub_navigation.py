@@ -30,6 +30,20 @@ class _Training(QWidget):
         pass
 
 
+class _Stats(QWidget):
+    guide_requested = pyqtSignal(str)
+
+    def __init__(self, _folder) -> None:
+        super().__init__()
+        self.activated = False
+
+    def activate(self) -> None:
+        self.activated = True
+
+    def shutdown(self) -> None:
+        pass
+
+
 class NavigationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -57,6 +71,20 @@ class NavigationTests(unittest.TestCase):
         self.assertTrue(window.sidebar.isVisible())
         self.assertFalse(window.top_nav.isVisible())
         window.close()
+
+    def test_statistics_is_fourth_tool_without_moving_navigation(self) -> None:
+        with patch("aoevillager.hub.TrainingPage", _Training), patch(
+            "aoevillager.stats_ui.StatsPage", _Stats
+        ):
+            window = ToolboxWindow(object(), Path("."))
+            window.resize(1200, 800)
+            window.show()
+            window.select_tool(3)
+            self.app.processEvents()
+            self.assertEqual(window.pages.currentIndex(), 3)
+            self.assertTrue(window.sidebar.isVisible())
+            self.assertTrue(window.stats.activated)
+            window.close()
 
 
 if __name__ == "__main__":
